@@ -3,3 +3,9 @@ os:
   - linux
   - osx
   - windows
+
+python:
+  - 3.3
+  - 3.4
+  - 3.5
+  - 3.6
