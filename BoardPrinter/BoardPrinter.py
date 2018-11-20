@@ -49,11 +49,20 @@ class BoardPrinter(ConsoleControl):
         
 
     def print_board(self, board):
-        matrix = self.header
+        #self.font_selector(self.style, self.back, self.fore) 91r 93y 94b 96c
+        matrix = '\033[94m'+ self.header
         for i in range (board.row_size):
-            row = " "+str(i+1) +" "
+            row = '\033[94m'+" "+str(i+1) +" "
             for j in range(board.column_size):
-                row += self.boardstyle[186] +" " +board.getAt(i,j)+" "
+                #self.font_selector("bright","","yellow")
+                row += self.boardstyle[186]
+                if board.getAt(i,j) == '1':
+                    row += '\033[91m' + " ⬤" #color red
+                elif board.getAt(i,j) == '2':
+                    row += '\033[93m' + " ⬤" #color yellow
+                else:
+                    row += "  "
+                row += '\033[94m' + " "
             row += self.boardstyle[186] +"\n"
             if i < board.row_size-1:
                 row += self.divider

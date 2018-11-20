@@ -5,16 +5,15 @@ from Player.Player import Player
 
 def prueba_mensaje():
 	# usar 'clear' en vez de 'cls 'si estan el linux o similar
-    mensajes = MessagePrinter('cls')
+    mensajes = MessagePrinter('clear')
     mensajes.welcome_message("bright", "", "green")
     mensajes.input_option(">>>> Do you want star the game?[s/n]: ")
     
     board = Board(6,7)
     board.create()
-    bp = BoardPrinter('cls',"bringht", "", "white")
+    bp = BoardPrinter('clear',"bringht", "", "blue")
     bp.load_boar(board.column_size)
-    player1 = Player('O', "Jake")
-    
+    player1 = Player('2', "Jake")
 
     """
         podria tomarse el ciclo como posible ciclo principal del juego
@@ -32,4 +31,3 @@ def prueba_mensaje():
         _input = int(mensajes.input_option(">>>> Select a number column: "))
 
 prueba_mensaje()
-
