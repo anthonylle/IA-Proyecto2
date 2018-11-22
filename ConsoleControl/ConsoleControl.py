@@ -10,73 +10,74 @@ class ConsoleControl(object):
     
         # cls i for windows
         def __init__(self, system = 'cls'):
+            init()
             self.system = system
         
         def fore_color(self, color = "reset"):
             
-            print(Fore.RESET)
+            print(Fore.RESET, end="")
             if color == "black":
-                print(Fore.BLACK)
+                print(Fore.BLACK,end="")
             
             elif color == "red":
-                print(Fore.RED)
+                print(Fore.RED,end="")
             
             elif color == "green":
-                print(Fore.GREEN)
+                print(Fore.GREEN,end="")
             
             elif color == "yellow":
-                print(Fore.YELLOW)
+                print(Fore.YELLOW,end="")
              
             elif color == "blue":
-                print(Fore.BLUE)
+                print(Fore.BLUE,end="")
   
             elif color == "magenta":
-                print(Fore.MAGENTA)
+                print(Fore.MAGENTA,end="")
               
             elif color == "cyan":
-                print(Fore.CYAN)
+                print(Fore.CYAN,end="")
               
             elif color == "white":
-                print(Fore.WHITE)
+                print(Fore.WHITE,end="")
         
         def back_color(self, color = "reset"):
-            print(Back.RESET)
+            print(Back.RESET,end="")
             if color == "black":
-                print(Back.BLACK)
+                print(Back.BLACK,end="")
                 
             elif color == "red":
-                print(Back.RED)
+                print(Back.RED,end="")
                 
             elif color == "green":
-                print(Back.GREEN)
+                print(Back.GREEN,end="")
                 
             elif color == "yellow":
-                print(Back.YELLOW)
+                print(Back.YELLOW,end="")
                  
             elif color == "blue":
-                print(Back.BLUE)
+                print(Back.BLUE,end="")
                   
             elif color == "magenta":
-                print(Back.MAGENTA)
+                print(Back.MAGENTA,end="")
                   
             elif color == "cyan":
-                print(Back.CYAN)
+                print(Back.CYAN,end="")
                   
             elif color == "white":
-                print(Back.WHITE)
+                print(Back.WHITE,end="")
                
         
         def style_selector(self, style = "reset"):
             style = str(style)
-            print(Style.RESET_ALL)
+            print(Style.RESET_ALL , end="")
             if style == "dim":
-                print(Style.DIM)
+                print(Style.DIM,end="")
                 
             elif style == "bringht":
-                print(Style.BRIGHT)
+                print(Style.BRIGHT,end="")
 
             elif style == "normal":
-                print(Style.NORMAL)  
+                print(Style.NORMAL,end="")  
 
         def font_selector(self, style, back, fore):
             self.style_selector(style)
@@ -88,12 +89,12 @@ class ConsoleControl(object):
            
             
         def cursor_position(self, row, column):
-            print(Cursor.POS(row,column))
+            print(Cursor.POS(row,column),end="")
             
         def cursor_position2(self, row, column):
-            print(Cursor.UP(row)+Cursor.FORWARD(column))   
+            print(Cursor.UP(row)+Cursor.FORWARD(column), end="")   
             
         def reset_all(self):
-            self.back_color()
-            self.fore_color()
-            self.style_selector()
+            print(Back.RESET,end="")
+            print(Fore.RESET, end="")
+            print(Style.RESET_ALL, end="")

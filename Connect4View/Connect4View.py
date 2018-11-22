@@ -31,7 +31,7 @@ class Connect4View(MessagePrinter):
                                 "   ___ ___  _ __  _ __   ___  ___| |_  | || |_   \n",
                                 "  / __/ _ \| '_ \| '_ \ / _ \/ __| __| |__   _|  \n",
                                 " | (_| (_) | | | | | | |  __/ (__| |_     | |    \n",
-                                "  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|"])
+                                "  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|  \n\n"])
     
         self.winner = "".join([" __     __         _                                 \n",
                                 " \ \   / /        ( )                                \n",
@@ -61,7 +61,7 @@ class Connect4View(MessagePrinter):
         self.main_menu = "".join([" -------------------  Main menu --------------------\n\n",
                                   "       >>> 1. New game\n\n",
                                   "       >>> 2. How to play\n\n",
-                                  "       >>> 3. Exit"])
+                                  "       >>> 3. Exit\n\n"])
 
         self.new_game_menu = "".join([" ----------------- New game  --------------------\n\n",
                                       "         >>> 1. Type of game\n\n",
@@ -91,7 +91,7 @@ class Connect4View(MessagePrinter):
                                     " xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
                                     " xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
                                     " xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
-                                    " xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"])
+                                    " xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n"])
     
     
     def view_title(self):
@@ -137,5 +137,25 @@ class Connect4View(MessagePrinter):
     def invalid_option(self):
         self.alert("___    Invalid option D:  ____")
 
+    def player1_wins(self, style, back, fore):
+            self.clear_console()
+            self.font_selector(style,back, fore)
+            print("__________.__                            ____   __      __.__               ") 
+            print("\______   \  | _____  ___.__. __________/_   | /  \    /  \__| ____   ______") 
+            print(" |     ___/  | \__  \<   |  |/ __ \_  __ \   | \   \/\/   /  |/    \ /  ___/") 
+            print(" |    |   |  |__/ __ \\\___  \  ___/|  | \/   |  \        /|  |   |  \\\___ \ ") 
+            print(" |____|   |____(____  / ____|\___  >__|  |___|   \__/\  / |__|___|  /____  >") 
+            print("                    \/\/         \/                   \/          \/     \/ ")   
+            self.reset_all()
         
+    def player2_wins(self, style, back, fore):
+            self.clear_console()
+            self.font_selector(style,back, fore)
+            print("__________.__                           ________     __      __.__               ") 
+            print("\______   \  | _____  ___.__. __________\_____  \   /  \    /  \__| ____   ______") 
+            print(" |     ___/  | \__  \<   |  |/ __ \_  __ \/  ____/  \   \/\/   /  |/    \ /  ___/") 
+            print(" |    |   |  |__/ __ \\\___  \  ___/|  | \/       \   \        /|  |   |  \\\___ \ ") 
+            print(" |____|   |____(____  / ____|\___  >__|  \_______ \   \__/\  / |__|___|  /____  >") 
+            print("                    \/\/         \/             \/         \/          \/     \/ ")   
+            self.reset_all()        
         

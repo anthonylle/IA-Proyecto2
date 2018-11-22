@@ -37,28 +37,5 @@ class MessagePrinter(ConsoleControl):
             print(message)
             self.reset_all()            
 
-    
-    def player1_wins(self, style, back, fore):
-            self.clear_console()
-            self.font_selector(style,back, fore)
-            print("__________.__                            ____   __      __.__               ") 
-            print("\______   \  | _____  ___.__. __________/_   | /  \    /  \__| ____   ______") 
-            print(" |     ___/  | \__  \<   |  |/ __ \_  __ \   | \   \/\/   /  |/    \ /  ___/") 
-            print(" |    |   |  |__/ __ \\\___  \  ___/|  | \/   |  \        /|  |   |  \\\___ \ ") 
-            print(" |____|   |____(____  / ____|\___  >__|  |___|   \__/\  / |__|___|  /____  >") 
-            print("                    \/\/         \/                   \/          \/     \/ ")   
-            self.reset_all()
-        
-    def player2_wins(self, style, back, fore):
-            self.clear_console()
-            self.font_selector(style,back, fore)
-            print("__________.__                           ________     __      __.__               ") 
-            print("\______   \  | _____  ___.__. __________\_____  \   /  \    /  \__| ____   ______") 
-            print(" |     ___/  | \__  \<   |  |/ __ \_  __ \/  ____/  \   \/\/   /  |/    \ /  ___/") 
-            print(" |    |   |  |__/ __ \\\___  \  ___/|  | \/       \   \        /|  |   |  \\\___ \ ") 
-            print(" |____|   |____(____  / ____|\___  >__|  \_______ \   \__/\  / |__|___|  /____  >") 
-            print("                    \/\/         \/             \/         \/          \/     \/ ")   
-            self.reset_all()
-
 
 #http://patorjk.com/software/taag/#p=display&v=0&f=Big&t=
