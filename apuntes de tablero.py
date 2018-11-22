@@ -73,5 +73,134 @@
 "  ╚═══╩═══╩═══╩═══╩═══╩═══╩═══╝"
 "    
 ╬
+
+" \ \        / / | |                                         \n",
+"  \ \  /\  / /__| | ___ ___  _ __ ___   ___                 \n",
+"   \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \                \n",
+"    \  /\  /  __/ | (_| (_) | | | | | |  __/                \n",
+"     \/  \/ \___|_|\___\___/|_| |_| |_|\___|                \n",
+"                   _                                        \n",
+"                  | |                                       \n",
+"                  | |_ ___                                  \n",
+"                  | __/ _ \                                 \n",
+"                  | || (_) |                                \n",
+"                   \__\___/                                 \n",
+"                                                            \n",
+"                                  _     _  _                \n",
+"                                 | |   | || |               \n",
+"   ___ ___  _ __  _ __   ___  ___| |_  | || |_              \n",
+"  / __/ _ \| '_ \| '_ \ / _ \/ __| __| |__   _|             \n",
+" | (_| (_) | | | | | | |  __/ (__| |_     | |               \n",
+"  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|               "
+
+" -------------------  Main menu --------------------\n\n",
+"       >>> 1. New game\n\n",
+"       >>> 2. How to play\n\n",
+"       >>> 3. Exit\n\n",
+"       >>> "
+                                           
+
+"                                  _     _  _     \n",
+"                                 | |   | || |    \n",
+"   ___ ___  _ __  _ __   ___  ___| |_  | || |_   \n",
+"  / __/ _ \| '_ \| '_ \ / _ \/ __| __| |__   _|  \n",
+" | (_| (_) | | | | | | |  __/ (__| |_     | |    \n",
+"  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|    \n"
+
+" ----------------  Type of game -----------------\n\n"
+"         >>> 1. Computer vs computer\n\n"
+"         >>> 2. Human vs human\n\n" 
+"         >>> 3. Computer vs human\n\n"
+"         >>> 4. Back\n\n"
+"         >>>  "
+
+
+"                                  _     _  _     \n",
+"                                 | |   | || |    \n",
+"   ___ ___  _ __  _ __   ___  ___| |_  | || |_   \n",
+"  / __/ _ \| '_ \| '_ \ / _ \/ __| __| |__   _|  \n",
+" | (_| (_) | | | | | | |  __/ (__| |_     | |    \n",
+"  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|    \n"
+
+" ----------------- New game  --------------------\n\n",
+"         >>> 1. Type of game\n\n",
+"         >>> 2. Start\n\n",
+"         >>> 3.Exit\n\n",
+"         >>> "
+
+
+"                                  _     _  _     \n",
+"                                 | |   | || |    \n",
+"   ___ ___  _ __  _ __   ___  ___| |_  | || |_   \n",
+"  / __/ _ \| '_ \| '_ \ / _ \/ __| __| |__   _|  \n",
+" | (_| (_) | | | | | | |  __/ (__| |_     | |    \n",
+"  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|    \n"
+
+" ----------------- New game  --------------------\n\n",
+"         >>> 1. Type of game\n\n",
+"         >>> 2. Start\n\n",
+"         >>> 3.Exit\n\n",
+"         >>> "
+
+
+"                                  _     _  _     \n",
+"                                 | |   | || |    \n",
+"   ___ ___  _ __  _ __   ___  ___| |_  | || |_   \n",
+"  / __/ _ \| '_ \| '_ \ / _ \/ __| __| |__   _|  \n",
+" | (_| (_) | | | | | | |  __/ (__| |_     | |    \n",
+"  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|    \n"
+
+" ----------------- How to play  -----------------\n\n",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
+" xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n",
+
+">>> 1. Back\n\n",
+">>> "
+
+" __     __         _                                 \n",
+" \ \   / /        ( )                                \n",
+"  \ \_/ /__  _   _|/__   _____  __      _____  _ __  \n",
+"   \   / _ \| | | | \ \ / / _ \ \ \ /\ / / _ \| '_ \ \n",
+"    | | (_) | |_| |  \ V /  __/  \ V  V / (_) | | | |\n",
+"    |_|\___/ \__,_|   \_/ \___|   \_/\_/ \___/|_| |_|\n",
+"                                                     \n\n"
+
+" __     __           _                       _               _   \n",
+" \ \   / /          | |                     | |             | |  \n",
+"  \ \_/ /__  _   _  | |__   __ ___   _____  | |     ___  ___| |_ \n",
+"   \   / _ \| | | | | '_ \ / _` \ \ / / _ \ | |    / _ \/ __| __|\n",
+"    | | (_) | |_| | | | | | (_| |\ V /  __/ | |___| (_) \__ \ |_ \n",
+"    |_|\___/ \__,_| |_| |_|\__,_| \_/ \___| |______\___/|___/\__|\n",
+"                                                                 \n\n"
+
+"  _____                     \n",
+" |  __ \                    \n",
+" | |  | |_ __ __ ___      __\n",
+" | |  | | '__/ _` \ \ /\ / /\n",
+" | |__| | | | (_| |\ V  V / \n",
+" |_____/|_|  \__,_| \_/\_/  \n",
+"                            \n\n"
+
+
+                                                                 
+                                                     
+
+
+
 """
 

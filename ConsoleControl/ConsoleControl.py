@@ -14,6 +14,7 @@ class ConsoleControl(object):
         
         def fore_color(self, color = "reset"):
             
+            print(Fore.RESET)
             if color == "black":
                 print(Fore.BLACK)
             
@@ -37,12 +38,9 @@ class ConsoleControl(object):
               
             elif color == "white":
                 print(Fore.WHITE)
-              
-            else:
-                print(Fore.RESET)
         
         def back_color(self, color = "reset"):
-            
+            print(Back.RESET)
             if color == "black":
                 print(Back.BLACK)
                 
@@ -66,13 +64,11 @@ class ConsoleControl(object):
                   
             elif color == "white":
                 print(Back.WHITE)
-                  
-            else:
-                print(Back.RESET)
+               
         
         def style_selector(self, style = "reset"):
             style = str(style)
-            
+            print(Style.RESET_ALL)
             if style == "dim":
                 print(Style.DIM)
                 
@@ -80,10 +76,7 @@ class ConsoleControl(object):
                 print(Style.BRIGHT)
 
             elif style == "normal":
-                print(Style.NORMAL) 
-                
-            else:
-                print(Style.RESET_ALL)  
+                print(Style.NORMAL)  
 
         def font_selector(self, style, back, fore):
             self.style_selector(style)
@@ -92,6 +85,7 @@ class ConsoleControl(object):
           
         def clear_console(self):
             os.system(self.system)
+           
             
         def cursor_position(self, row, column):
             print(Cursor.POS(row,column))
