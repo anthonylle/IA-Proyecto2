@@ -68,4 +68,7 @@ class BoardPrinter(ConsoleControl):
                 row += self.divider
             matrix += row
         matrix += self.footer
+        self.font_selector(self.style,self.back, self.fore)
         print(matrix)
+        self.reset_all()
+       

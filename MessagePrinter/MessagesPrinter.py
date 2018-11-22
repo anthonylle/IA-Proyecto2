@@ -21,44 +21,20 @@ class MessagePrinter(ConsoleControl):
 
     def alert(self, message):
         self.font_selector("bright","","red")
-        print("_______"+message+"_______")
-   
-
+        print(message)
+        self.reset_all()
         
-    def welcome_message(self, style, back, fore):
+    def print_message(self, style, back, fore, message):
+            
+            self.font_selector(style,back, fore)
+            print(message)
+            self.reset_all()
+
+    def clear_print(self, style, back, fore, message):
             
             self.clear_console()
             self.font_selector(style,back, fore)
-            print(" __          __  _                                          ")                                          
-            print(" \ \        / / | |                                         ")                                           
-            print("  \ \  /\  / /__| | ___ ___  _ __ ___   ___                 ")                   
-            print("   \ \/  \/ / _ \ |/ __/ _ \| '_ ` _ \ / _ \                ")           
-            print("    \  /\  /  __/ | (_| (_) | | | | | |  __/                ")                  
-            print("     \/  \/ \___|_|\___\___/|_| |_| |_|\___|                ")                                                                                
-            print("                   _                                        ")                                                                                                                         
-            print("                  | |                                       ")                                         
-            print("                  | |_ ___                                  ")                                   
-            print("                  | __/ _ \                                 ")                                  
-            print("                  | || (_) |                                ")                                   
-            print("                   \__\___/                                 ")                                 
-            print("                                                            ")                                                                                                                          
-            print("                                  _     _  _                ")                 
-            print("                                 | |   | || |               ")                 
-            print("   ___ ___  _ __  _ __   ___  ___| |_  | || |_              ")               
-            print("  / __/ _ \| '_ \| '_ \ / _ \/ __| __| |__   _|             ")               
-            print(" | (_| (_) | | | | | | |  __/ (__| |_     | |               ")               
-            print("  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|               ")        
-            self.reset_all()
-
-    def title(self, style, back, fore):
-        self.font_selector(style,back, fore)
-        print("                                  _     _  _                ")                 
-        print("                                 | |   | || |               ")                 
-        print("   ___ ___  _ __  _ __   ___  ___| |_  | || |_              ")               
-        print("  / __/ _ \| '_ \| '_ \ / _ \/ __| __| |__   _|             ")               
-        print(" | (_| (_) | | | | | | |  __/ (__| |_     | |               ")               
-        print("  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|               ")        
-        self.reset_all()
-        
+            print(message)
+            self.reset_all()            
 
 #http://patorjk.com/software/taag/#p=display&v=0&f=Big&t=
