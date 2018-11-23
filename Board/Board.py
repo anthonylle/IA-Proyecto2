@@ -34,6 +34,36 @@ class Board():
         for i in range(self.row_size):
             print(self.matrix[i])
             
-    def getAt(self, i, j):
-        return self.matrix[i][j]
-        
+    def getAt(self, row, col):
+        return self.matrix[row][col]
+
+    def get_highest_disc(self, col, player_value):
+        position = -1
+        for i in range(self.row_size-1, -1, -1):
+            if self.getAt(i, col) == player_value:
+                position = i
+            elif self.getAt(i, col) == " ":
+                break
+        return position
+    
+    def get_lowest_disc(self, col, player_value):
+        position = -1
+        for i in range(self.row_size-1, -1, -1):
+            if self.getAt(i, col) == player_value:
+                position = i
+                break
+        return position
+    
+    def get_diagonal_border(self, row, col):
+        while col != 0 and row != 0:
+            col -=1
+            row -=1
+        return row, col
+    
+    def get_transposed(self):
+        transposed_matrix = Board(self.row_size, self.column_size)
+        transposed_matrix.create()
+        for i in range(self.row_size-1, -1, -1):
+            del transposed_matrix.matrix[0]
+            transposed_matrix.matrix.append(self.matrix[i])
+        return transposed_matrix

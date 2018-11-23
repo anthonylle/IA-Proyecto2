@@ -37,4 +37,5 @@ class MessagePrinter(ConsoleControl):
             print(message)
             self.reset_all()            
 
+
 #http://patorjk.com/software/taag/#p=display&v=0&f=Big&t=
