@@ -2,6 +2,7 @@ from BoardPrinter.BoardPrinter import BoardPrinter
 from Connect4View.Connect4View import Connect4View
 from Player.Player import Player
 from Board.Board import Board
+from WinAndBlock.WinAndBlock import Win_Checker, Block_Checker
 
 class Connect4():
     
@@ -98,6 +99,8 @@ class Connect4():
         Actual = 0
         self.view.view_title()
         self.boar_printer.print_board(self.board)
+        win_checker = Win_Checker()
+        block_checker = Block_Checker()
         try:
             _input = int(self.view.input_option(">>>> {} select a column's number: ".format(players[Actual].name)))
         except ValueError:
@@ -106,6 +109,7 @@ class Connect4():
         while( _input  != -1):
             self.view.view_title()
             
+
             if self.board.insert_value(_input, players[Actual].character):
                 self.boar_printer.print_board(self.board)
                 if self.check_win(self.board, _input-1, players[Actual].character):
@@ -115,7 +119,15 @@ class Connect4():
                         self.view.player1_wins("bright", "", "cyan")
                     print("{} is the winner".format(players[Actual].name))
                     break
-                Actual = not(Actual)
+                Actual = self.change_turn(Actual)
+                win = win_checker.check(self, self.board, players, Actual)
+                block = block_checker.check(self, self.board, players, Actual)
+                if win != -1:
+                    _input = win
+                    continue
+                elif block != -1:
+                    _input = block
+                    continue
             else:
                 self.boar_printer.print_board(self.board)
                 self.view.alert("invalid move ! D:")
@@ -125,6 +137,8 @@ class Connect4():
                 _input = -2
                 self.view.alert("invalid move ! D:")
 
+    def change_turn(self, Actual):
+        return not(Actual)
             
     def check_win(self, board, col, player_value):
         return self.check_verticals(board, col, player_value
