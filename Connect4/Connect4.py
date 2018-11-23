@@ -2,7 +2,7 @@ from BoardPrinter.BoardPrinter import BoardPrinter
 from Connect4View.Connect4View import Connect4View
 from Player.Player import Player
 from Board.Board import Board
-from WinAndBlock.WinAndBlock import Win_Checker, Block_Checker
+
 
 class Connect4():
     
@@ -99,8 +99,7 @@ class Connect4():
         Actual = 0
         self.view.view_title()
         self.boar_printer.print_board(self.board)
-        win_checker = Win_Checker()
-        block_checker = Block_Checker()
+        
         try:
             _input = int(self.view.input_option(">>>> {} select a column's number: ".format(players[Actual].name)))
         except ValueError:
@@ -120,14 +119,7 @@ class Connect4():
                     print("{} is the winner".format(players[Actual].name))
                     break
                 Actual = self.change_turn(Actual)
-                win = win_checker.check(self, self.board, players, Actual)
-                block = block_checker.check(self, self.board, players, Actual)
-                if win != -1:
-                    _input = win
-                    continue
-                elif block != -1:
-                    _input = block
-                    continue
+
             else:
                 self.boar_printer.print_board(self.board)
                 self.view.alert("invalid move ! D:")
