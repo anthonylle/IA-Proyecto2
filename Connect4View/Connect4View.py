@@ -66,7 +66,7 @@ class Connect4View(MessagePrinter):
         self.new_game_menu = "".join([" ----------------- New game  --------------------\n\n",
                                       "         >>> 1. Type of game\n\n",
                                       "         >>> 2. Start\n\n",
-                                      "         >>> 3.Exit\n\n"])
+                                      "         >>> 3. Back\n\n"])
 
         self.type_game_menu = "".join([" ----------------  Type of game -----------------\n\n",
                                        "         >>> 1. Computer vs computer\n\n",
