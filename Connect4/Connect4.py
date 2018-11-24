@@ -3,6 +3,7 @@ from Connect4View.Connect4View import Connect4View
 from Player.Player import Player
 from Board.Board import Board
 
+
 class Connect4():
     
     def __init__(self,system):
@@ -98,6 +99,7 @@ class Connect4():
         Actual = 0
         self.view.view_title()
         self.boar_printer.print_board(self.board)
+        
         try:
             _input = int(self.view.input_option(">>>> {} select a column's number: ".format(players[Actual].name)))
         except ValueError:
@@ -106,6 +108,7 @@ class Connect4():
         while( _input  != -1):
             self.view.view_title()
             
+
             if self.board.insert_value(_input, players[Actual].character):
                 self.boar_printer.print_board(self.board)
                 if self.check_win(self.board, _input-1, players[Actual].character):
@@ -115,7 +118,8 @@ class Connect4():
                         self.view.player1_wins("bright", "", "cyan")
                     print("{} is the winner".format(players[Actual].name))
                     break
-                Actual = not(Actual)
+                Actual = self.change_turn(Actual)
+
             else:
                 self.boar_printer.print_board(self.board)
                 self.view.alert("invalid move ! D:")
@@ -125,6 +129,8 @@ class Connect4():
                 _input = -2
                 self.view.alert("invalid move ! D:")
 
+    def change_turn(self, Actual):
+        return not(Actual)
             
     def check_win(self, board, col, player_value):
         return self.check_verticals(board, col, player_value
