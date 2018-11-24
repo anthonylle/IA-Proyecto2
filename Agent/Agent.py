@@ -1,4 +1,5 @@
 import random
+from WinAndBlock.WinAndBlock import Win_Checker, Block_Checker
 
 class Agent():
     
@@ -10,6 +11,8 @@ class Agent():
         self.my_die = 0
         self.last_move = 0
         self.last_moves = list()
+        self.win_checker = Win_Checker()
+        self.block_checker = Block_Checker()
         
     def throw_die(self):
         self.my_die = random.uniform(0, 1)
@@ -28,3 +31,14 @@ class Agent():
         else:
             print("escojo el cuarto movimiento")
 
+    def next_move(self, board, players, actual):
+        col_move = 0
+        win = self.win_checker.check(self, board, players, actual)
+        block = self.block_checker.check(self, board, players, actual)
+        if win != -1:
+            col_move = win
+        elif block != -1:
+            col_move = block
+        #else:
+            #Llamar función electora de estrategia
+        return col_move
