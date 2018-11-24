@@ -72,3 +72,9 @@ class Board():
             del transposed_matrix.matrix[0]
             transposed_matrix.matrix.append(self.matrix[i])
         return transposed_matrix
+
+    def setAt(self, row, col, value):
+        if (col >= 0 and col < self.column_size):
+            self.matrix[row][col] = value
+            return True
+        return False
