@@ -14,7 +14,7 @@ class Checker():
     
     def set_player_value(self, players, actual):
         print("function definition")
-        return " "
+        return "1"
         
 class Win_Checker(Checker):
     def set_player_value(self, players, actual):

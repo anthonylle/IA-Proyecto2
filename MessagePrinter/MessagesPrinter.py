@@ -24,18 +24,16 @@ class MessagePrinter(ConsoleControl):
         print(message)
         self.reset_all()
         
-    def print_message(self, style, back, fore, message):
-            
-            self.font_selector(style,back, fore)
-            print(message)
-            self.reset_all()
+    def print_message(self, style, back, fore, message):    
+        self.font_selector(style,back, fore)
+        print(message)
+        self.reset_all()
 
-    def clear_print(self, style, back, fore, message):
-            
-            self.clear_console()
-            self.font_selector(style,back, fore)
-            print(message)
-            self.reset_all()            
+    def clear_print(self, style, back, fore, message):            
+        self.clear_console()
+        self.font_selector(style,back, fore)
+        print(message)
+        self.reset_all()            
 
 
 #http://patorjk.com/software/taag/#p=display&v=0&f=Big&t=

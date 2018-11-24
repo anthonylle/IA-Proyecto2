@@ -9,15 +9,15 @@ class Connect4():
     def __init__(self,system):
         self.board =  None
         self.system = system
-        self.boar_printer = None
+        self.board_printer = None
         self.view = Connect4View(system)
         
 
     def default(self):
         self.board =  Board(6,7)
         self.board.create()
-        self.boar_printer = BoardPrinter(self.system,"bringht", "", "white")
-        self.boar_printer.load_boar(self.board.column_size)        
+        self.board_printer = BoardPrinter(self.system,"bringht", "", "white")
+        self.board_printer.load_boar(self.board.column_size)        
         
     def new_game_menu(self):
         option = ""
@@ -96,38 +96,44 @@ class Connect4():
         
     
     def play(self, players):
-        Actual = 0
+        actual = 0
         self.view.view_title()
-        self.boar_printer.print_board(self.board)
+        self.board_printer.print_board(self.board)
         
+        _input = self.request_column(players, actual)
+        while( _input  != -1):
+            self.view.view_title()
+
+            if self.board.insert_value(_input, players[actual].character):
+                self.board_printer.print_board(self.board)
+                if self.check_win(self.board, _input-1, players[actual].character):
+                    self.show_winner(players, actual)
+                    break
+                actual = self.change_turn(actual)
+            else:
+                self.board_printer.print_board(self.board)
+                self.view.alert("invalid move ! D:")
+            _input = self.request_column(players, actual)
+
+    def show_winner(self, players, actual):
+        if actual:
+            self.view.player2_wins("bright", "", "cyan")
+        else:
+            self.view.player1_wins("bright", "", "cyan")
+        players[actual].add_win()
+        players[not actual].add_lose()
+        print("{} is the winner".format(players[actual].name))
+        players[actual].print_record()
+        players[not actual].print_record()
+
+    def request_column(self, players, actual):
+        _input = -2
         try:
-            _input = int(self.view.input_option(">>>> {} select a column's number: ".format(players[Actual].name)))
+            _input = int(self.view.input_option(">>>> {} select a column's number: ".format(players[actual].name)))
         except ValueError:
             _input = -2
             self.view.alert("invalid move ! D:")
-        while( _input  != -1):
-            self.view.view_title()
-            
-
-            if self.board.insert_value(_input, players[Actual].character):
-                self.boar_printer.print_board(self.board)
-                if self.check_win(self.board, _input-1, players[Actual].character):
-                    if Actual:
-                       self.view.player2_wins("bright", "", "cyan")
-                    else:
-                        self.view.player1_wins("bright", "", "cyan")
-                    print("{} is the winner".format(players[Actual].name))
-                    break
-                Actual = self.change_turn(Actual)
-
-            else:
-                self.boar_printer.print_board(self.board)
-                self.view.alert("invalid move ! D:")
-            try:
-                _input = int(self.view.input_option(">>>> {} select a column's number: ".format(players[Actual].name)))
-            except ValueError:
-                _input = -2
-                self.view.alert("invalid move ! D:")
+        return _input
 
     def change_turn(self, Actual):
         return not(Actual)
