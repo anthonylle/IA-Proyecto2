@@ -1,5 +1,5 @@
 """
-    WinAndBlock tests
+    tests WinAndBlock class 
 """
 from WinAndBlock.WinAndBlock import *
 from Connect4.Connect4 import Connect4

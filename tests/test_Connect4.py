@@ -1,5 +1,5 @@
 """
-    Connect4 module tests
+    tests Connect4 class
 """
 
 from Connect4.Connect4 import Connect4
