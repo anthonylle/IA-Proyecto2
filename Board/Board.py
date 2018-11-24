@@ -3,10 +3,15 @@ class Board():
     def __init__(self, row_size, column_size):
         self.row_size = row_size
         self.column_size = column_size
-        self.matrix = list()
-        
+        self.matrix = None
+      
+    def copy(self):
+        copy = Board( self.row_size,self.column_size)
+        copy.matrix = [x[:] for x in self.matrix]
+        return copy
         
     def create(self):
+        self.matrix = list()
         for i in range(self.row_size):
             self.matrix.append([" "]*self.column_size)
         
