@@ -1,13 +1,17 @@
-import os
+
 class Board():
     def __init__(self, row_size, column_size):
         self.row_size = row_size
         self.column_size = column_size
         self.matrix = None
+        self.last_column = -1
+        self.last_row = -1
       
     def copy(self):
         copy = Board( self.row_size,self.column_size)
         copy.matrix = [x[:] for x in self.matrix]
+        copy.last_column = self.last_column
+        copy.last_row = self.last_row
         return copy
         
     def create(self):
@@ -30,14 +34,27 @@ class Board():
         while(row >= 0 ):
             if self.matrix[row][column_number] == " ":
                 self.matrix[row][column_number] = str(value)
+                self.last_column = column_number
+                self.last_row = row
                 return True
             row -= 1
-            
         return False
+
+    def is_column_full(self, column_number):
+        
+        row = self.row_size-1
+        
+        while(row >= 0 ):
+            if self.matrix[row][column_number] == " ":
+                return False
+            row -= 1
+        return True
     
-    def print_matrix(self): 
-        for i in range(self.row_size):
-            print(self.matrix[i])
+    def have_legal_move(self):
+        for col in range(self.column_size):
+            if not(self.is_column_full(col)):
+                return True
+        return False
             
     def getAt(self, row, col):
         return self.matrix[row][col]
@@ -78,3 +95,9 @@ class Board():
             self.matrix[row][col] = value
             return True
         return False
+    
+    def print_matrix(self):
+        for row in self.matrix:
+            print(row)
+        print("________________________________")
+            
