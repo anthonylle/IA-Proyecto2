@@ -13,6 +13,8 @@ class Connect4():
         self.boar_printer = None
         self.view = Connect4View(system)
         self.checker = Checker()
+        self.game_modes = ["c_vs_c", "h_vs_h", "h_vs_c"]
+        self.game_mode = self.game_modes[2]
 
     def default(self):
         self.board =  Board(6,7)
