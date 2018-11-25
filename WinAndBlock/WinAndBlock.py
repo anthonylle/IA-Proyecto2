@@ -6,7 +6,7 @@ class Checker():
             player_char = self.set_player_value(players, actual)
             board.insert_value(col+1, player_char)
             row = board.get_highest_disc(col, player_char)
-            if (connect4.check_win(board, col, player_char)):
+            if (self.check_win(board, col, player_char)):
                 board.setAt(row, col, " ")
                 return col+1
             board.setAt(row, col, " ")
@@ -14,7 +14,7 @@ class Checker():
     
     def set_player_value(self, players, actual):
         print("function definition")
-        return " "
+        return "1"
     
     def check_win(self, board, col, player_value):
         return self.check_verticals(board, col, player_value
@@ -31,7 +31,7 @@ class Checker():
                 elif i == highest_disc_row+3:
                     four_in_a_row = True
         return four_in_a_row
-    
+
     def check_horizontals(self, board, col, player_value):
         discs = 1 #Actual
         highest_disc_row = board.get_highest_disc(col, player_value)
@@ -49,6 +49,28 @@ class Checker():
                     return 1 + self._check_horizontals(board, col-1, row, player_value, look_right)
         return 0
 
+    def check_horizontals_count(self, board, col, player_value, next_discs):
+        discs = 1 #Actual
+        highest_disc_row = board.get_highest_disc(col, player_value)
+        discs += self._check_horizontals_count(board, col+1, highest_disc_row, player_value, True, next_discs)
+        discs += self._check_horizontals_count(board, col-1, highest_disc_row, player_value, False, next_discs)
+        return discs
+
+    def _check_horizontals_count(self, board, col, row, player_value, look_right, next_discs):
+        if col >= 0 and col <= board.column_size-1 and next_discs > 0:
+            if look_right:
+                if board.getAt(row, col) == player_value:
+                    return 1 + self._check_horizontals_count(board, col+1, row, player_value, look_right, next_discs-1)
+                elif board.getAt(row, col) == " ":
+                    return self._check_horizontals_count(board, col+1, row, player_value, look_right, next_discs-1)
+            else:
+                if board.getAt(row, col) == player_value:
+                    return 1 + self._check_horizontals_count(board, col-1, row, player_value, look_right, next_discs-1)
+                elif board.getAt(row, col) == " ":
+                    return self._check_horizontals_count(board, col-1, row, player_value, look_right, next_discs-1)
+        return 0
+
+
     def check_diagonals(self, board, col, player_value):
         discs = 1  #Actual
         discsT = 1 #Actual
@@ -60,7 +82,7 @@ class Checker():
         discsT += self._check_diagonals(transposed, col-1, lowest_disc_row_t-1, player_value, True)
         discsT += self._check_diagonals(transposed, col+1, lowest_disc_row_t+1, player_value, False)
 
-        return discs >= 4 or discsT>=4
+        return discs >= 4 or discsT>=4   
 
     def _check_diagonals(self, board, col, row, player_value, look_up):
         if col >= 0 and row >=0 and col < board.column_size and row < board.row_size:
@@ -70,9 +92,35 @@ class Checker():
             else:
                 if board.getAt(row, col) == player_value:
                     return 1 + self._check_diagonals(board, col+1, row+1, player_value, look_up)
-        return 0 
-        
-        
+        return 0
+    
+    def check_diagonals_count(self, board, col, player_value, next_discs, identity):
+        discs = 1 #Actual
+        if not(identity):
+            matrix = board.get_transposed()
+            disc_row = matrix.get_lowest_disc(col, player_value)
+        else:
+            matrix = board
+            disc_row = matrix.get_highest_disc(col, player_value)
+        discs += self._check_diagonals_count(matrix, col-1, disc_row-1, player_value, True, next_discs)
+        discs  += self._check_diagonals_count(matrix, col+1, disc_row+1, player_value, False, next_discs)
+
+        return discs
+
+    def _check_diagonals_count(self, board, col, row, player_value, look_up, next_discs):
+        if col >= 0 and row >=0 and col < board.column_size and row < board.row_size and next_discs > 0:
+            if look_up:
+                if board.getAt(row, col) == player_value:
+                    return 1 + self._check_diagonals_count(board, col-1, row-1, player_value, look_up, next_discs-1)
+                elif board.getAt(row, col) == " ":
+                    return self._check_diagonals_count(board, col-1, row-1, player_value, look_up, next_discs-1)
+            else:
+                if board.getAt(row, col) == player_value:
+                    return 1 + self._check_diagonals_count(board, col+1, row+1, player_value, look_up, next_discs-1)
+                elif board.getAt(row, col) == " ":
+                    return self._check_diagonals_count(board, col+1, row+1, player_value, look_up, next_discs-1)
+        return 0
+
 class Win_Checker(Checker):
     def set_player_value(self, players, actual):
         return players[actual].character

@@ -105,20 +105,15 @@ class Connect4():
         while( _input  != -1):
             self.view.view_title()
 
-            if self.board.insert_value(_input, players[Actual].character):
-                self.boar_printer.print_board(self.board)
-                if self.checker.check_win(self.board, _input-1, players[Actual].character):
-                    if Actual:
-                       self.view.player2_wins("bright", "", "cyan")
-                    else:
-                        self.view.player1_wins("bright", "", "cyan")
-                    print("{} is the winner".format(players[Actual].name))
+            if self.board.insert_value(_input, players[actual].character):
+                self.board_printer.print_board(self.board)
+                if self.checker.check_win(self.board, _input-1, players[actual].character):
+                    self.show_winner(players, actual)
                     break
-                Actual = self.change_turn(Actual)
-                if Actual == 1:
+                actual = self.change_turn(actual)
+                if actual == 1:
                     mm = MiniMax(1,'2','1')
                     mm.minimax_search(self.board, [0,1,2,3,4,5,6])
-
             else:
                 self.board_printer.print_board(self.board)
                 self.view.alert("invalid move ! D:")
