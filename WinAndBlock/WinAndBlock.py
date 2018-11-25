@@ -4,7 +4,7 @@ class Checker():
     def check(self, connect4, board, players, actual):
         for col in range(board.column_size):
             player_char = self.set_player_value(players, actual)
-            board.insert_value_IA(col+1, player_char)
+            board.insert_value(col+1, player_char)
             row = board.get_highest_disc(col, player_char)
             if (self.check_win(board, col, player_char)):
                 board.setAt(row, col, " ")

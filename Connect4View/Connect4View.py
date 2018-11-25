@@ -129,7 +129,7 @@ class Connect4View(MessagePrinter):
     def view_draw(self):
         self.clear_console()
         self.alert(self.draw)
-        self.input_option(self,">>> Main menu: ")
+        self.input_option(">>> Main menu: ")
  
     #--------------------------------------------------------------------------
     #input : none
@@ -145,6 +145,7 @@ class Connect4View(MessagePrinter):
     #function: print the main menu
     #output: none     
     def view_main_menu(self):
+        self.clear_console()
         self.print_message("bright","","cyan", self.welcome_message)
         return self.view_menu(self.main_menu,"       >>> ")
 
