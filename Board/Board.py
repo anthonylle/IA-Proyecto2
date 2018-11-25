@@ -107,7 +107,7 @@ class Board():
         function: verify if the board has at least a space
         output: true if it has a space or false if it has not a space 
         """        
-        print(self.moves_count)
+        #print(self.moves_count)
         return self.moves_count < self.column_size * self.row_size
             
     #--------------------------------------------------------------------------

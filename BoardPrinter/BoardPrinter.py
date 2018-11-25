@@ -1,6 +1,5 @@
 from ConsoleControl.ConsoleControl import ConsoleControl
 from Board.Board import Board
-
 class BoardPrinter(ConsoleControl):
     
     #--------------------------------------------------------------------------
@@ -47,7 +46,7 @@ class BoardPrinter(ConsoleControl):
     #function: create the header to the board
     #output: none
     def create_header(self,column_size):
-        header = "    "
+        header = "  "
         string = self.boardstyle[206] +self.boardstyle[205]*3
         boundary = "  "+self.boardstyle[205] + string*column_size 
         boundary += self.boardstyle[187]
@@ -75,14 +74,14 @@ class BoardPrinter(ConsoleControl):
         #self.font_selector(self.style, self.back, self.fore) 91r 93y 94b 96c
         matrix = '\033[94m'+ self.header
         for i in range (board.row_size):
-            row = '\033[94m'+" "+str(i+1) +" "
+            row = '\033[94m'+"   "
             for j in range(board.column_size):
                 #self.font_selector("bright","","yellow")
                 row += self.boardstyle[186]
                 if board.getAt(i,j) == '1':
-                    row += '\033[91m' + " ⬤" #color red
+                    row += '\033[91m' + " ●" #color red●
                 elif board.getAt(i,j) == '2':
-                    row += '\033[93m' + " ⬤" #color yellow
+                    row += '\033[93m' + " ●" #color yellow
                 else:
                     row += "  "
                 row += '\033[94m' + " "

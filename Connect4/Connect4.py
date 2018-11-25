@@ -298,9 +298,9 @@ class Connect4():
         """
         
         if type(players[actual]) is Agent:
-            players[actual].throw_die()
+            self.view.print_message("bright","","yellow",">>> Waiting for {}'s answer: ".format(players[actual].name))
             return players[actual].next_move(self.board, players, actual)
-            #return players[actual].select_move(self.board,self.level, players[not actual].character)
+
         elif type(players[actual]) is Player:
             return self.human_request_column(players, actual)
         return -2
@@ -348,7 +348,7 @@ class Connect4():
         self.board_printer.print_board(self.board)
         
         column = self.request_column(players, actual)
-        while( column  != -1):
+        while column  != -1:
             self.view.view_title()
 
             if self.board.insert_value(column, players[actual].character):
@@ -363,6 +363,3 @@ class Connect4():
             column = self.request_column(players, actual)
         
         return players
-            
-
-            
