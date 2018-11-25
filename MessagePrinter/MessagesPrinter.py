@@ -13,6 +13,10 @@ class MessagePrinter(ConsoleControl):
         
         
     def input_option(self, message):
+        """
+            asks for an input and prints the message in yellow
+            returns the input
+        """
         self.font_selector("bright","","yellow")
         print(message,end="")
         my_input = input()
@@ -20,16 +24,25 @@ class MessagePrinter(ConsoleControl):
         return my_input   
 
     def alert(self, message):
+        """
+            Prints an alert message in red
+        """
         self.font_selector("bright","","red")
         print(message)
         self.reset_all()
         
-    def print_message(self, style, back, fore, message):    
+    def print_message(self, style, back, fore, message): 
+        """
+            Prints a message with a given stile
+        """  
         self.font_selector(style,back, fore)
         print(message)
         self.reset_all()
 
-    def clear_print(self, style, back, fore, message):            
+    def clear_print(self, style, back, fore, message):       
+        """
+            Clears the console and then prints the message given with stile
+        """     
         self.clear_console()
         self.font_selector(style,back, fore)
         print(message)
