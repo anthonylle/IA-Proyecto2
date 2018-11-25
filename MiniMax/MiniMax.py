@@ -32,7 +32,7 @@ class MiniMax():
                     best_move = col
                     best_max = current_max
                     
-        return best_move
+        return best_move+1
     
     # board is a board class 's object 
     def check_state(self, board, depth, player):
