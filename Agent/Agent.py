@@ -1,9 +1,13 @@
-import random
 from WinAndBlock.WinAndBlock import Win_Checker, Block_Checker
+from MiniMax.MiniMax import MiniMax
+from Player.Player import Player
+import random
 
-class Agent():
+class Agent(Player):
     
-    def __init__(self, percent_first_move, percent_second_move, percent_third_move, percent_fourth_move):
+    def __init__(self,character, name ,percent_first_move, 
+                 percent_second_move, percent_third_move, percent_fourth_move):
+        Player.__init__(self, character, name)
         self.percent_first_move = percent_first_move
         self.percent_second_move = percent_second_move
         self.percent_third_move = percent_third_move
@@ -17,14 +21,18 @@ class Agent():
     def throw_die(self):
         self.my_die = random.uniform(0, 1)
     
-    def select_move(self):
-        print("mi dado: ", self.my_die)
-        if self.my_die <= self.percent_first_move:
-            print("escojo el primer movimiento")
+    def select_move(self, board_state,depth_max, oponent):
         
+        minimax = MiniMax(depth_max, self.character, oponent)
+        print("mi dado: ", self.my_die)
+        
+        if self.my_die <= self.percent_first_move:
+            print("escojo el de secuencia vs espacio")
+            return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])
         elif self.my_die <= self.percent_second_move:
-            print("escojo el segundo movimiento")
-            
+            print("escojo centro vs centros")
+            #return minimax.search_best_move(board_state, [2,3,4])
+            #return minimax.search_best_move(board_state, [0,1,5,6])
         elif self.my_die <= self.percent_third_move:
             print("escojo el tercer movimiento")
             

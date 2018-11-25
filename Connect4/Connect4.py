@@ -140,18 +140,6 @@ class Connect4():
             return self.h_vs_h("Human1","Human2")
         elif self.game_mode == self.game_modes[2]:
             return self.h_vs_c("Human","Computer")
-        
-    
-    #--------------------------------------------------------------------------    
-    def start_game(self):
-        players = self.create_players()
-        play_again = "y"
-
-        while play_again != "n":
-            
-            self.default()
-            self.play(players)
-            play_again =  self.view.input_option(">>>> Do you want to play again?[y/n]: ")        
 
     #--------------------------------------------------------------------------
     def show_winner(self, players, actual):
@@ -196,6 +184,7 @@ class Connect4():
     #--------------------------------------------------------------------------
     def request_column(self, players, actual):
         if type(players[actual]) is Agent:
+            players[actual].throw_die()
             return players[actual].select_move(self.board,self.level, players[not actual].character)
         elif type(players[actual]) is Player:
             return self.human_request_column(players, actual)
@@ -204,6 +193,17 @@ class Connect4():
     #--------------------------------------------------------------------------
     def change_turn(self, Actual):
         return not(Actual)
+    
+    #--------------------------------------------------------------------------    
+    def start_game(self):
+        players = self.create_players()
+        play_again = "y"
+
+        while play_again != "n":
+            
+            self.default()
+            self.play(players)
+            play_again =  self.view.input_option(">>>> Do you want to play again?[y/n]: ")  
             
     #--------------------------------------------------------------------------
     def play(self, players):
