@@ -14,7 +14,7 @@ class Checker():
     
     def set_player_value(self, players, actual):
         print("function definition")
-        return " "
+        return "1"
     
     def check_win(self, board, col, player_value):
         return self.check_verticals(board, col, player_value
@@ -70,8 +70,7 @@ class Checker():
             else:
                 if board.getAt(row, col) == player_value:
                     return 1 + self._check_diagonals(board, col+1, row+1, player_value, look_up)
-        return 0 
-        
+        return 0
         
 class Win_Checker(Checker):
     def set_player_value(self, players, actual):
