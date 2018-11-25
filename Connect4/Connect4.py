@@ -107,11 +107,11 @@ class Connect4():
 
             if self.board.insert_value(_input, players[actual].character):
                 self.board_printer.print_board(self.board)
-                if self.check_win(self.board, _input-1, players[actual].character):
+                if self.checker.check_win(self.board, _input-1, players[actual].character):
                     self.show_winner(players, actual)
                     break
                 actual = self.change_turn(actual)
-                if Actual == 1:
+                if actual == 1:
                     mm = MiniMax(1,'2','1')
                     mm.minimax_search(self.board, [0,1,2,3,4,5,6])
             else:
