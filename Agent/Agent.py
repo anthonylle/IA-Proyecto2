@@ -50,7 +50,8 @@ class Agent(Player):
             col_move = block
         else:
             #Llamar función electora de estrategia
-            minimax = Secuential(3, self.character, '1')
+            #minimax = Secuential(3, self.character, '1')
+            minimax = Espaces(3, self.character, '1')
             col_move = minimax.search_best_move(board, [0,1,2,3,4,5,6])+1
             #col_move = random.randint(0, 6)+1
         return col_move

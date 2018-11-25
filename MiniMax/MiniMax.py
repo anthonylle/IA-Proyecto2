@@ -100,12 +100,21 @@ class Secuential(MiniMax):
         discs_4 = checker.check_lines(state_board, self.current_player, 4)
         discs_3 = checker.check_lines(state_board, self.current_player, 3)
         discs_2 = checker.check_lines(state_board, self.current_player, 2)
-        oponent_discs_4 = discs_4 = checker.check_lines(state_board,
-                                            self.oponent, 4)
+        oponent_discs_4 = checker.check_lines(state_board, self.oponent, 4)
         if oponent_discs_4 > 0:
             return -100000
         return discs_4*100000 + discs_3*100 + discs_2
 
+class Espaces(MiniMax):
+    def heuristic(self, state_board):
+        checker = Checker()
+        discs_4 = checker.check_lines(state_board, self.current_player, 4)
+        discs_3 = checker.check_lines(state_board, self.current_player, 3)
+        discs_2 = checker.check_lines(state_board, self.current_player, 2)
+        oponent_discs_4 = checker.check_lines(state_board, self.oponent, 4)
+        if oponent_discs_4 > 0:
+            return -100000
+        return discs_4*100000 + discs_3*100 + discs_2
            
     
     
