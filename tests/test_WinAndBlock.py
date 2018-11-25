@@ -402,7 +402,7 @@ def test_check_horizontals_count_1_with_0_neighbours():
                     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
                     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
                     [' ', ' ', ' ', '1', ' ', ' ', ' ']]
-    neighbour_discs = checker.check_horizontals_count(board, 3, '1', 0)
+    neighbour_discs = checker.check_horizontals_count(board, 5, 3, '1', 0)
     assert(neighbour_discs == 1)
 
 def test_check_horizontals_count_0_with_2_neighbours_but_search_limit_2():
@@ -414,8 +414,8 @@ def test_check_horizontals_count_0_with_2_neighbours_but_search_limit_2():
                     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
                     [' ', ' ', ' ', '2', ' ', ' ', '2'],
                     ['1', ' ', ' ', '1', ' ', ' ', '1']]
-    neighbour_discs = checker.check_horizontals_count(board, 3, '1', 2)
-    assert(neighbour_discs == 1)
+    neighbour_discs = checker.check_horizontals_count(board, 5, 3, '1', 2)
+    assert(neighbour_discs == 0)
 
 def test_check_horizontals_count_1_with_2_neighbours_search_limit_2_but_only_one_into_limit():
     checker = Checker()
@@ -426,22 +426,10 @@ def test_check_horizontals_count_1_with_2_neighbours_search_limit_2_but_only_one
                     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
                     [' ', ' ', ' ', '2', ' ', ' ', '2'],
                     [' ', '1', ' ', '1', ' ', ' ', '1']]
-    neighbour_discs = checker.check_horizontals_count(board, 3, '1', 2)
-    assert(neighbour_discs == 2)
-
-def test_check_diagonals_count_1_with_2_neighbours_search_limit_1_Player2():
-    checker = Checker()
-    board = Board(6, 7)
-    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
-                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-                    [' ', ' ', ' ', '2', ' ', ' ', ' '],
-                    [' ', ' ', '2', '1', ' ', ' ', ' '],
-                    [' ', ' ', '1', '2', ' ', ' ', '2'],
-                    ['2', '1', '1', '1', ' ', ' ', '1']]
-    neighbour_discs = checker.check_diagonals_count(board, 0, '2', 1, False)
+    neighbour_discs = checker.check_horizontals_count(board, 5, 3, '1', 2)
     assert(neighbour_discs == 1)
 
-def test_check_diagonals_count_2_search_limit_2_with_2_neighbours_but_only_1_in_limit_Player2():
+def test_check_diagonals_count_2_with_2_neighbours_search_limit_1_Player2():
     checker = Checker()
     board = Board(6, 7)
     board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -450,11 +438,10 @@ def test_check_diagonals_count_2_search_limit_2_with_2_neighbours_but_only_1_in_
                     [' ', ' ', '2', '1', ' ', ' ', ' '],
                     [' ', ' ', '1', '2', ' ', ' ', '2'],
                     ['2', '1', '1', '1', ' ', ' ', '1']]
-    neighbour_discs = checker.check_diagonals_count(board, 0, '2', 2, False)
+    neighbour_discs = checker.check_diagonals_count(board, 5, 0, '2', 1)
     assert(neighbour_discs == 2)
 
-
-def test_check_diagonals_count_3_search_limit_3_with_2_neighbours_both_in_limit_Player2():
+def test_check_diagonals_count_1_search_limit_2_with_2_neighbours_but_only_1_in_limit_Player2():
     checker = Checker()
     board = Board(6, 7)
     board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -463,8 +450,21 @@ def test_check_diagonals_count_3_search_limit_3_with_2_neighbours_both_in_limit_
                     [' ', ' ', '2', '1', ' ', ' ', ' '],
                     [' ', ' ', '1', '2', ' ', ' ', '2'],
                     ['2', '1', '1', '1', ' ', ' ', '1']]
-    neighbour_discs = checker.check_diagonals_count(board, 0, '2', 3, False)
-    assert(neighbour_discs == 3)
+    neighbour_discs = checker.check_diagonals_count(board, 5, 0, '2', 2)
+    assert(neighbour_discs == 1)
+
+
+def test_check_diagonals_count_1_search_limit_3_with_2_neighbours_both_in_limit_Player2():
+    checker = Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', '2', ' ', ' ', ' '],
+                    [' ', ' ', '2', '1', ' ', ' ', ' '],
+                    [' ', ' ', '1', '2', ' ', ' ', '2'],
+                    ['2', '1', '1', '1', ' ', ' ', '1']]
+    neighbour_discs = checker.check_diagonals_count(board, 5, 0, '2', 3)
+    assert(neighbour_discs == 1)
 
 def test_check_diagonals_count_3_search_limit_3_transposed_diagonal_with_2_neighbours_both_in_limit_Player2():
     checker = Checker()
@@ -475,8 +475,8 @@ def test_check_diagonals_count_3_search_limit_3_transposed_diagonal_with_2_neigh
                     ['2', ' ', '2', '1', ' ', ' ', ' '],
                     ['2', '2', '1', '2', ' ', ' ', ' '],
                     ['2', '1', '1', '1', ' ', ' ', '1']]
-    neighbour_discs = checker.check_diagonals_count(board, 0, '1', 3, True)
-    assert(neighbour_discs == 3)
+    neighbour_discs = checker.check_diagonals_count(board, 2, 0, '1', 3)
+    assert(neighbour_discs == 1)
 
 def test_check_verticals_count_2():
     checker = Checker()
@@ -487,8 +487,8 @@ def test_check_verticals_count_2():
                     ['2', ' ', '2', '1', ' ', ' ', ' '],
                     ['2', '2', '1', '2', ' ', ' ', ' '],
                     ['2', '1', '1', '1', ' ', ' ', '1']]
-    neighbour_discs = checker.check_verticals_count(board, 0, '2', 2)
-    assert(neighbour_discs == 2)
+    neighbour_discs = checker.check_verticals_count(board, 1, 0, '2', 2)
+    assert(neighbour_discs == 1)
 
 def test_check_verticals_count_5_limit_99():
     checker = Checker()
@@ -499,8 +499,8 @@ def test_check_verticals_count_5_limit_99():
                     ['2', ' ', '2', '1', ' ', ' ', ' '],
                     ['2', '2', '1', '2', ' ', ' ', ' '],
                     ['2', '1', '1', '1', ' ', '1', '1']]
-    neighbour_discs = checker.check_verticals_count(board, 0, '2', 99)
-    assert(neighbour_discs == 5)
+    neighbour_discs = checker.check_verticals_count(board, 1, 0, '2', 4)
+    assert(neighbour_discs == 1)
 
 def test_Secuential_Count_check_verticals():
     checker = Secuential_Count_Checker()
@@ -573,3 +573,27 @@ def test_Secuential_Count_check_lines_3_in_line_count_4():
                     ['2', '1', '2', '2', '2', '1', '1']]
     neighbour_discs = checker.check_lines(board, '1', 2)
     assert(neighbour_discs == 14)
+
+def test_Check_check_lines_13_in_line_count_2():
+    checker = Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', '2'],
+                    [' ', ' ', ' ', ' ', ' ', ' ', '1'],
+                    [' ', ' ', '2', ' ', ' ', '1', '1'],
+                    ['2', '1', '2', '2', '2', '1', '1']]
+    neighbour_discs = checker.check_lines(board, '1', 2)
+    assert(neighbour_discs == 13)
+
+def test_Check_check_lines_3_in_line_count_3():
+    checker = Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', '2', ' ', ' ', ' '],
+                    [' ', '1', ' ', '1', ' ', ' ', ' '],
+                    [' ', '2', ' ', '2', ' ', ' ', ' '],
+                    ['2', '1', ' ', '1', ' ', ' ', ' ']]
+    neighbour_discs = checker.check_lines(board, '2', 3)
+    assert(neighbour_discs == 3)
