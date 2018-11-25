@@ -10,10 +10,12 @@ class MiniMax():
         self.depth_max = depth_max
         self.current_player = current_player
         self.oponent = oponent
-        
+    #--------------------------------------------------------------------------   
     # state_board is object of Board class
     # player_piece is char value   
     # board_area is a list with the columns number to apply this
+    #function: search the best move for an agent
+    #output: an int with best 
     def search_best_move(self, state_board, board_area):
         best_move = -2
         current_max = self.MIN
@@ -31,10 +33,15 @@ class MiniMax():
                 if( current_max > best_max):
                     best_move = col
                     best_max = current_max
-                    
+        # +1 because the insert method only admit number bigger than 0            
         return best_move+1
     
-    # board is a board class 's object 
+    
+    #--------------------------------------------------------------------------
+    #input : board is a board class 's object, depth a int value and player is a 
+    #        char with the player character
+    #function: check if there a win, or the game is depth is the max
+    #output: boolean value
     def check_state(self, board, depth, player):
         checker = Checker()
         win = checker.check_win(board, board.last_column, player)
@@ -43,10 +50,17 @@ class MiniMax():
         #print("win: ", win, "legal moves: ", legal_moves, "over: ", over)
         return  win or legal_moves or over
             
-    
+    #--------------------------------------------------------------------------
+    #input : 
+    #function: 
+    #output:
     def heuristic(self):
         return 0
     
+    #--------------------------------------------------------------------------
+    #input : depth: int value, state_board: Board object, alfa: int value and beta: int value 
+    #function: search the best value for the human(oponent) the worse for the computer
+    #output: int value, the least between alfa and beta 
     def min_value(self, depth, state_board, alfa, beta):
         
         if self.check_state(state_board, depth, self.current_player):
@@ -67,7 +81,11 @@ class MiniMax():
                         return alfa
             
             return beta
-    
+        
+    #--------------------------------------------------------------------------
+    #input : depth: int value, state_board: Board object, alfa: int value and beta: int value 
+    #function: search the best value for the computer and the worse for the human (oponent)
+    #output: int value, the higher bwtween alpha and beta   
     def max_value(self, depth, state_board, alfa, beta):
 
         if self.check_state(state_board, depth, self.oponent):
@@ -90,6 +108,10 @@ class MiniMax():
             
             return alfa
     
+    #--------------------------------------------------------------------------
+    #input : depth: an int value, and a Board object 
+    #function: print the board state with its depth
+    #output: none
     def print_state(self, depth, board):
         print ("Depth: ", depth)
         board.print_matrix()

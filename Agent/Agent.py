@@ -17,10 +17,18 @@ class Agent(Player):
         self.last_moves = list()
         self.win_checker = Win_Checker()
         self.block_checker = Block_Checker()
-        
+
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: throw_die for a new percent
+    #output: none  
     def throw_die(self):
         self.my_die = random.uniform(0, 1)
-    
+
+    #--------------------------------------------------------------------------
+    #input: a Board object, max depth to search, oponent character(human) 
+    #function: select the best move using minimax
+    #output: int with column number > 0
     def select_move(self, board_state,depth_max, oponent):
         
         minimax = MiniMax(depth_max, self.character, oponent)
@@ -39,6 +47,10 @@ class Agent(Player):
         else:
             print("escojo el cuarto movimiento")
 
+    #--------------------------------------------------------------------------
+    #input: a Board object, a list of players, an int with the actual player
+    #function: select the best move using minimax
+    #output: ?
     def next_move(self, board, players, actual):
         col_move = 0
         win = self.win_checker.check(self, board, players, actual)
