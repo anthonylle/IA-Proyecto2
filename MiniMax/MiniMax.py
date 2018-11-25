@@ -1,5 +1,5 @@
 from Board.Board import Board
-from WinAndBlock.WinAndBlock import Checker
+from WinAndBlock.WinAndBlock import *
 import sys
 
 class MiniMax():
@@ -24,8 +24,8 @@ class MiniMax():
             if not(state_board.is_column_full(col)):
                 #print("---------------------------------------",col,"---------------------------------------")
                 child = state_board.copy()
-                child.insert_value(col+1, self.current_player)
-                child.print_matrix()
+                child.insert_value_IA(col+1, self.current_player)
+                #child.print_matrix()
                 current_max = self.min_value(0, child, self.MIN, self.MAX)
                 
                 if( current_max > best_max):
@@ -44,13 +44,13 @@ class MiniMax():
         return  win or legal_moves or over
             
     
-    def heuristic(self):
+    def heuristic(self, state_board):
         return 0
     
     def min_value(self, depth, state_board, alfa, beta):
         
         if self.check_state(state_board, depth, self.current_player):
-            return self.heuristic()
+            return self.heuristic(state_board)
             
         else:
             #print("----------- for del min ----------")
@@ -58,7 +58,7 @@ class MiniMax():
                 
                 if not(state_board.is_column_full(col)):
                     child = state_board.copy()
-                    child.insert_value(col+1, self.oponent) 
+                    child.insert_value_IA(col+1, self.oponent) 
                     #print("-----------jagada valida ----------")
                     #self.print_state(depth, child)
                     temp_alfa = self.max_value(depth+1, child, alfa, beta)
@@ -71,7 +71,7 @@ class MiniMax():
     def max_value(self, depth, state_board, alfa, beta):
 
         if self.check_state(state_board, depth, self.oponent):
-            return self.heuristic()
+            return self.heuristic(state_board)
             
         else: 
             #print("----------- for del min ----------")
@@ -80,7 +80,7 @@ class MiniMax():
                 if not(state_board.is_column_full(col)):
                     
                     child = state_board.copy()
-                    child.insert_value(col+1, self.current_player)
+                    child.insert_value_IA(col+1, self.current_player)
               #      print("-----------jagada valida ----------")
               #      self.print_state(depth, child)
                     temp_beta = self.min_value(depth+1, child, alfa, beta)
@@ -93,6 +93,19 @@ class MiniMax():
     def print_state(self, depth, board):
         print ("Depth: ", depth)
         board.print_matrix()
+    
+class Secuential(MiniMax):
+    def heuristic(self, state_board):
+        checker = Secuential_Count_Checker()
+        discs_4 = checker.check_lines(state_board, self.current_player, 4)
+        discs_3 = checker.check_lines(state_board, self.current_player, 3)
+        discs_2 = checker.check_lines(state_board, self.current_player, 2)
+        oponent_discs_4 = discs_4 = checker.check_lines(state_board,
+                                            self.oponent, 4)
+        if oponent_discs_4 > 0:
+            return -100000
+        return discs_4*100000 + discs_3*100 + discs_2
+
            
     
     

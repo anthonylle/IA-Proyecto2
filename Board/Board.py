@@ -23,7 +23,7 @@ class Board():
         
         #no insertar crear de esta forma --> self.matrix = [[" "]*self.column_size]*self.row_size
 
-    def  insert_value(self, column_number, value):
+    def insert_value(self, column_number, value):
         if (column_number >= 1 and column_number <= self.column_size):
             return self.insert_aux(column_number-1, value)
         else:
@@ -43,6 +43,25 @@ class Board():
             row -= 1
         return False
 
+    def insert_value_IA(self, column_number, value):
+        if (column_number >= 1 and column_number <= self.column_size):
+            return self.insert_aux_IA(column_number-1, value)
+        else:
+            return False
+        
+    def insert_aux_IA(self, column_number, value):
+        
+        row = self.row_size-1
+        
+        while(row >= 0 ):
+            if self.matrix[row][column_number] == " ":
+                self.matrix[row][column_number] = str(value)
+                self.last_column = column_number
+                self.last_row = row
+                return True
+            row -= 1
+        return False
+
     def is_column_full(self, column_number):
         
         row = self.row_size-1
@@ -54,6 +73,7 @@ class Board():
         return True
     
     def have_legal_move(self):
+        print(self.moves_count)
         return self.moves_count < self.column_size * self.row_size
             
     def getAt(self, row, col):

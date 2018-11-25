@@ -1,5 +1,5 @@
 from WinAndBlock.WinAndBlock import Win_Checker, Block_Checker
-from MiniMax.MiniMax import MiniMax
+from MiniMax.MiniMax import *
 from Player.Player import Player
 import random
 
@@ -23,11 +23,12 @@ class Agent(Player):
     
     def select_move(self, board_state,depth_max, oponent):
         
-        minimax = MiniMax(depth_max, self.character, oponent)
+        #minimax = MiniMax(depth_max, self.character, oponent)
         print("mi dado: ", self.my_die)
         
         if self.my_die <= self.percent_first_move:
             print("escojo el de secuencia vs espacio")
+            minimax = Secuential(depth_max, self.character, oponent)
             return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])
         elif self.my_die <= self.percent_second_move:
             print("escojo centro vs centros")
@@ -47,6 +48,9 @@ class Agent(Player):
             col_move = win
         elif block != -1:
             col_move = block
-        #else:
+        else:
             #Llamar función electora de estrategia
+            minimax = Secuential(3, self.character, '1')
+            col_move = minimax.search_best_move(board, [0,1,2,3,4,5,6])+1
+            #col_move = random.randint(0, 6)+1
         return col_move

@@ -185,7 +185,8 @@ class Connect4():
     def request_column(self, players, actual):
         if type(players[actual]) is Agent:
             players[actual].throw_die()
-            return players[actual].select_move(self.board,self.level, players[not actual].character)
+            return players[actual].next_move(self.board, players, actual)
+            #return players[actual].select_move(self.board,self.level, players[not actual].character)
         elif type(players[actual]) is Player:
             return self.human_request_column(players, actual)
         return -2

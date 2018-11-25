@@ -537,3 +537,39 @@ def test_Secuential_Count_check_diagonals():
                     ['2', '1', '1', '1', ' ', '1', '1']]
     neighbour_discs = checker.check_diagonals(board, 3, 2, '2', 3)
     assert(neighbour_discs == 1)
+
+def test_Secuential_Count_check_lines_4_in_line_count_1():
+    checker = Secuential_Count_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '1', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '2', '1', ' ', ' ', ' '],
+                    ['2', '2', '1', '2', ' ', ' ', ' '],
+                    ['2', '1', '1', '1', ' ', '1', '1']]
+    neighbour_discs = checker.check_lines(board, '2', 4)
+    assert(neighbour_discs == 1)
+
+def test_Secuential_Count_check_lines_4_in_line_count_2():
+    checker = Secuential_Count_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '1', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '2', '1', ' ', ' ', ' '],
+                    ['2', '2', '1', '2', ' ', ' ', ' '],
+                    ['2', '1', '1', '1', ' ', '1', '1']]
+    neighbour_discs = checker.check_lines(board, '2', 3)
+    assert(neighbour_discs == 5)
+
+def test_Secuential_Count_check_lines_3_in_line_count_4():
+    checker = Secuential_Count_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', '2'],
+                    [' ', ' ', ' ', ' ', ' ', ' ', '1'],
+                    [' ', ' ', '2', ' ', ' ', '1', '1'],
+                    ['2', '1', '2', '2', '2', '1', '1']]
+    neighbour_discs = checker.check_lines(board, '1', 2)
+    assert(neighbour_discs == 14)

@@ -4,7 +4,7 @@ class Checker():
     def check(self, connect4, board, players, actual):
         for col in range(board.column_size):
             player_char = self.set_player_value(players, actual)
-            board.insert_value(col+1, player_char)
+            board.insert_value_IA(col+1, player_char)
             row = board.get_highest_disc(col, player_char)
             if (self.check_win(board, col, player_char)):
                 board.setAt(row, col, " ")
@@ -138,6 +138,16 @@ class Block_Checker(Checker):
         return players[not(actual)].character
 
 class Secuential_Count_Checker(Checker):
+
+    def check_lines(self, board, player_value, next_discs):
+        lines_count = 0
+        for row in range(board.row_size):
+            for col in range(board.column_size):
+                if board.getAt(row, col) == player_value:
+                    lines_count += self.check_verticals_count(board, row, col, player_value, next_discs)
+                    lines_count += self.check_horizontals_count(board, row, col, player_value, next_discs)
+                    lines_count += self.check_diagonals(board, row, col, player_value, next_discs)
+        return lines_count
 
     def check_verticals_count(self, board, row, col, player_value, next_discs):
         discs = 0
