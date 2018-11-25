@@ -14,8 +14,8 @@ class MiniMax():
     # state_board is object of Board class
     # player_piece is char value   
     # board_area is a list with the columns number to apply this
-    def minimax_search(self, state_board, board_area):
-        best_move = -1
+    def search_best_move(self, state_board, board_area):
+        best_move = -2
         current_max = self.MIN
         best_max = self.MIN
         
