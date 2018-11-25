@@ -35,11 +35,13 @@ class Board():
         
         #no insertar crear de esta forma --> self.matrix = [[" "]*self.column_size]*self.row_size
 
+
     #--------------------------------------------------------------------------
     #input : column_number: int value to insert, value: a char with player character
     #function: verify if column number is into the range 
     #output: a boolean value, true is insert is ok and false if no 
     def  insert_value(self, column_number, value):
+
         if (column_number >= 1 and column_number <= self.column_size):
             return self.insert_aux(column_number-1, value)
         else:
@@ -63,10 +65,32 @@ class Board():
             row -= 1
         return False
 
+<<<<<<< HEAD
     #--------------------------------------------------------------------------
     #input :  column_number: int value to consult
     #function: verify if the i column is full or not
     #output: true if is full or false if it has at least a space 
+=======
+    def insert_value_IA(self, column_number, value):
+        if (column_number >= 1 and column_number <= self.column_size):
+            return self.insert_aux_IA(column_number-1, value)
+        else:
+            return False
+        
+    def insert_aux_IA(self, column_number, value):
+        
+        row = self.row_size-1
+        
+        while(row >= 0 ):
+            if self.matrix[row][column_number] == " ":
+                self.matrix[row][column_number] = str(value)
+                self.last_column = column_number
+                self.last_row = row
+                return True
+            row -= 1
+        return False
+
+>>>>>>> develop-Tenorio
     def is_column_full(self, column_number):
         
         row = self.row_size-1
@@ -82,6 +106,7 @@ class Board():
     #function: verify if the board has at least a space
     #output: true if it has a space or false if it has not a space   
     def have_legal_move(self):
+        print(self.moves_count)
         return self.moves_count < self.column_size * self.row_size
             
     #--------------------------------------------------------------------------

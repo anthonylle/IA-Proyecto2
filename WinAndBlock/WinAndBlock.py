@@ -4,7 +4,7 @@ class Checker():
     def check(self, connect4, board, players, actual):
         for col in range(board.column_size):
             player_char = self.set_player_value(players, actual)
-            board.insert_value(col+1, player_char)
+            board.insert_value_IA(col+1, player_char)
             row = board.get_highest_disc(col, player_char)
             if (self.check_win(board, col, player_char)):
                 board.setAt(row, col, " ")
@@ -31,6 +31,15 @@ class Checker():
                 elif i == highest_disc_row+3:
                     four_in_a_row = True
         return four_in_a_row
+    
+    def check_verticals_count(self, board, col, player_value, next_discs):
+        discs = 0
+        highest_disc_row = board.get_highest_disc(col, player_value)
+        for i in range(highest_disc_row, highest_disc_row+next_discs):
+            if i >= board.column_size-1 or board.getAt(i, col) != player_value:
+                break
+            discs += 1
+        return discs
 
     def check_horizontals(self, board, col, player_value):
         discs = 1 #Actual
@@ -69,7 +78,6 @@ class Checker():
                 elif board.getAt(row, col) == " ":
                     return self._check_horizontals_count(board, col-1, row, player_value, look_right, next_discs-1)
         return 0
-
 
     def check_diagonals(self, board, col, player_value):
         discs = 1  #Actual
@@ -128,3 +136,48 @@ class Win_Checker(Checker):
 class Block_Checker(Checker):
     def set_player_value(self, players, actual):
         return players[not(actual)].character
+
+class Secuential_Count_Checker(Checker):
+
+    def check_lines(self, board, player_value, next_discs):
+        lines_count = 0
+        for row in range(board.row_size):
+            for col in range(board.column_size):
+                if board.getAt(row, col) == player_value:
+                    lines_count += self.check_verticals_count(board, row, col, player_value, next_discs)
+                    lines_count += self.check_horizontals_count(board, row, col, player_value, next_discs)
+                    lines_count += self.check_diagonals(board, row, col, player_value, next_discs)
+        return lines_count
+
+    def check_verticals_count(self, board, row, col, player_value, next_discs):
+        discs = 0
+        for i in range(row, row+next_discs):
+            if i >= board.column_size-1 or board.getAt(i, col) != player_value:
+                break
+            discs += 1
+        if discs >= next_discs:
+            return 1
+        return 0
+    
+    def check_horizontals_count(self, board, row, col, player_value, next_discs):
+        discs = 1 #Actual
+        discs += self._check_horizontals_count(board, col+1, row, player_value, True, next_discs)
+        discs += self._check_horizontals_count(board, col-1, row, player_value, False, next_discs)
+        if discs >= next_discs:
+            return 1
+        return 0
+    
+    def check_diagonals(self, board, row, col, player_value, next_discs):
+        discs = 1  #Actual
+        discsT = 1 #Actual
+        total = 0
+        transposed = board.get_transposed()
+        rowT = (board.row_size-1)-row
+        discs  += self._check_diagonals(board, col-1, row-1, player_value, True)
+        discs  += self._check_diagonals(board, col+1, row+1, player_value, False)
+        discsT += self._check_diagonals(transposed, col-1, rowT-1, player_value, True)
+        discsT += self._check_diagonals(transposed, col+1, rowT+1, player_value, False)
+
+        total+=1 if discs >= next_discs else total
+        total+=1 if discsT >= next_discs else total
+        return total
