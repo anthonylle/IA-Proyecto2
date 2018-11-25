@@ -477,3 +477,63 @@ def test_check_diagonals_count_3_search_limit_3_transposed_diagonal_with_2_neigh
                     ['2', '1', '1', '1', ' ', ' ', '1']]
     neighbour_discs = checker.check_diagonals_count(board, 0, '1', 3, True)
     assert(neighbour_discs == 3)
+
+def test_check_verticals_count_2():
+    checker = Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '1', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '2', '1', ' ', ' ', ' '],
+                    ['2', '2', '1', '2', ' ', ' ', ' '],
+                    ['2', '1', '1', '1', ' ', ' ', '1']]
+    neighbour_discs = checker.check_verticals_count(board, 0, '2', 2)
+    assert(neighbour_discs == 2)
+
+def test_check_verticals_count_5_limit_99():
+    checker = Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '1', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '2', '1', ' ', ' ', ' '],
+                    ['2', '2', '1', '2', ' ', ' ', ' '],
+                    ['2', '1', '1', '1', ' ', '1', '1']]
+    neighbour_discs = checker.check_verticals_count(board, 0, '2', 99)
+    assert(neighbour_discs == 5)
+
+def test_Secuential_Count_check_verticals():
+    checker = Secuential_Count_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '1', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '2', '1', ' ', ' ', ' '],
+                    ['2', '2', '1', '2', ' ', ' ', ' '],
+                    ['2', '1', '1', '1', ' ', '1', '1']]
+    neighbour_discs = checker.check_verticals_count(board, 1, 0, '2', 4)
+    assert(neighbour_discs == 1)
+
+def test_Secuential_Count_check_horizontals():
+    checker = Secuential_Count_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '1', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '2', '1', ' ', ' ', ' '],
+                    ['2', '2', '1', '2', ' ', ' ', ' '],
+                    ['2', '1', '1', '1', ' ', '1', '1']]
+    neighbour_discs = checker.check_horizontals_count(board, 5, 2, '1', 3)
+    assert(neighbour_discs == 1)
+
+def test_Secuential_Count_check_diagonals():
+    checker = Secuential_Count_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '1', ' ', ' ', ' ', ' '],
+                    ['2', ' ', '2', '1', ' ', ' ', ' '],
+                    ['2', '2', '1', '2', ' ', ' ', ' '],
+                    ['2', '1', '1', '1', ' ', '1', '1']]
+    neighbour_discs = checker.check_diagonals(board, 3, 2, '2', 3)
+    assert(neighbour_discs == 1)
