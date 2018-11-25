@@ -65,13 +65,14 @@ class Connect4View(MessagePrinter):
 
         self.new_game_menu = "".join([" ----------------- New game  --------------------\n\n",
                                       "         >>> 1. Type of game\n\n",
-                                      "         >>> 2. Start\n\n",
-                                      "         >>> 3. Back\n\n"])
+                                      "         >>> 2. Level game\n\n",
+                                      "         >>> 3. Start\n\n",
+                                      "         >>> 4. Back\n\n"])
 
         self.type_game_menu = "".join([" ----------------  Type of game -----------------\n\n",
                                        "         >>> 1. Computer vs computer\n\n",
                                        "         >>> 2. Human vs human\n\n" ,
-                                       "         >>> 3. Computer vs human\n\n",
+                                       "         >>> 3. Human vs Computer\n\n",
                                        "         >>> 4. Back\n\n"])
     
         self.how_to_play = "".join([" ----------------- How to play  -----------------\n\n",
@@ -133,6 +134,10 @@ class Connect4View(MessagePrinter):
     
     def column_option(self):
         return self.input_option(">>>> Select a number column: ")
+    
+    def select_level(self):
+        return int(self.input_option(">>>> Select level (1 - 4): "))
+        
            
     def invalid_option(self):
         self.alert("___    Invalid option D:  ____")

@@ -13,9 +13,9 @@ class MiniMax():
         
     # state_board is object of Board class
     # player_piece is char value   
-    # sector is a list with the columns number to apply this
-    def minimax_search(self, state_board, board_area):
-        best_move = -1
+    # board_area is a list with the columns number to apply this
+    def search_best_move(self, state_board, board_area):
+        best_move = -2
         current_max = self.MIN
         best_max = self.MIN
         
@@ -26,7 +26,7 @@ class MiniMax():
                 child = state_board.copy()
                 child.insert_value(col+1, self.current_player)
                 child.print_matrix()
-                current_max = self.min_value(0, child, self.MIN, self.MAX, board_area)
+                current_max = self.min_value(0, child, self.MIN, self.MAX)
                 
                 if( current_max > best_max):
                     best_move = col
@@ -47,35 +47,35 @@ class MiniMax():
     def heuristic(self):
         return 0
     
-    def min_value(self, depth, state_board, alfa, beta, board_area):
+    def min_value(self, depth, state_board, alfa, beta):
         
         if self.check_state(state_board, depth, self.current_player):
             return self.heuristic()
             
         else:
             #print("----------- for del min ----------")
-            for col in board_area:
+            for col in range(state_board.column_size):
                 
                 if not(state_board.is_column_full(col)):
                     child = state_board.copy()
                     child.insert_value(col+1, self.oponent) 
                     #print("-----------jagada valida ----------")
                     #self.print_state(depth, child)
-                    temp_alfa = self.max_value(depth+1, child, alfa, beta, board_area)
+                    temp_alfa = self.max_value(depth+1, child, alfa, beta)
                     beta = min(beta, temp_alfa)
                     if alfa >= beta:
                         return alfa
             
             return beta
     
-    def max_value(self, depth, state_board, alfa, beta, board_area):
+    def max_value(self, depth, state_board, alfa, beta):
 
         if self.check_state(state_board, depth, self.oponent):
             return self.heuristic()
             
         else: 
             #print("----------- for del min ----------")
-            for col in board_area:
+            for col in range(state_board.column_size):
                 
                 if not(state_board.is_column_full(col)):
                     
@@ -83,7 +83,7 @@ class MiniMax():
                     child.insert_value(col+1, self.current_player)
               #      print("-----------jagada valida ----------")
               #      self.print_state(depth, child)
-                    temp_beta = self.min_value(depth+1, child, alfa, beta, board_area)
+                    temp_beta = self.min_value(depth+1, child, alfa, beta)
                     alfa = max(alfa, temp_beta)
                     if alfa >= beta:
                         return beta

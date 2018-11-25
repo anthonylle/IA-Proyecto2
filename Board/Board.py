@@ -6,12 +6,14 @@ class Board():
         self.matrix = None
         self.last_column = -1
         self.last_row = -1
+        self.moves_count = 0
       
     def copy(self):
         copy = Board( self.row_size,self.column_size)
         copy.matrix = [x[:] for x in self.matrix]
         copy.last_column = self.last_column
         copy.last_row = self.last_row
+        copy.moves_count = self.moves_count
         return copy
         
     def create(self):
@@ -36,6 +38,7 @@ class Board():
                 self.matrix[row][column_number] = str(value)
                 self.last_column = column_number
                 self.last_row = row
+                self.moves_count += 1 
                 return True
             row -= 1
         return False
@@ -51,10 +54,7 @@ class Board():
         return True
     
     def have_legal_move(self):
-        for col in range(self.column_size):
-            if not(self.is_column_full(col)):
-                return True
-        return False
+        return self.moves_count < self.column_size * self.row_size
             
     def getAt(self, row, col):
         return self.matrix[row][col]
