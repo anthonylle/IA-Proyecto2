@@ -1,7 +1,10 @@
 from MessagePrinter.MessagesPrinter import MessagePrinter
 
+# class to use as part game's view 
 class Connect4View(MessagePrinter):
-    
+    #--------------------------------------------------------------------------
+    #input : a string, 'cls' i for windows and 'clear' for ubunrun or other
+    #function: constructor, store great messages
     def __init__(self, system):
         
         MessagePrinter.__init__(self, system)
@@ -24,7 +27,7 @@ class Connect4View(MessagePrinter):
                                         "   ___ ___  _ __  _ __   ___  ___| |_  | || |_              \n",
                                         "  / __/ _ \| '_ \| '_ \ / _ \/ __| __| |__   _|             \n",
                                         " | (_| (_) | | | | | | |  __/ (__| |_     | |               \n",
-                                        "  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|"])
+                                        "  \___\___/|_| |_|_| |_|\___|\___|\__|    |_|    \n\n"])
 
         self.title = "".join([  "                                  _     _  _     \n",
                                 "                                 | |   | || |    \n",
@@ -65,13 +68,14 @@ class Connect4View(MessagePrinter):
 
         self.new_game_menu = "".join([" ----------------- New game  --------------------\n\n",
                                       "         >>> 1. Type of game\n\n",
-                                      "         >>> 2. Start\n\n",
-                                      "         >>> 3.Exit\n\n"])
+                                      "         >>> 2. Level game\n\n",
+                                      "         >>> 3. Start\n\n",
+                                      "         >>> 4. Back\n\n"])
 
         self.type_game_menu = "".join([" ----------------  Type of game -----------------\n\n",
                                        "         >>> 1. Computer vs computer\n\n",
                                        "         >>> 2. Human vs human\n\n" ,
-                                       "         >>> 3. Computer vs human\n\n",
+                                       "         >>> 3. Human vs Computer\n\n",
                                        "         >>> 4. Back\n\n"])
     
         self.how_to_play = "".join([" ----------------- How to play  -----------------\n\n",
@@ -93,50 +97,105 @@ class Connect4View(MessagePrinter):
                                     " xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n ",
                                     " xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n"])
     
-    
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print the tittle
+    #output: none
     def view_title(self):
         self.clear_print("bright","","cyan", self.title)
-        
+
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print the winner
+    #output: none        
     def view_winner(self):
         self.clear_console()
         self.clear_print("bright","","yellow",self.winner)
         self.input_option(self,">>> Main menu: ")
 
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print the lost
+    #output: none
     def view_lost(self):
         self.clear_console()
         self.alert(self.lost)
         self.input_option(self,">>> Main menu: ")
-        
+
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print draw message
+    #output: none       
     def view_draw(self):
         self.clear_console()
         self.alert(self.draw)
         self.input_option(self,">>> Main menu: ")
-        
+ 
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print a menu with input option
+    #output: none       
     def view_menu(self, menu, space):
-        self.view_title()
+        
         self.print_message("bright","","white", menu)
         option = self.input_option(space)
         return option
-    
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print the main menu
+    #output: none     
     def view_main_menu(self):
-        self.print_message("bright","","cyan", self.title)
+        self.print_message("bright","","cyan", self.welcome_message)
         return self.view_menu(self.main_menu,"       >>> ")
- 
+
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print the new game menu
+    #output: none  
     def view_new_game_menu(self):
+        self.view_title()
         return self.view_menu(self.new_game_menu, "         >>> ")
-    
+
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print the type game menu
+    #output: none     
     def view_type_game_menu(self):
+        self.view_title()
         return self.view_menu(self.type_game_menu, "         >>> ")
-    
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print thow to play
+    #output: none     
     def view_how_to_play(self):
+        self.view_title()
         return self.view_menu(self.how_to_play,">>> Back [enter]:  ")
-    
+
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: asks for column option
+    #output: none     
     def column_option(self):
         return self.input_option(">>>> Select a number column: ")
-           
+ 
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: asks for the level game
+    #output: none    
+    def select_level(self):
+        return int(self.input_option(">>>> Select level (1 - 4): "))
+        
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print invalid option
+    #output: none              
     def invalid_option(self):
         self.alert("___    Invalid option D:  ____")
 
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print the wiiner 1
+    #output: none 
     def player1_wins(self, style, back, fore):
             self.clear_console()
             self.font_selector(style,back, fore)
@@ -147,7 +206,11 @@ class Connect4View(MessagePrinter):
             print(" |____|   |____(____  / ____|\___  >__|  |___|   \__/\  / |__|___|  /____  >") 
             print("                    \/\/         \/                   \/          \/     \/ ")   
             self.reset_all()
-        
+
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print the wiiner 1
+    #output: none         
     def player2_wins(self, style, back, fore):
             self.clear_console()
             self.font_selector(style,back, fore)
