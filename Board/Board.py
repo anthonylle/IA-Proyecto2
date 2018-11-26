@@ -19,10 +19,9 @@ class Board():
     def copy(self):
         """
         input : none
-        function: create a copy of current board
+        function: Creates a copy of the actual board
         output: new board object 
         """        
-        
         copy = Board( self.row_size,self.column_size)
         copy.matrix = [x[:] for x in self.matrix]
         copy.last_column = self.last_column
@@ -42,8 +41,6 @@ class Board():
         self.matrix = list()
         for i in range(self.row_size):
             self.matrix.append([" "]*self.column_size)
-        
-        #no insertar crear de esta forma --> self.matrix = [[" "]*self.column_size]*self.row_size
     
     #--------------------------------------------------------------------------
 
@@ -54,7 +51,6 @@ class Board():
         function: verify if column number is into the range 
         output: a boolean value, true is insert is ok and false if no     
         """
-        
         if (column_number >= 1 and column_number <= self.column_size):
             return self.insert_aux(column_number-1, value)
         else:
@@ -70,7 +66,6 @@ class Board():
         move
         output: a boolean value, true is insert is ok and false if no   
         """        
-        
         row = self.row_size-1
         
         while(row >= 0 ):
@@ -106,8 +101,8 @@ class Board():
         input : none
         function: verify if the board has at least a space
         output: true if it has a space or false if it has not a space 
-        """        
-        #print(self.moves_count)
+            Checks if moves_count have reach the maximun number allow
+        """
         return self.moves_count < self.column_size * self.row_size
             
     #--------------------------------------------------------------------------
@@ -117,8 +112,8 @@ class Board():
         input : row: int value, column: int value
         function: get a specifict space in the board
         output: specifict space in the board    
+            Returns the value in the row,col position
         """
-        
         return self.matrix[row][col]
 
     #--------------------------------------------------------------------------
@@ -128,8 +123,9 @@ class Board():
         input : col: int value, player_value: a char with the player's charter
         function: find the last space in the column
         output: int value, -1 if the column is empty or other if not
+            returns the row value where it finds the first apereance of the 
+            player value
         """
-        
         position = -1
         for i in range(self.row_size-1, -1, -1):
             if self.getAt(i, col) == player_value:
@@ -145,7 +141,9 @@ class Board():
         input : col: int value, player_value: a char with the player's charter
         function: find the fisrt space in the column
         output: int value, -1 if the column is empty or other if not
-        """        
+            return the row value where it finds the first apereance of the 
+            player value, from button to top, mainly used by transposed board
+        """
         position = -1
         for i in range(self.row_size-1, -1, -1):
             if self.getAt(i, col) == player_value:
@@ -160,7 +158,8 @@ class Board():
         input : row: int value, column: int value
         function: ?
         output: two int values    
-        """        
+            Returns the fist diagonal position
+        """
         while col != 0 and row != 0:
             col -=1
             row -=1
@@ -173,8 +172,8 @@ class Board():
         input : none
         function: create a transposed boar with this board
         output:  a Board object 
+        returns a copy of the board inverted
         """
-        
         transposed_matrix = Board(self.row_size, self.column_size)
         transposed_matrix.create()
         for i in range(self.row_size-1, -1, -1):
@@ -190,8 +189,8 @@ class Board():
         player's charter
         function: set specific spacein the board
         output: true if all is ok or false if it isn't
-        """        
-        
+            Sets the a value of the row and col given
+        """
         if (col >= 0 and col < self.column_size):
             self.matrix[row][col] = value
             return True
@@ -204,6 +203,7 @@ class Board():
         input : none
         function: print each row in the matrix
         output: none
+            Prints the matrix to have a perspective of it's actual state
         """
         for row in self.matrix:
             print(row)

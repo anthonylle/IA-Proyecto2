@@ -55,16 +55,11 @@ class Agent(Player):
         else:
             print("escojo el cuarto movimiento")
 
-    #--------------------------------------------------------------------------
     def next_move(self, board, players, actual):
-        """input: a Board object, a list of players, an int with the actual 
-        player
-        
-        function: select the best move using minimax
-        
-        output: ?
-        
-        """        
+        """
+            Checks if it can win el if it can block else make a move from
+            the strategies
+        """
         col_move = 0
         win = self.win_checker.check(self, board, players, actual)
         block = self.block_checker.check(self, board, players, actual)

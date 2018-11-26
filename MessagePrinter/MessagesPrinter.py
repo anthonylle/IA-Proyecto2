@@ -21,6 +21,10 @@ class MessagePrinter(ConsoleControl):
     #          always with yellow color
     #output: a string value
     def input_option(self, message):
+        """
+            asks for an input and prints the message in yellow
+            returns the input
+        """
         self.font_selector("bright","","yellow")
         print(message,end="")
         my_input = input()
@@ -33,24 +37,34 @@ class MessagePrinter(ConsoleControl):
     #          always with red color
     #output: none
     def alert(self, message):
+        """
+            Prints an alert message in red
+        """
         self.font_selector("bright","","red")
         print(message)
         self.reset_all()
  
     #--------------------------------------------------------------------------
-    #input : three string with the style and other with the message
-    #function: print simple message in console, with a specific style
-    #output: none       
-    def print_message(self, style, back, fore, message):    
+
+    def print_message(self, style, back, fore, message):
+        """
+            Prints a message with a given stile
+            #input : three string with the style and other with the message
+            #function: print simple message in console, with a specific style
+            #output: none       
+        """     
         self.font_selector(style,back, fore)
         print(message)
         self.reset_all()
         
     #--------------------------------------------------------------------------
-    #input : three string with the style and other with the message
-    #function: to clear the console after print simple message in console, with a specific style, 
-    #output: none 
-    def clear_print(self, style, back, fore, message):            
+    def clear_print(self, style, back, fore, message):                  
+        """
+            #input : three string with the style and other with the message
+            #function: to clear the console after print simple message in console, with a specific style, 
+            #output: none 
+            Clears the console and then prints the message given with stile
+        """     
         self.clear_console()
         self.font_selector(style,back, fore)
         print(message)
