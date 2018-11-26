@@ -17,11 +17,13 @@ class Agent(Player):
         self.last_moves = list()
         self.win_checker = Win_Checker()
         self.block_checker = Block_Checker()
+        self.ranges = {}
+        
 
     #--------------------------------------------------------------------------
     def throw_die(self):
         """input : none
-        
+
         function: throw_die for a new percent
         
         output: none
@@ -36,23 +38,49 @@ class Agent(Player):
         function: select the best move using minimax
         output: int with column number > 0     
         """
-        #minimax = MiniMax(depth_max, self.character, oponent)
+        
+        self.throw_die()
         print("mi dado: ", self.my_die)
         
         if self.my_die <= self.percent_first_move:
             print("escojo el de secuencia vs espacio")
-            minimax = Secuential(depth_max, self.character, oponent)
             return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])
         elif self.my_die <= self.percent_second_move:
             print("escojo centro vs centros")
-            #return minimax.search_best_move(board_state, [2,3,4])
-            #return minimax.search_best_move(board_state, [0,1,5,6])
+
         elif self.my_die <= self.percent_third_move:
             print("escojo el tercer movimiento")
             
         else:
             print("escojo el cuarto movimiento")
 
+    #--------------------------------------------------------------------------
+    def sequence_vs_space(self,board_state,depth_max, oponent):
+        """
+        input: a Board object, max depth to search, oponent character(human)
+        funtion: select the sequence or space
+        output: none
+        """
+        self.throw_die()
+        if self.my_die <= 0.60:
+            pass # secuencia
+        else:
+            pass
+
+    #--------------------------------------------------------------------------
+    def center_vs_extremes(self,board_state,depth_max, oponent):
+        """
+        input: a Board object, max depth to search, oponent character(human)
+        funtion: select center or extreme
+        output: none
+        """
+        self.throw_die()
+        if self.my_die <= 0.70:
+            pass # centros [2,3,4]
+        else:
+            pass # extremos [0,1,5,6]     
+        
+     #--------------------------------------------------------------------------       
     def next_move(self, board, players, actual):
         """
             Checks if it can win el if it can block else make a move from
