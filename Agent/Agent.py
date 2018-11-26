@@ -31,12 +31,10 @@ class Agent(Player):
 
     #--------------------------------------------------------------------------
     def select_move(self, board_state,depth_max, oponent):
-        """input: a Board object, max depth to search, oponent character(human)
-        
+        """
+        input: a Board object, max depth to search, oponent character(human)
         function: select the best move using minimax
-        
         output: int with column number > 0     
-        
         """
         #minimax = MiniMax(depth_max, self.character, oponent)
         print("mi dado: ", self.my_die)
