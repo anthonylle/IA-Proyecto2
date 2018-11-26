@@ -15,7 +15,7 @@ class Player():
         self.character = character
         self.name = name
         self.record = [0, 0, 0]
-        self.last_moves = {2,3,4}
+        self.last_moves = {2, 3, 4}
     
     #--------------------------------------------------------------------------
     #input : none

@@ -230,7 +230,7 @@ class Board():
         funtion: get a set from 0 to column_size
         output: set object
         """
-        return list(range(self.column_size))
+        return set(list(range(self.column_size)))
     
     #--------------------------------------------------------------------------
     def print_matrix(self):

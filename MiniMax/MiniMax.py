@@ -31,13 +31,12 @@ class MiniMax():
             if not(state_board.is_column_full(col)):
                 child = state_board.copy()
                 child.insert_value(col+1, self.current_player)
-                #child.print_matrix()
                 current_max = self.min_value(0, child, self.MIN, self.MAX)
-                
+                #print("curent_max", current_max, col)
                 if( current_max > best_max):
                     best_move = col
                     best_max = current_max
-        # +1 because the insert method only admit number bigger than 0            
+        # +1 because the insert method only admit number bigger than 0           
         return best_move+1
     
     #--------------------------------------------------------------------------
@@ -60,7 +59,7 @@ class MiniMax():
     #input : 
     #function: 
     #output:
-    def heuristic(self):
+    def heuristic(self, state_board):
         """
             Fathers Model funtion
         """
@@ -84,8 +83,6 @@ class MiniMax():
                 if not(state_board.is_column_full(col)):
                     child = state_board.copy()
                     child.insert_value(col+1, self.oponent) 
-                    #print("-----------jagada valida ----------")
-                    #self.print_state(depth, child)
                     temp_alfa = self.max_value(depth+1, child, alfa, beta)
                     beta = min(beta, temp_alfa)
                     if alfa >= beta:
@@ -112,8 +109,6 @@ class MiniMax():
                     
                     child = state_board.copy()
                     child.insert_value(col+1, self.current_player)
-              #      print("-----------jagada valida ----------")
-              #      self.print_state(depth, child)
                     temp_beta = self.min_value(depth+1, child, alfa, beta)
                     alfa = max(alfa, temp_beta)
                     if alfa >= beta:
@@ -165,7 +160,40 @@ class Spaces(MiniMax):
         if oponent_discs_4 > 0:
             return -100000
         return discs_4*100000 + discs_3*100 + discs_2
-           
-    
-    
 
+class Block_3_In_Line(MiniMax):
+    def heuristic(self, state_board):
+        """
+        Overwrites heuristic function, it gives a 1000 weight to 3 in line
+        discs blocked, 100 to 2 in line with discs blocked and 150 to the 4 
+        in line with discs blocked, then returns the sum of them all, if the 
+        oponent haves 4 in line returns -100000 
+        """
+        blocker = Block_3_In_Line_Checker()
+        checker = Checker()
+        oponent_discs_4 = checker.check_lines(state_board, self.oponent, 4)
+
+        oponent_block_discs_3 = blocker.check_lines(state_board, self.oponent, 3)
+        oponent_block_discs_2 = blocker.check_lines(state_board, self.oponent, 2)
+        oponent_block_discs_4 = blocker.check_lines(state_board, self.oponent, 4)
+        if oponent_discs_4 > 0:
+            return -100000
+        return oponent_block_discs_3*1000+oponent_block_discs_2*100+oponent_block_discs_4*150
+           
+class Play_3_In_Line(MiniMax):
+    def heuristic(self, state_board):
+        """
+        Overwrites heuristic function, it gives a 1000 weight to 3 in line
+        discs blocked, 100 to 2 in line with discs blocked and 150 to the 4 
+        in line with discs blocked, then returns the sum of them all, if the 
+        oponent haves 4 in line returns -100000 
+        """
+        checker = Checker()
+        discs_4 = checker.check_lines(state_board, self.current_player, 4)
+        discs_3 = checker.check_lines(state_board, self.current_player, 3)
+        discs_2 = checker.check_lines(state_board, self.current_player, 2)
+
+        oponent_discs_4 = checker.check_lines(state_board, self.oponent, 4)
+        if oponent_discs_4 > 0:
+            return -100000
+        return discs_3*1000 + discs_2*100 + discs_4*150

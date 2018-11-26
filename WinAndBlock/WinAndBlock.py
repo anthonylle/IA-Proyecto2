@@ -314,3 +314,162 @@ class Secuential_Count_Checker(Checker):
         total+=1 if discs >= next_discs else total
         total+=1 if discsT >= next_discs else total
         return total
+    
+class Block_3_In_Line_Checker(Checker):
+    def check_verticals_count(self,board,row,col,player_value,next_discs):
+        """
+            returns 1 if there are x or more discs in a vertical row 
+            with a block at the begining
+        """
+        discs = 0
+
+        if board.getAt(row, col) == player_value:
+            discs += 1
+            for i in range(row+1, row+next_discs):
+                if i >= board.column_size-1 or board.getAt(i, col)==player_value:
+                    break
+                discs += 1
+        return discs >= next_discs
+
+    def check_horizontals_count(self,board,row,col,player_value,next_discs):
+        """
+            checks if there are x discs count next to the row, with at least
+            one actual player disc in the row, to seach blocks
+        """
+        player_discs = 0
+        discs = 0
+        if board.getAt(row, col) == player_value:
+            player_discs += 1
+        if board.getAt(row, col)!=player_value and board.getAt(row, col)!=" ":
+            discs += 1
+        discs += self._check_horizontals_count(board, col+1, row, 
+                                            player_value, True, 2, True)
+        discs += self._check_horizontals_count(board, col-1, row, 
+                                            player_value, False, 2, True)
+        player_discs += self._check_horizontals_count(board, col+1, row, 
+                                            player_value, True, 2, False)
+        player_discs += self._check_horizontals_count(board, col-1, row, 
+                                            player_value, False, 2, False)
+        
+        return player_discs >=1 and discs >= next_discs-1
+
+
+    def _check_horizontals_count(self,board,col,row,player_value,look_right,next_discs,oponent):
+        """
+            Auxiliar recursive function returns the amount of horizontal
+            discs to left or right from the col,row  given even if there
+            are empty squares in the way, it have the oponent option to 
+            look for oponent or actual player discs 
+        """
+        if col >= 0 and col <= board.column_size-1 and next_discs > 0:
+            if look_right:
+                if oponent:
+                    if board.getAt(row, col)!=player_value and board.getAt(row, col)!=" ":
+                        return 1 + self._check_horizontals_count(board, col+1,
+                                row, player_value, look_right, next_discs-1, oponent)
+                    else:
+                        return self._check_horizontals_count(board, col+1, row, 
+                                        player_value, look_right, next_discs-1, oponent)
+                else:
+                    if board.getAt(row, col) == player_value:
+                        return 1 + self._check_horizontals_count(board, col+1,
+                                    row, player_value, look_right, next_discs-1, oponent)
+                    else:
+                        return self._check_horizontals_count(board, col+1, row, 
+                                        player_value, look_right, next_discs-1, oponent)
+            else:
+                if oponent:
+                    if board.getAt(row, col)!=player_value and board.getAt(row, col)!=" ":
+                        return 1 + self._check_horizontals_count(board, col-1,
+                                row, player_value, look_right, next_discs-1, oponent)
+                    else:
+                        return self._check_horizontals_count(board, col-1, row, 
+                                        player_value, look_right, next_discs-1, oponent)
+                else:
+                    if board.getAt(row, col) == player_value:
+                        return 1 + self._check_horizontals_count(board, col-1,
+                                    row, player_value, look_right, next_discs-1, oponent)
+                    else:
+                        return self._check_horizontals_count(board, col-1, row, 
+                                        player_value, look_right, next_discs-1, oponent)
+        return 0
+
+    def check_diagonals_count(self, board, row, col, player_value, next_discs):
+        """
+            check if there are x discs count in diagonal next to the row,col 
+            given, returns 0,1 or 2, 2 if there are x discs in both diagonals
+            with at least one actual player discs in the middle
+        """
+        total = 0
+        discs = self._check_diagonals_count(board, row, col, player_value, 
+                                                            next_discs, True)
+        discsT = self._check_diagonals_count(board, row, col, player_value, 
+                                                            next_discs, False)
+        total = discs + discsT
+        return total
+    
+    def _check_diagonals_count(self,board,row,col,player_value,next_discs,identity):
+        """
+            returns the amount of discs next to the row,col given in diagonal
+            looks for oponent discs and players discs
+        """
+        player_discs = 0
+        discs = 0
+        if board.getAt(row, col) == player_value:
+            player_discs += 1
+        if board.getAt(row, col)!=player_value and board.getAt(row, col)!=" ":
+            discs += 1
+        if not(identity):
+            matrix = board.get_transposed()
+            row = (board.row_size-1)-row
+        else:
+            matrix = board
+        discs += self.__check_diagonals_count(matrix, col-1, row-1,
+                                                        player_value,2, True, True)
+        discs += self.__check_diagonals_count(matrix, col+1, row+1, 
+                                                        player_value,2, False, True)
+        player_discs += self.__check_diagonals_count(matrix, col-1, row-1,
+                                                        player_value,2, True, False)
+        player_discs += self.__check_diagonals_count(matrix, col+1, row+1, 
+                                                        player_value,2, False, False)
+        return player_discs >= 1 and discs >= next_discs-1
+    
+    def __check_diagonals_count(self, board, col, row, player_value, next_discs, look_up, oponent):
+        """
+            Auxiliar recursive function returns the amount of diagonals
+            discs to up or down from the col,row  given even if there
+            are empty squares in the way, also looks for oponent discs or 
+            players discs
+        """
+        if col>=0 and row>=0 and col<board.column_size and row<board.row_size and next_discs >0:
+            if look_up:
+                if oponent:
+                    if board.getAt(row, col)!=player_value and board.getAt(row, col)!=" ":
+                        return 1 + self.__check_diagonals_count(board, col-1, 
+                                                    row-1, player_value,next_discs-1, look_up, oponent)
+                    else:
+                        return self.__check_diagonals_count(board, col-1, row-1,
+                                                            player_value,next_discs-1, look_up, oponent)
+                else:
+                    if board.getAt(row, col)==player_value:
+                        return 1 + self.__check_diagonals_count(board, col-1, 
+                                                    row-1, player_value,next_discs-1, look_up, oponent)
+                    else:
+                        return self.__check_diagonals_count(board, col-1, row-1,
+                                                            player_value,next_discs-1, look_up, oponent)   
+            else:
+                if oponent:
+                    if board.getAt(row, col)!=player_value and board.getAt(row, col)!=" ":
+                        return 1 + self.__check_diagonals_count(board, col+1, 
+                                                    row+1, player_value,next_discs-1, look_up, oponent)
+                    else:
+                        return self.__check_diagonals_count(board, col+1, row+1,
+                                                            player_value,next_discs-1, look_up, oponent)
+                else:
+                    if board.getAt(row, col)==player_value:
+                        return 1 + self.__check_diagonals_count(board, col+1, 
+                                                    row+1, player_value,next_discs-1, look_up, oponent)
+                    else:
+                        return self.__check_diagonals_count(board, col+1, row+1,
+                                                            player_value,next_discs-1, look_up, oponent)
+        return 0

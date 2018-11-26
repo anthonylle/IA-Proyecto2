@@ -11,7 +11,7 @@ def test_minimax_search():
                     [' ', ' ', ' ', '2', ' ', ' ', ' '],
                     [' ', ' ', '1', '1', ' ', ' ', '1']]
     best_move = minimax.search_best_move(board, [0,1,2,3,4,5,6])
-    assert (best_move == 0)
+    assert (best_move == 1)
 
 def test_minimax_Secuential():
     secuential = Secuential(1, '1', '2')
@@ -24,3 +24,15 @@ def test_minimax_Secuential():
                     ['2', '1', '2', '2', '2', '1', '1']]
     best_move = secuential.heuristic(board)
     assert (best_move == 114)
+
+def test_minimax_Block_3():
+    secuential = Block_3_In_Line(1, '1', '2')
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', '2'],
+                    [' ', ' ', '2', ' ', ' ', ' ', '1'],
+                    [' ', ' ', '2', ' ', ' ', '1', '1'],
+                    ['2', '1', '2', '2', '2', '1', '1']]
+    best_move = secuential.heuristic(board)
+    assert (best_move == 4850)

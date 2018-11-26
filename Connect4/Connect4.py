@@ -285,7 +285,7 @@ class Connect4():
             self.view.player2_wins("bright", "", "cyan")
         else:
             self.view.player1_wins("bright", "", "cyan")
-            
+        self.view.print_players_names(players[0].name, players[1].name)     
         self.board_printer.print_board(self.board)
         self.winner(players, actual)
 
@@ -371,6 +371,22 @@ class Connect4():
             column = -2
             self.view.alert("invalid move ! D:")
         return column
+
+    #--------------------------------------------------------------------------
+
+    def computer_request_column(self, players, actual):
+        """
+        input : a players list, an int with the actual player
+        function: ask for the computer player's column number
+        output:
+            Request a column to a human user
+        """
+        self.view.print_message("normal", "", "white",
+          ">>> Waiting for {}'s answer... ".format(players[actual].name) )
+        move = players[actual].next_move(self.board, players, actual,self.level)
+        self.view.print_message("normal", "", "white",">>> Selected column: "+str(move))
+        self.view.input_option(">>> Press enter to continue: ")
+        return move
     
     #--------------------------------------------------------------------------
 
@@ -383,11 +399,7 @@ class Connect4():
             if it is a computer calls the next_move function
         """
         if type(players[actual]) is Agent:
-            self.view.print_without_end("white",">>> Waiting for {}'s answer: ".format(players[actual].name) )
-            move = players[actual].next_move(self.board, players, actual)
-            self.view.print_message("normal", "", "white",str(move))
-            self.view.input_option(">>> Press enter to continue: ")
-            return move
+            return self.computer_request_column(players, actual)
 
         elif type(players[actual]) is Player:
             return self.human_request_column(players, actual)
@@ -445,6 +457,7 @@ class Connect4():
             
             if self.board.insert_value(column, players[actual].character):
                 self.board_printer.print_board(self.board)
+                players[actual].insert_move(column)
                 if self.show_ended_game(players, actual):
                     return players
                 actual = self.change_turn(actual)

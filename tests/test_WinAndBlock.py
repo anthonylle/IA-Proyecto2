@@ -597,3 +597,124 @@ def test_Check_check_lines_3_in_line_count_3():
                     ['2', '1', ' ', '1', ' ', ' ', ' ']]
     neighbour_discs = checker.check_lines(board, '2', 3)
     assert(neighbour_discs == 3)
+
+
+def test_Block_3_check_verticals_count():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', '1', ' ', ' ', ' ', ' '],
+                    [' ', ' ', '2', ' ', ' ', ' ', '2'],
+                    [' ', ' ', '2', ' ', ' ', '1', '1'],
+                    ['2', '1', '2', '2', '2', '1', '1']]
+    best_move = block.check_verticals_count(board, 3, 6, '2',3)
+    assert (best_move == True)
+
+def test_Block_3_check_verticals_count_Player1():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', '1', ' ', ' ', ' ', ' '],
+                    [' ', ' ', '2', ' ', ' ', ' ', '2'],
+                    [' ', ' ', '2', ' ', '1', '1', '1'],
+                    ['2', '1', '2', '2', '2', '1', '1']]
+    best_move = block.check_verticals_count(board, 2, 2, '1',4)
+    assert (best_move == True)
+
+def test_Block_3_check_verticals_count_Player1_2():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', '1', ' ', ' ', ' ', ' '],
+                    [' ', ' ', '2', ' ', ' ', ' ', '2'],
+                    [' ', ' ', '2', ' ', '1', '1', '1'],
+                    ['2', '1', '2', '2', '2', '1', '1']]
+    best_move = block.check_verticals_count(board, 4, 4, '1',2)
+    assert (best_move == True)
+
+def test_Block_3_check_horizontals_count_2_Player1():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', '1', '2', ' ', ' ']]
+    best_move = block.check_horizontals_count(board, 5, 3, '1', 2)
+    assert (best_move == True)
+
+def test_Block_3_check_horizontals_count_3_Player1():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', '2', ' ', '1', '2', ' ', ' ']]
+    best_move = block.check_horizontals_count(board, 5, 3, '1',3)
+    assert (best_move == True)
+
+def test_Block_3_check_diagonals_count_2_Player1():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', '1', '2', ' ', ' '],
+                    [' ', '2', ' ', '1', '2', ' ', ' ']]
+    best_move = block._check_diagonals_count(board, 4, 3, '1',2, True)
+    assert (best_move == True)
+
+def test_Block_3_check_diagonals_count_3_Player1():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', '2', ' ', ' ', ' ', ' ', ' '],
+                    [' ', '1', ' ', ' ', ' ', ' ', ' '],
+                    [' ', '1', ' ', '1', '2', ' ', ' '],
+                    [' ', '2', ' ', '1', '2', ' ', ' ']]
+    best_move = block._check_diagonals_count(board, 4, 3, '1',3, True)
+    assert (best_move == True)
+
+def test_Block_3_check_diagonals_count_3_Player1_only_2_inside_limit():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['1', '1', ' ', ' ', ' ', ' ', ' '],
+                    ['2', '1', ' ', '1', '2', ' ', ' '],
+                    ['1', '2', '1', '1', '2', ' ', ' ']]
+    best_move = block._check_diagonals_count(board, 4, 3, '1',3, True)
+    assert (best_move == False)
+
+def test_Block_3_check_diagonals_count_1():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', '2', ' ', ' ', ' ', ' ', ' '],
+                    ['1', '1', ' ', ' ', ' ', ' ', ' '],
+                    ['2', '1', ' ', '1', '2', ' ', ' '],
+                    ['1', '2', '1', '1', '2', ' ', ' ']]
+    best_move = block.check_diagonals_count(board, 4, 3, '1',3)
+    assert (best_move == 1)
+
+def test_Block_3_check_diagonals_count_2():
+    block = Block_3_In_Line_Checker()
+    board = Board(6, 7)
+    board.matrix = [[' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', ' ', ' ', ' ', ' ', ' ', ' '],
+                    ['2', '2', ' ', ' ', ' ', ' ', ' '],
+                    ['1', '1', ' ', ' ', '2', ' ', ' '],
+                    ['2', '1', ' ', '1', '2', '1', '1'],
+                    ['1', '2', '2', '1', '2', '1', '1']]
+    best_move = block.check_diagonals_count(board, 4, 3, '1',3)
+    assert (best_move == 2)
