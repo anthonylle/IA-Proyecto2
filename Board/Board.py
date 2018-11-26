@@ -104,7 +104,21 @@ class Board():
             Checks if moves_count have reach the maximun number allow
         """
         return self.moves_count < self.column_size * self.row_size
-            
+
+    # -------------------------------------------------------------------------
+    
+    def is_legal_area(self, area):
+        """
+        input: a list with specific index area
+        function: review if an area is legal
+        output: true or false
+        """
+        if area != []:
+            for col in area:
+                if not(self.is_column_full(col)):
+                    return True
+        return False
+        
     #--------------------------------------------------------------------------
 
     def getAt(self, row, col):
