@@ -44,9 +44,10 @@ class Agent(Player):
         
         if self.is_in_range(0,die):
             print("escojo el de secuencia vs espacio")
-            return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])
+            return self.sequence_vs_space(board_state,depth_max, oponent)
         elif self.is_in_range(1,die):
             print("escojo centro vs centros")
+            return self.center_vs_extremes(board_state,depth_max, oponent)
 
         elif self.is_in_range(2,die):
             print("escojo el tercer movimiento")
@@ -61,10 +62,13 @@ class Agent(Player):
         funtion: select the sequence or space
         output: none
         """
-        self.throw_die()
-        if self.my_die <= 0.60:
-            pass # secuencia
+        die = self.throw_die(0, self.percent_fourth_move)
+        if die <= 0.60: # sequence
+            minimax = Secuential(depth_max, self.character, depth_max)
+            return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])
         else:
+            minimax = Spaces(depth_max, self.character, depth_max)
+            return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])
             pass
 
     #--------------------------------------------------------------------------
@@ -74,11 +78,13 @@ class Agent(Player):
         funtion: select center or extreme
         output: none
         """
-        self.throw_die()
-        if self.my_die <= 0.70:
-            pass # centros [2,3,4]
+        
+        if board_state.is_legal_area([2,3,4]):
+            return board_state.get_column_with_space([3,2,4])
+        elif board_state.is_legal_area([0,1,5,6]):
+            return board_state.get_column_with_space([1,5,0,6])
         else:
-            pass # extremos [0,1,5,6]     
+            return -2     
         
      #--------------------------------------------------------------------------       
     def next_move(self, board, players, actual):
@@ -96,7 +102,7 @@ class Agent(Player):
         else:
             #Llamar función electora de estrategia
             #minimax = Secuential(3, self.character, '1')
-            minimax = Espaces(3, self.character, '1')
+            minimax = Spaces(3, self.character, '1')
             col_move = minimax.search_best_move(board, [0,1,2,3,4,5,6])
             #col_move = random.randint(0, 6)+1
         return col_move
