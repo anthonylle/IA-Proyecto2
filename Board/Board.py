@@ -221,6 +221,17 @@ class Board():
             if not(self.is_column_full(col)) :
                 return col
         return -2
+    
+    
+    #--------------------------------------------------------------------------
+    def get_set_space(self):
+        """
+        input: none
+        funtion: get a set from 0 to column_size
+        output: set object
+        """
+        return list(range(self.column_size))
+    
     #--------------------------------------------------------------------------
     def print_matrix(self):
         """

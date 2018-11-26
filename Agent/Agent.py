@@ -14,7 +14,6 @@ class Agent(Player):
         self.percent_second_move = percent_second_move
         self.percent_third_move = percent_third_move
         self.percent_fourth_move =percent_fourth_move
-        self.last_move = 0
         self.last_moves = list()
         self.win_checker = Win_Checker()
         self.block_checker = Block_Checker()
@@ -53,8 +52,8 @@ class Agent(Player):
             print("escojo el tercer movimiento")
             
         elif self.is_in_range(3,die):
-            print("escojo el cuarto movimiento")
-
+            print("escojo repeat_vs_continue")
+            self.repeat_vs_continue(board_state)
     #--------------------------------------------------------------------------
     def sequence_vs_space(self,board_state,depth_max, oponent):
         """
@@ -62,7 +61,7 @@ class Agent(Player):
         funtion: select the sequence or space
         output: none
         """
-        die = self.throw_die(0, self.percent_fourth_move)
+        die = self.throw_die(0, 1)
         if die <= 0.60: # sequence
             minimax = Secuential(depth_max, self.character, depth_max)
             return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])
@@ -84,7 +83,27 @@ class Agent(Player):
         elif board_state.is_legal_area([0,1,5,6]):
             return board_state.get_column_with_space([1,5,0,6])
         else:
-            return -2     
+            return -2  
+        
+    
+    def repeat_vs_continue(self,board_state):
+        """
+        input: a Board object, max depth to search, oponent character(human)
+        funtion: select center or extreme
+        output: none
+        """
+        die = self.throw_die(0, 1)
+        decision = self.throw_die(0.55, 0.9)
+        other_set = list(board_state.get_set_space() - self.last_moves)
+        if die <= decision and board_state.is_legal_area(list(self.last_moves)):
+            return board_state.get_column_with_space(list(self.last_moves))
+
+        elif board_state.is_legal_area(other_set):
+            return board_state.get_column_with_space(other_set)
+        
+        return -2
+            
+                   
         
      #--------------------------------------------------------------------------       
     def next_move(self, board, players, actual):
