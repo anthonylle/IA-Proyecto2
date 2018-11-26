@@ -4,6 +4,9 @@ class Player():
     LOSSES = 1
     DRAWS = 2
 
+    #--------------------------------------------------------------------------
+    #input : character is a char, name is a string
+    #function: constructor
     def __init__(self, character, name):
         """
             character is a char
@@ -14,24 +17,40 @@ class Player():
         self.my_pieces_positions = list()
         self.record = [0, 0, 0]
     
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: add one to wins
+    #output: none
     def add_win(self):
         """
             Adds 1 to the WINS(0) in the vector record
         """
         self.record[self.WINS] += 1
-    
+
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: add one to lose
+    #output: none    
     def add_lose(self):
         """
             Adds 1 to the LOSSES(0) in the vector record
         """
         self.record[self.LOSSES] += 1
-    
+
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: add one to draw
+    #output: none    
     def add_draw(self):
         """
             Adds 1 to the DRWS(0) in the vector record
         """
         self.record[self.DRAWS] +=1
 
+    #--------------------------------------------------------------------------
+    #input : none
+    #function: print each player's record
+    #output: none
     def print_record(self):
         """
             Prints the Record of a Player

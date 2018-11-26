@@ -11,6 +11,12 @@ class MiniMax():
         self.current_player = current_player
         self.oponent = oponent
         
+    #--------------------------------------------------------------------------   
+    # state_board is object of Board class
+    # player_piece is char value   
+    # board_area is a list with the columns number to apply this
+    #function: search the best move for an agent
+    #output: an int with best 
     def search_best_move(self, state_board, board_area):
         """
             Looks for the best move to take, it calls min_value
@@ -24,15 +30,21 @@ class MiniMax():
             
             if not(state_board.is_column_full(col)):
                 child = state_board.copy()
-                child.insert_value_IA(col+1, self.current_player)
+                child.insert_value(col+1, self.current_player)
+                #child.print_matrix()
                 current_max = self.min_value(0, child, self.MIN, self.MAX)
                 
                 if( current_max > best_max):
                     best_move = col
                     best_max = current_max
-                    
-        return best_move
+        # +1 because the insert method only admit number bigger than 0            
+        return best_move+1
     
+    #--------------------------------------------------------------------------
+    #input : board is a board class 's object, depth a int value and player is a 
+    #        char with the player character
+    #function: check if there a win, or the game is depth is the max
+    #output: boolean value
     def check_state(self, board, depth, player):
         """
             Returns True if theres a win, no more legal moves or the depth
@@ -44,13 +56,20 @@ class MiniMax():
         over = depth > self.depth_max
         return  win or legal_moves or over
             
-    
-    def heuristic(self, state_board):
+    #--------------------------------------------------------------------------
+    #input : 
+    #function: 
+    #output:
+    def heuristic(self):
         """
             Fathers Model funtion
         """
         return 0
     
+    #--------------------------------------------------------------------------
+    #input : depth: int value, state_board: Board object, alfa: int value and beta: int value 
+    #function: search the best value for the human(oponent) the worse for the computer
+    #output: int value, the least between alfa and beta 
     def min_value(self, depth, state_board, alfa, beta):
         """
 
@@ -64,14 +83,20 @@ class MiniMax():
                 
                 if not(state_board.is_column_full(col)):
                     child = state_board.copy()
-                    child.insert_value_IA(col+1, self.oponent) 
+                    child.insert_value(col+1, self.oponent) 
+                    #print("-----------jagada valida ----------")
+                    #self.print_state(depth, child)
                     temp_alfa = self.max_value(depth+1, child, alfa, beta)
                     beta = min(beta, temp_alfa)
                     if alfa >= beta:
                         return alfa
             
             return beta
-    
+        
+    #--------------------------------------------------------------------------
+    #input : depth: int value, state_board: Board object, alfa: int value and beta: int value 
+    #function: search the best value for the computer and the worse for the human (oponent)
+    #output: int value, the higher bwtween alpha and beta   
     def max_value(self, depth, state_board, alfa, beta):
         """
 
@@ -86,7 +111,9 @@ class MiniMax():
                 if not(state_board.is_column_full(col)):
                     
                     child = state_board.copy()
-                    child.insert_value_IA(col+1, self.current_player)
+                    child.insert_value(col+1, self.current_player)
+              #      print("-----------jagada valida ----------")
+              #      self.print_state(depth, child)
                     temp_beta = self.min_value(depth+1, child, alfa, beta)
                     alfa = max(alfa, temp_beta)
                     if alfa >= beta:
@@ -94,6 +121,10 @@ class MiniMax():
             
             return alfa
     
+    #--------------------------------------------------------------------------
+    #input : depth: an int value, and a Board object 
+    #function: print the board state with its depth
+    #output: none
     def print_state(self, depth, board):
         """
             Prints the actual depth and matrix
