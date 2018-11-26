@@ -71,8 +71,9 @@ class Connect4View(MessagePrinter):
         self.new_game_menu = "".join([" ----------------- New game  --------------------\n\n",
                                       "         >>> 1. Type of game\n\n",
                                       "         >>> 2. Level game\n\n",
-                                      "         >>> 3. Start\n\n",
-                                      "         >>> 4. Back\n\n"])
+                                      "         >>> 3. Training\n\n",
+                                      "         >>> 4. Start\n\n",
+                                      "         >>> 5. Back\n\n"])
 
         self.type_game_menu = "".join([" ----------------  Type of game -----------------\n\n",
                                        "         >>> 1. Computer vs computer\n\n",
@@ -249,10 +250,7 @@ class Connect4View(MessagePrinter):
             #output: none 
             Prints Player2 Wins title
         """
-        self.clear_console()
-        self.font_selector(style,back, fore)
-        print(self.player1_wins_title)
-        self.reset_all()
+        self.clear_print(style, back, fore,self.player1_wins_title)
         
 
     def player2_wins(self, style, back, fore):
@@ -262,8 +260,17 @@ class Connect4View(MessagePrinter):
             #output: none 
             Prints Player2 Wins title
         """
-        self.clear_console()
-        self.font_selector(style,back, fore)
-        print(self.player2_wins_title)
-        self.reset_all()        
+        self.clear_print(style, back, fore,self.player2_wins_title)
+ 
+        
+    def print_players_names(self, p1_name, p2_name):
+        """
+            #input : two strings with the players's names
+            #function: print in console the players's names
+            #output: none        
+        """
+        message = "".join(['\033[0m'," Players --->","   ",p1_name,'\033[91m', 
+                           " ●",'\033[0m',"       ",p2_name,'\033[93m'," ● ",
+                           "\n\n"])
+        self.print_message("","","white",message)
         

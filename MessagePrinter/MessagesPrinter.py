@@ -68,7 +68,15 @@ class MessagePrinter(ConsoleControl):
         self.clear_console()
         self.font_selector(style,back, fore)
         print(message)
-        self.reset_all()            
+        self.reset_all()
 
+    def print_without_end(self, color, message):
+        """
+        input: color text and message string
+        function: pirnt without '\n'
+        :return: none
+        """
+        self.font_selector("normal", "", color)
+        print(message, end="")
 
 #http://patorjk.com/software/taag/#p=display&v=0&f=Big&t=
