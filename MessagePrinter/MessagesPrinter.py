@@ -52,7 +52,7 @@ class MessagePrinter(ConsoleControl):
             #input : three string with the style and other with the message
             #function: print simple message in console, with a specific style
             #output: none       
-        """     
+        """
         self.font_selector(style,back, fore)
         print(message)
         self.reset_all()

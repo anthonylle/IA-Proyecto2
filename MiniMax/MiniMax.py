@@ -37,7 +37,7 @@ class MiniMax():
                 if( current_max > best_max):
                     best_move = col
                     best_max = current_max
-        # +1 because the insert method only admit number bigger than 0            
+        # +1 because the insert method only admit number bigger than 0           
         return best_move+1
     
     #--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ class MiniMax():
     #input : 
     #function: 
     #output:
-    def heuristic(self):
+    def heuristic(self, state_board):
         """
             Fathers Model funtion
         """
