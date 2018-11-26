@@ -16,16 +16,20 @@ class Connect4():
         self.game_modes = ["c_vs_c", "h_vs_h", "h_vs_c"]
         self.game_mode = self.game_modes[1]
         self.level = 1
-        
-    #--------------------------------------------------------------------------    
+          
     def default(self):
+        """
+            Sets the game to start playing
+        """
         self.board =  Board(6,7)
         self.board.create()
         self.board_printer = BoardPrinter(self.system,"bringht", "", "white")
         self.board_printer.load_boar(self.board.column_size)        
-    
-    #--------------------------------------------------------------------------    
+      
     def new_game_menu(self):
+        """
+            Displays the Game Menu ask the user which option to choose
+        """
         option = ""
         while option != "4":
             option = self.view.view_new_game_menu()
@@ -43,9 +47,10 @@ class Connect4():
             else:
                 self.view.invalid_option()
     
-    #--------------------------------------------------------------------------  
-
     def select_level(self):
+        """
+            Asks the user to the level(depth) the computer will have
+        """
         self.view.view_title()
         level = self.view.select_level()
         if level >= 1 and level <= 4:
@@ -53,13 +58,18 @@ class Connect4():
         else:
             self.view.invalid_option()
             return self.select_level()            
-    #--------------------------------------------------------------------------    
-    #mode is a int, index of game:modes
+
     def set_game_mode(self,mode):
+        """
+            Sets the game mode from the game_modes array
+        """
         self.game_mode = self.game_modes[mode]
-     
-    #--------------------------------------------------------------------------    
+       
     def type_game_menu(self):
+        """
+            Displays the Game Menu, asks which mode to play
+            h vs h, h vs c, c vs c
+        """
         option = ""
         while option != "4":
             option = self.view.view_type_game_menu()
@@ -80,14 +90,19 @@ class Connect4():
                 
             else:
                 self.view.invalid_option()
-    #--------------------------------------------------------------------------
+
     def how_to_play(self):
+        """
+            Displays the how to play guide
+        """
         self.view.view_how_to_play()
         self.view.clear_console()
     
-    #--------------------------------------------------------------------------
     def main_menu(self):
-        
+        """
+            Displays the Main Menu, ask if play new game, show how to play
+            or exit the game
+        """
         option = ""
         while option != "3":
             option = self.view.view_main_menu()
@@ -103,9 +118,10 @@ class Connect4():
             else:
                 self.view.invalid_option()   
 
-    #--------------------------------------------------------------------------
-    # player_type1 and player_type2 are string
     def h_vs_h(self, player_type1, player_type2):
+        """
+            Sets the game to play human vs human 
+        """
         players = list()
         P1name = self.view.input_option("Enter " +player_type1+"'s name: ")
         players.append(Player('1', P1name))
@@ -113,26 +129,32 @@ class Connect4():
         players.append(Player('2', P2name))
         return players
     
-    #--------------------------------------------------------------------------
-    # player_type1 and player_type2 are string
     def c_vs_c(self, player_type1, player_type2):
+        """
+            Sets the game to play computer vs computer 
+        """
         players = list()
         P1name = self.view.input_option("Enter " +player_type1+"'s name: ")
         players.append(Agent('1', P1name,0,0,0,0))
         P2name = self.view.input_option("Enter " +player_type2+"'s name: ")
         players.append(Agent('2', P2name,0,0,0,0))
         return players
-    #--------------------------------------------------------------------------
-    # player_type1 and player_type2 are string
+
     def h_vs_c(self, player_type1, player_type2):
+        """
+            Sets the game to play human vs computer
+        """
         players = list()
         P1name = self.view.input_option("Enter " +player_type1+"'s name: ")
         players.append(Player('1', P1name))
         P2name = self.view.input_option("Enter " +player_type2+"'s name: ")
         players.append(Agent('2', P2name,0,0,0,0))
         return players
-    #--------------------------------------------------------------------------      
+    
     def create_players(self):
+        """
+            from the game mode decided by the user creates the Players
+        """
         self.view.view_title()
         if self.game_mode == self.game_modes[0]:
             return self.c_vs_c("Computer1","Computer2")
@@ -141,8 +163,10 @@ class Connect4():
         elif self.game_mode == self.game_modes[2]:
             return self.h_vs_c("Human","Computer")
 
-    #--------------------------------------------------------------------------
     def show_winner(self, players, actual):
+        """
+            Displays the winner of the game and each player record
+        """
         if actual:
             self.view.player2_wins("bright", "", "cyan")
         else:
@@ -152,18 +176,23 @@ class Connect4():
         print("{} is the winner".format(players[actual].name))
         players[actual].print_record()
         players[not actual].print_record()
-     
-    #--------------------------------------------------------------------------    
+        
     def draw(self, players, actual):
+        """
+            Displays a draw title and update players record
+        """
         self.view.view_draw()
         players[actual].add_draw()
         players[not actual].add_draw()
         players[actual].print_record()
         players[not actual].print_record()
         
-    #--------------------------------------------------------------------------
     def ended_game(self, players, actual):
-        if self.checker.check_win(self.board, self.board.last_column, players[actual].character):
+        """
+            Checks if one player have won or if there are no more moves played
+        """
+        if self.checker.check_win(self.board, self.board.last_column, 
+                                            players[actual].character):
             self.show_winner(players, actual)
             return True
         elif not(self.board.have_legal_move()):
@@ -171,18 +200,24 @@ class Connect4():
             return True
         return False        
     
-    #--------------------------------------------------------------------------
     def human_request_column(self, players, actual):
+        """
+            Request a column to a human user
+        """
         column = -2
         try:
-            column = int(self.view.input_option(">>>> {} select a column's number: ".format(players[actual].name)))
+            column = int(self.view.input_option
+             (">>>> {} select a column's number: ".format(players[actual].name)))
         except ValueError:
             column = -2
             self.view.alert("invalid move ! D:")
         return column
     
-    #--------------------------------------------------------------------------
     def request_column(self, players, actual):
+        """
+            checks which player is to play, if it is human ask for a column 
+            if it is a computer calls the next_move function
+        """
         if type(players[actual]) is Agent:
             players[actual].throw_die()
             return players[actual].next_move(self.board, players, actual)
@@ -191,12 +226,17 @@ class Connect4():
             return self.human_request_column(players, actual)
         return -2
     
-    #--------------------------------------------------------------------------
     def change_turn(self, Actual):
+        """
+            Changes the Actual player 0 to 1 or viseversa
+        """
         return not(Actual)
     
-    #--------------------------------------------------------------------------    
     def start_game(self):
+        """
+            Stars the game, it holds the game's playing cyclo until the player
+            types "n"
+        """
         players = self.create_players()
         play_again = "y"
 
@@ -206,8 +246,11 @@ class Connect4():
             self.play(players)
             play_again =  self.view.input_option(">>>> Do you want to play again?[y/n]: ")  
             
-    #--------------------------------------------------------------------------
     def play(self, players):
+        """
+            Single game, playing cyclo, it asks for the column, inserts the 
+            disc checks for, checks if win, change turn, and repeat the cyclo
+        """
         actual = 0
         self.view.view_title()
         self.board_printer.print_board(self.board)

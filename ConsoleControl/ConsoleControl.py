@@ -14,6 +14,9 @@ class ConsoleControl(object):
             self.system = system
         
         def fore_color(self, color = "reset"):
+            """
+                Recibes a color string and sets a font color stile
+            """
             
             print(Fore.RESET, end="")
             if color == "black":
@@ -41,6 +44,9 @@ class ConsoleControl(object):
                 print(Fore.WHITE,end="")
         
         def back_color(self, color = "reset"):
+            """
+                Recibes a color string and sets a back color style
+            """
             print(Back.RESET,end="")
             if color == "black":
                 print(Back.BLACK,end="")
@@ -68,6 +74,9 @@ class ConsoleControl(object):
                
         
         def style_selector(self, style = "reset"):
+            """
+                Sets a bright, normal o dim style
+            """
             style = str(style)
             print(Style.RESET_ALL , end="")
             if style == "dim":
@@ -80,21 +89,35 @@ class ConsoleControl(object):
                 print(Style.NORMAL,end="")  
 
         def font_selector(self, style, back, fore):
+            """
+                Sets style font and back style in console
+            """
             self.style_selector(style)
             self.fore_color(fore)
             self.back_color(back)
           
         def clear_console(self):
+            """
+                Clears the console
+            """
             os.system(self.system)
-           
             
         def cursor_position(self, row, column):
+            """
+                prints cursor position
+            """
             print(Cursor.POS(row,column),end="")
             
         def cursor_position2(self, row, column):
+            """
+                Prints Cursor position
+            """
             print(Cursor.UP(row)+Cursor.FORWARD(column), end="")   
             
         def reset_all(self):
+            """
+                Restes all the style, font and back styles in cosole
+            """
             print(Back.RESET,end="")
             print(Fore.RESET, end="")
             print(Style.RESET_ALL, end="")

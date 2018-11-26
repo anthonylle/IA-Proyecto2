@@ -157,7 +157,6 @@ class Checker():
             in the board, variation of Breadth-first search
             uses the transposed matrix to check 2 types of diagonals
         """
-        discs 
         discs = 1  #Actual
         discsT = 1 #Actual
         transposed = board.get_transposed()
