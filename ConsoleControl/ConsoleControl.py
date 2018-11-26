@@ -50,11 +50,11 @@ class ConsoleControl(object):
 
     #--------------------------------------------------------------------------        
     def back_color(self, color = "reset"):
-      """
+        """
           #input : color: a string with the backgrond's color
           #function: choose the backgrond's color in line console
           #output: none 
-      """
+        """
         print(Back.RESET,end="")
         if color == "black":
             print(Back.BLACK,end="")
@@ -67,26 +67,26 @@ class ConsoleControl(object):
             
         elif color == "yellow":
             print(Back.YELLOW,end="")
-             
+                
         elif color == "blue":
             print(Back.BLUE,end="")
-              
+                
         elif color == "magenta":
             print(Back.MAGENTA,end="")
-              
+                
         elif color == "cyan":
             print(Back.CYAN,end="")
-              
+                
         elif color == "white":
             print(Back.WHITE,end="")
 
     #-------------------------------------------------------------------------- 
     def style_selector(self, style = "reset"):
-      """
+        """
         #input : color: a string with the letter's style
         #function: choose the letter's style
-        #output: none         
-      """
+        #output: none     
+        """
         style = str(style)
         print(Style.RESET_ALL , end="")
         if style == "dim":
@@ -94,7 +94,7 @@ class ConsoleControl(object):
             
         elif style == "bringht":
             print(Style.BRIGHT,end="")
-    
+
         elif style == "normal":
             print(Style.NORMAL,end="")  
     #--------------------------------------------------------------------------
