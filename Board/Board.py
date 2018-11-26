@@ -211,7 +211,17 @@ class Board():
         return False
     
     #--------------------------------------------------------------------------
-
+    def get_column_with_space(self,area):
+        """
+        input: area with index to search
+        funtion: search a column in the board with a space empty
+        output: index column
+        """
+        for col in area:
+            if not(self.is_column_full(col)) :
+                return col
+        return -2
+    #--------------------------------------------------------------------------
     def print_matrix(self):
         """
         input : none
