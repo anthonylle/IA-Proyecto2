@@ -4,6 +4,7 @@ from WinAndBlock.WinAndBlock import Checker
 from Agent.Agent import Agent
 from Player.Player import Player
 from Board.Board import Board
+import time
 
 # class to control all game's logic
 class Connect4():
@@ -51,10 +52,14 @@ class Connect4():
             
             elif option == "2":
                 self.level = self.select_level()
+                
             elif option == "3":
-                self.start_game()
+                self.training_computer()
                 
             elif option == "4":
+                self.start_game()
+                
+            elif option == "5":
                 self.view.clear_console()
                 
             else:
@@ -153,6 +158,35 @@ class Connect4():
             else:
                 self.view.invalid_option()   
 
+
+    #--------------------------------------------------------------------------
+
+    def training_computer(self):
+        """
+        input: none
+        function: get the training
+        :return: none
+        """
+        self.view.view_title()
+        self.view.print_message("normal","", "white",">>> Please waiting for the training end ....")
+        trainning = "0.40 ,0.6 ,0.85 ,1" # = agent's training function
+        self.view.print_message("normal","", "white",">>> Please copy the following text and save it: "+trainning)
+        self.view.input_option(">>> Back [type enter]: ")
+
+    #-------------------------------------------------------------------------
+
+    def get_computer_parameters(self):
+        """
+        input: none
+        functions: get values from console for computer agent
+        :return:
+        """
+        parameters = self.view.input_option(">>>> Please enter the parameters for computer (p1, p2,p3,p4): ")
+        values =[]
+        for porcent in parameters.split(","):
+            values.append(float(porcent))
+        return values
+
     #--------------------------------------------------------------------------
 
     def h_vs_h(self, player_type1, player_type2):
@@ -180,9 +214,11 @@ class Connect4():
         """
         players = list()
         P1name = self.view.input_option("Enter " +player_type1+"'s name: ")
-        players.append(Agent('1', P1name,0,0,0,0))
+        p = self.get_computer_parameters()
+        players.append(Agent('1', P1name,p[0],p[1],p[2], p[3]))
         P2name = self.view.input_option("Enter " +player_type2+"'s name: ")
-        players.append(Agent('2', P2name,0,0,0,0))
+        p = self.get_computer_parameters()
+        players.append(Agent('2', P2name,p[0],p[1],p[2], p[3]))
         return players
     
     #--------------------------------------------------------------------------
@@ -198,9 +234,10 @@ class Connect4():
         P1name = self.view.input_option("Enter " +player_type1+"'s name: ")
         players.append(Player('1', P1name))
         P2name = self.view.input_option("Enter " +player_type2+"'s name: ")
-        players.append(Agent('2', P2name,0,0,0,0))
+        p = self.get_computer_parameters()
+        players.append(Agent('2', P2name,p[0],p[1],p[2], p[3]))
         return players
-    
+
     #--------------------------------------------------------------------------
 
     def create_players(self):
@@ -227,10 +264,13 @@ class Connect4():
         output:none
             Displays the winner of the game and each player record
         """
+        
         if actual:
             self.view.player2_wins("bright", "", "cyan")
         else:
             self.view.player1_wins("bright", "", "cyan")
+            
+        self.board_printer.print_board(self.board)
         players[actual].add_win()
         players[not actual].add_lose()
         print("{} is the winner".format(players[actual].name))
@@ -247,6 +287,7 @@ class Connect4():
             Displays a draw title and update players record
         """
         self.view.view_draw()
+        self.board_printer.print_board(self.board)
         players[actual].add_draw()
         players[not actual].add_draw()
         players[actual].print_record()
@@ -300,6 +341,7 @@ class Connect4():
         """
         if type(players[actual]) is Agent:
             self.view.print_message("bright","","yellow",">>> Waiting for {}'s answer: ".format(players[actual].name))
+            
             return players[actual].next_move(self.board, players, actual)
 
         elif type(players[actual]) is Player:
@@ -348,12 +390,14 @@ class Connect4():
         """
         actual = 0
         self.view.view_title()
+        self.view.print_players_names(players[0].name, players[1].name)
         self.board_printer.print_board(self.board)
         
         column = self.request_column(players, actual)
         while column  != -1:
             self.view.view_title()
-
+            self.view.print_players_names(players[0].name, players[1].name)
+            
             if self.board.insert_value(column, players[actual].character):
                 self.board_printer.print_board(self.board)
                 if self.ended_game(players, actual):
@@ -364,5 +408,5 @@ class Connect4():
                 self.board_printer.print_board(self.board)
                 self.view.invalid_option()
             column = self.request_column(players, actual)
-        
+            
         return players
