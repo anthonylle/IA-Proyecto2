@@ -65,12 +65,10 @@ class Board():
             row -= 1
         return False
 
-<<<<<<< HEAD
     #--------------------------------------------------------------------------
     #input :  column_number: int value to consult
     #function: verify if the i column is full or not
     #output: true if is full or false if it has at least a space 
-=======
     def insert_value_IA(self, column_number, value):
         if (column_number >= 1 and column_number <= self.column_size):
             return self.insert_aux_IA(column_number-1, value)
@@ -90,7 +88,6 @@ class Board():
             row -= 1
         return False
 
->>>>>>> develop-Tenorio
     def is_column_full(self, column_number):
         
         row = self.row_size-1
