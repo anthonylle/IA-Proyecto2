@@ -51,10 +51,14 @@ class Connect4():
             
             elif option == "2":
                 self.level = self.select_level()
+                
             elif option == "3":
-                self.start_game()
+                self.training_computer()
                 
             elif option == "4":
+                self.start_game()
+                
+            elif option == "5":
                 self.view.clear_console()
                 
             else:
@@ -153,6 +157,35 @@ class Connect4():
             else:
                 self.view.invalid_option()   
 
+
+    #--------------------------------------------------------------------------
+
+    def training_computer(self):
+        """
+        input: none
+        function: get the training
+        :return: none
+        """
+        self.view.view_title()
+        self.view.print_message("normal","", "white",">>> Please waiting for the training end ....")
+        trainning = "0.40 ,0.6 ,0.85 ,1" # = agent's training function
+        self.view.print_message("normal","", "white",">>> Please copy the following text and save it: "+trainning)
+        self.view.input_option(">>> Back [type enter]: ")
+
+    #-------------------------------------------------------------------------
+
+    def get_computer_parameters(self):
+        """
+        input: none
+        functions: get values from console for computer agent
+        :return:
+        """
+        parameters = self.view.input_option(">>>> Please enter the parameters for computer (p1, p2,p3,p4): ")
+        values =[]
+        for porcent in parameters.split(","):
+            values.append(float(porcent))
+        return values
+
     #--------------------------------------------------------------------------
 
     def h_vs_h(self, player_type1, player_type2):
@@ -180,9 +213,11 @@ class Connect4():
         """
         players = list()
         P1name = self.view.input_option("Enter " +player_type1+"'s name: ")
-        players.append(Agent('1', P1name,0,0,0,0))
+        p = self.get_computer_parameters()
+        players.append(Agent('1', P1name,p[0],p[1],p[2], p[3]))
         P2name = self.view.input_option("Enter " +player_type2+"'s name: ")
-        players.append(Agent('2', P2name,0,0,0,0))
+        p = self.get_computer_parameters()
+        players.append(Agent('2', P2name,p[0],p[1],p[2], p[3]))
         return players
     
     #--------------------------------------------------------------------------
@@ -198,9 +233,10 @@ class Connect4():
         P1name = self.view.input_option("Enter " +player_type1+"'s name: ")
         players.append(Player('1', P1name))
         P2name = self.view.input_option("Enter " +player_type2+"'s name: ")
-        players.append(Agent('2', P2name,0,0,0,0))
+        p = self.get_computer_parameters()
+        players.append(Agent('2', P2name,p[0],p[1],p[2], p[3]))
         return players
-    
+
     #--------------------------------------------------------------------------
 
     def create_players(self):
