@@ -14,8 +14,8 @@ class Player():
         """
         self.character = character
         self.name = name
-        self.my_pieces_positions = list()
         self.record = [0, 0, 0]
+        self.last_moves = {2,3,4}
     
     #--------------------------------------------------------------------------
     #input : none
@@ -46,6 +46,23 @@ class Player():
             Adds 1 to the DRWS(0) in the vector record
         """
         self.record[self.DRAWS] +=1
+
+    #--------------------------------------------------------------------------
+
+    def insert_move(self, move):
+        """
+            input: last move for player
+            function: insert new move in last_move
+            output: none
+        """
+        if not(move in self.last_moves):
+            self.last_moves.pop()
+            self.last_moves.add(move)
+            
+            return True
+        
+        return False
+            
 
     #--------------------------------------------------------------------------
     #input : none

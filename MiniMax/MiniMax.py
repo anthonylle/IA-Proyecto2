@@ -149,7 +149,7 @@ class Secuential(MiniMax):
             return -100000
         return discs_4*100000 + discs_3*100 + discs_2
 
-class Espaces(MiniMax):
+class Spaces(MiniMax):
     def heuristic(self, state_board):
         """
         Overwrites heuristic function, it gives a 100000 weight to 4 in line

@@ -383,9 +383,11 @@ class Connect4():
             if it is a computer calls the next_move function
         """
         if type(players[actual]) is Agent:
-            self.view.print_message("bright","","yellow",">>> Waiting for {}'s answer: ".format(players[actual].name))
-            
-            return players[actual].next_move(self.board, players, actual)
+            self.view.print_without_end("white",">>> Waiting for {}'s answer: ".format(players[actual].name) )
+            move = players[actual].next_move(self.board, players, actual)
+            self.view.print_message("normal", "", "white",str(move))
+            self.view.input_option(">>> Press enter to continue: ")
+            return move
 
         elif type(players[actual]) is Player:
             return self.human_request_column(players, actual)
@@ -471,7 +473,7 @@ class Connect4():
         while column  != -1:
             
             if self.board.insert_value(column, players[actual].character):
-                if self.ended_game(players, actual):
+                if self.show_ended_game(players, actual):
                     return players
                 actual = self.change_turn(actual)
 
