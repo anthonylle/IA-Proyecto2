@@ -1,30 +1,34 @@
 import operator
 import random
+import copy
 from Agent.Agent import Agent
+from Connect4.Connect4 import Connect4
 from NameRandomizer.NameGenerator import get_random_name
 
 
-def mutate(individual: Agent) -> Agent:
+def mutate(individual: Agent, probability) -> Agent:
     """
     :param individual:
     :return:
     """
     random.seed()
-    index = random.randint(0, 3)
-    new_values = [random.randint(0, 100), random.randint(0, 100), random.randint(0, 100), random.randint(0, 100)]
+    dies = random.randint(1,100)
+    if dies <= probability:
+        index = random.randint(0, 3)
 
-    current_first = individual.percent_first_move
-    current_second = individual.percent_second_move
-    current_third = individual.percent_third_move
-    current_fourth = individual.percent_fourth_move
+        current_first = individual.percent_first_move
+        current_second = individual.percent_second_move
+        current_third = individual.percent_third_move
+        current_fourth = individual.percent_fourth_move
 
-    percents = [current_first, current_second, current_third, current_fourth]
-    percents[index] = new_values[index]
+        percents = [current_first, current_second, current_third, current_fourth]
+        limits = [0] + percents + [100]
+        percents[index] = random.randint(limits[index]+1, limits[index+2]-1)
 
-    [individual.percent_first_move,
-     individual.percent_second_move,
-     individual.percent_third_move,
-     individual.percent_fourth_move] = percents
+        [individual.percent_first_move,
+         individual.percent_second_move,
+         individual.percent_third_move,
+         individual.percent_fourth_move] = percents
 
     return individual
 
@@ -34,10 +38,12 @@ class GeneticTrainer:
         self.population = []
         self.preserved_individuals_amount = preserved_individuals_amount
         self.number_of_generations = number_of_generations
+        self.best_individual = None
+        self.mutation_probability = 8 # 8%
 
     def get_best_configuration_params(self) -> list:
         """
-        \:return:
+        :return:
         """
         return None
 
@@ -61,9 +67,9 @@ class GeneticTrainer:
         :return: the amount of WINS the Agent already has set in its attribute
         :rtype: int
         """
-        return individual.WINS
+        return individual.record[individual.WINS]
 
-    def crossover(self, parent1: Agent, parent2: Agent) -> (Agent, Agent):
+    def reproduce(self, parent1: Agent, parent2: Agent) -> [Agent, Agent]:
         """
         :param parent1:
         :param parent2:
@@ -95,27 +101,50 @@ class GeneticTrainer:
         child2.percent_second_move, \
         child2.percent_third_move, \
         child2.percent_fourth_move = child2_params
-        return child1, child2
+        return [child1, child2]
 
     def genetic_algorithm(self):
-        """"
+        """
         :return:
         """
         self.population = self.generate_population(self.preserved_individuals_amount*10)
+
         for i in range(0, self.number_of_generations):
             generation_fitness = {}
+
             for individual in self.population:
-                opponents = self.population.remove(individual)
-                # train indiviual 1 vs the-world-now
+                opponents = self.population.copy()
+                opponents.remove(individual)
+                individual = self.train(individual, opponents)
                 generation_fitness[individual] = self.get_fitness(individual)
+
             best_fitting_individuals = self.get_N_best_fitting(generation_fitness, self.preserved_individuals_amount)
+            best_fitting_pairs = make_pairs(best_fitting_individuals)
+            children = []
+            for parent1, parent2 in best_fitting_pairs:
+                parent1_copy = copy.deepcopy(parent1)
+                parent2_copy = copy.deepcopy(parent2)
+                new_borns = self.reproduce(parent1_copy, parent2_copy)
+                new_borns[0] = mutate(new_borns[0],self.mutation_probability)
+                new_borns[1] = mutate(new_borns[0], self.mutation_probability)
+                children.append(new_borns)
+                self.population.remove(parent1)
+                self.population.remove(parent2)
+            self.population = self.generate_population(self.preserved_individuals_amount*10-len(children))
+            self.population.append(children)
+
 
 
     def train(self, individual: Agent, opponents: list):
+        individual.character = "1"
         for opponent in opponents:
-
-            print(individual, opponent)
-
+            opponent.character = "2"
+            players = [individual, opponent]
+            game = Connect4('cls')
+            game.default()
+            game.game_mode = game.game_modes[0]
+            [individual, opponent] = game.logic_play(players=players)
+        return individual
 
     def get_N_best_fitting(self, population: dict, n):
         """
@@ -130,3 +159,21 @@ class GeneticTrainer:
             del population[best_now]
         return bests
 
+
+def make_pairs(elements: list, n=2):
+    return zip(*[iter(elements)] * n)
+
+
+agent1 = Agent("1", get_random_name(), 15,30, 60, 90)
+mutated_agent1 = mutate(agent1)
+print("Agent1 - 1st: ", agent1.percent_first_move, " 2nd: ", agent1.percent_second_move, " 3rd: ", agent1.percent_third_move, " 4th: ", agent1.percent_fourth_move)
+'''
+agent2 = Agent("2", get_random_name(), 0, 0, 0, 0)
+players = [agent1, agent2]
+game = Connect4('cls')
+game.default()
+game.game_mode = game.game_modes[0]
+[agent1, agent2] = game.logic_play(players=players)
+print("Agent1:", agent1.name, " Wins: ", agent1.record[agent1.WINS], " DRAWS: ", agent1.record[agent1.DRAWS], " Loses: ", agent1.record[agent1.LOSSES])
+print("Agent2:", agent2.name, " Wins: ", agent2.record[agent2.WINS], " DRAWS: ", agent2.record[agent2.DRAWS], " Loses: ", agent2.record[agent2.LOSSES])
+'''
