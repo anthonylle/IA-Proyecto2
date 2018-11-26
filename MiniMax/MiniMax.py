@@ -19,8 +19,9 @@ class MiniMax():
     #output: an int with best 
     def search_best_move(self, state_board, board_area):
         """
-            Looks for the best move to take, it calls min_value
+            function: Looks for the best move to take, it calls min_value
             with all the columns then decides the best move amongst then
+            output: an int with best 
         """
         best_move = -2
         current_max = self.MIN
@@ -47,8 +48,9 @@ class MiniMax():
     #output: boolean value
     def check_state(self, board, depth, player):
         """
-            Returns True if theres a win, no more legal moves or the depth
+            function checks if there's a win, no more legal moves or the depth
             has come to 0
+            output: boolean
         """
         checker = Checker()
         win = checker.check_win(board, board.last_column, player)
@@ -62,7 +64,8 @@ class MiniMax():
     #output:
     def heuristic(self, state_board):
         """
-            Fathers Model funtion
+            function: Fathers Model funtion
+            output: 0
         """
         return 0
     
@@ -72,7 +75,9 @@ class MiniMax():
     #output: int value, the least between alfa and beta 
     def min_value(self, depth, state_board, alfa, beta):
         """
-
+            function: search the best value for the human(oponent) the worse 
+            for the computer
+            output: int value, the least between alfa and beta 
         """
         
         if self.check_state(state_board, depth, self.current_player):
@@ -99,7 +104,9 @@ class MiniMax():
     #output: int value, the higher bwtween alpha and beta   
     def max_value(self, depth, state_board, alfa, beta):
         """
-
+            function: search the best value for the computer and the worse for
+            the human (oponent)
+            output: int value, the higher bwtween alpha and beta   
         """
 
         if self.check_state(state_board, depth, self.oponent):
@@ -127,7 +134,8 @@ class MiniMax():
     #output: none
     def print_state(self, depth, board):
         """
-            Prints the actual depth and matrix
+            function: Prints the actual depth and matrix
+            output: None
         """
         print ("Depth: ", depth)
         board.print_matrix()
@@ -135,10 +143,11 @@ class MiniMax():
 class Secuential(MiniMax):
     def heuristic(self, state_board):
         """
-        Overwrites heuristic function, it gives a 100000 weight to 4 in line
+        fucntion: Overwrites heuristic function, it gives a 100000 weight to 4 in line
         discs, 100 to 3 in line discs and 1 to the 2 in line discs, then
         returns the sum of them all, if the oponent haves 4 in line returns
-        -100000 
+        -100000
+        output: weight calculated
         """
         checker = Secuential_Count_Checker()
         discs_4 = checker.check_lines(state_board, self.current_player, 4)
@@ -152,10 +161,11 @@ class Secuential(MiniMax):
 class Espaces(MiniMax):
     def heuristic(self, state_board):
         """
-        Overwrites heuristic function, it gives a 100000 weight to 4 in line
+        function: Overwrites heuristic function, it gives a 100000 weight to 4 in line
         discs, 100 to 3 in line with spaces discs and 1 to the 2 in line with 
         spaces discs, then returns the sum of them all, if the oponent haves 
         4 in line returns -100000 
+        output: weight calculated
         """
         checker = Checker()
         discs_4 = checker.check_lines(state_board, self.current_player, 4)
@@ -169,10 +179,11 @@ class Espaces(MiniMax):
 class Block_3_In_Line(MiniMax):
     def heuristic(self, state_board):
         """
-        Overwrites heuristic function, it gives a 1000 weight to 3 in line
+        function: Overwrites heuristic function, it gives a 1000 weight to 3 in line
         discs blocked, 100 to 2 in line with discs blocked and 150 to the 4 
         in line with discs blocked, then returns the sum of them all, if the 
         oponent haves 4 in line returns -100000 
+        output: weight calculated
         """
         blocker = Block_3_In_Line_Checker()
         checker = Checker()
@@ -188,10 +199,11 @@ class Block_3_In_Line(MiniMax):
 class Play_3_In_Line(MiniMax):
     def heuristic(self, state_board):
         """
-        Overwrites heuristic function, it gives a 1000 weight to 3 in line
+        function: Overwrites heuristic function, it gives a 1000 weight to 3 in line
         discs blocked, 100 to 2 in line with discs blocked and 150 to the 4 
         in line with discs blocked, then returns the sum of them all, if the 
         oponent haves 4 in line returns -100000 
+        output: weight calculated
         """
         checker = Checker()
         discs_4 = checker.check_lines(state_board, self.current_player, 4)

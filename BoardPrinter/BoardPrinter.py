@@ -1,5 +1,7 @@
 from ConsoleControl.ConsoleControl import ConsoleControl
 from Board.Board import Board
+
+
 class BoardPrinter(ConsoleControl):
     
     #--------------------------------------------------------------------------
@@ -27,7 +29,8 @@ class BoardPrinter(ConsoleControl):
     #output: none
     def creat_divider(self, column_size):
         """
-            Creates the divisions (═ + ╬  + ═)*columns+ ╣ = ═╬═╬═╬═╣
+            function: Creates the divisions (═ + ╬  + ═)*columns+ ╣ = ═╬═╬═╬═╣
+            output: None
         """
         self.divider = "  "+self.boardstyle[205]
         string = self.boardstyle[206] +self.boardstyle[205]*3
@@ -39,8 +42,9 @@ class BoardPrinter(ConsoleControl):
     #output: none
     def create_footer(self, column_size):
         """
-            Creates the footer
-            ╚ + (═*3 + ╩)*columns-1 + ═*3 + ╝ = ╚═══╩═══╩═══╩═══╝  
+            function: Creates the footer
+            ╚ + (═*3 + ╩)*columns-1 + ═*3 + ╝ = ╚═══╩═══╩═══╩═══╝ 
+            output: None 
         """
         self.footer = "   "+ self.boardstyle[200]
         string = self.boardstyle[205]*3 + self.boardstyle[202]
@@ -48,9 +52,10 @@ class BoardPrinter(ConsoleControl):
      
     def create_header(self,column_size):
         """
-            Creates the header 
+            function: Creates the header 
             "  " ═ + (╬ + ═*3)*columns + ╗  =         1   2   3
                                                 "  ═╬═══╬═══╬═══╗"
+            output: None
         """
         header = "  "
         string = self.boardstyle[206] +self.boardstyle[205]*3
@@ -68,8 +73,9 @@ class BoardPrinter(ConsoleControl):
     #output: none
     def load_boar(self,column_size):
         """
-            It prepares the divider, footer and headers class to 
+            function: It prepares the divider, footer and headers class to 
             print the board
+            output: None
         """
         self.creat_divider(column_size)
         self.create_footer(column_size)
@@ -80,6 +86,10 @@ class BoardPrinter(ConsoleControl):
     #function: read the board and create the board view
     #output: a string with the board view
     def generate_board_string(self, board):
+        """
+            function: read the board and create the board view
+            output: A String with the board view
+        """
         #self.font_selector(self.style, self.back, self.fore) 91r 93y 94b 96c
         matrix = '\033[94m'+ self.header
         for i in range (board.row_size):
@@ -106,7 +116,10 @@ class BoardPrinter(ConsoleControl):
     #function: print the board view
     #output: none
     def print_board(self, board):
-
+        """
+            function: Prints the board view
+            output: None
+        """
         self.font_selector(self.style,self.back, self.fore)
         print(self.generate_board_string(board))
         self.reset_all()

@@ -20,21 +20,19 @@ class Agent(Player):
 
     #--------------------------------------------------------------------------
     def throw_die(self):
-        """input : none
-        
-        function: throw_die for a new percent
-        
-        output: none
-        
+        """
+            input : None
+            function: throw_die for a new percent
+            output: None
         """        
         self.my_die = random.uniform(0, 1)
 
     #--------------------------------------------------------------------------
     def select_move(self, board_state,depth_max, oponent):
         """
-        input: a Board object, max depth to search, oponent character(human)
-        function: select the best move using minimax
-        output: int with column number > 0     
+            input: Board object, max depth to search, oponent character(human)
+            function: Select the best move using minimax
+            output: Int with column number > 0     
         """
         #minimax = MiniMax(depth_max, self.character, oponent)
         print("mi dado: ", self.my_die)
@@ -55,8 +53,9 @@ class Agent(Player):
 
     def next_move(self, board, players, actual):
         """
-            Checks if it can win el if it can block else make a move from
-            the strategies
+            function: Checks if it can win, block or make a move 
+            from the strategies
+            output: column move chosen
         """
         col_move = 0
         win = self.win_checker.check(self, board, players, actual)

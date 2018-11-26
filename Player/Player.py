@@ -23,7 +23,9 @@ class Player():
     #output: none
     def add_win(self):
         """
-            Adds 1 to the WINS(0) in the vector record
+        input : none
+        function: add one to wins
+        output: none
         """
         self.record[self.WINS] += 1
 
@@ -53,9 +55,11 @@ class Player():
     #output: none
     def print_record(self):
         """
-            Prints the Record of a Player
-            e.g record=[2,1,0]
-            Player Record: Wins: 2 | Losses: 1 | draws: 0
+            input: none
+            function: Prints the Record of a Player
+                        e.g record=[2,1,0]
+                        Player Record: Wins: 2 | Losses: 1 | draws: 0
+            output: none
         """
         print("{} Record: Wins: {} | Losses: {} | draws: {}".format(self.name,
         self.record[self.WINS], self.record[self.LOSSES],

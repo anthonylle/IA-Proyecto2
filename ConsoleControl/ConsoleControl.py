@@ -102,6 +102,10 @@ class ConsoleControl(object):
     #function: set style for console's line
     #output: none
     def font_selector(self, style, back, fore):
+        """
+            function: set style for console's line
+            output: none
+        """
         self.style_selector(style)
         self.fore_color(fore)
         self.back_color(back)
@@ -111,6 +115,11 @@ class ConsoleControl(object):
     #function: clear all the console
     #output: none  
     def clear_console(self):
+        """
+            input : none
+            function: clear all the console
+            output: none  
+        """
         os.system(self.system)
        
     #--------------------------------------------------------------------------
@@ -118,6 +127,11 @@ class ConsoleControl(object):
     #function: set the cursor's position in the console
     #output: none
     def cursor_position(self, row, column):
+        """
+            input : row: int position, column: int position
+            function: set the cursor's position in the console
+            output: none
+        """
         print(Cursor.POS(row,column),end="")
 
     #--------------------------------------------------------------------------
@@ -125,6 +139,11 @@ class ConsoleControl(object):
     #function: set the cursor's position in the console
     #output: none      
     def cursor_position2(self, row, column):
+        """
+            input : row: int position, column: int position
+            function: set the cursor's position in the console
+            output: none   
+        """
         print(Cursor.UP(row)+Cursor.FORWARD(column), end="")   
  
     #--------------------------------------------------------------------------
@@ -132,4 +151,9 @@ class ConsoleControl(object):
     #function: set the original console's style
     #output: none       
     def reset_all(self):
-      print(Back.RESET,Fore.RESET,Style.RESET_ALL,end="")
+        """
+            input : none
+            function: set the original console's style
+            output: none    
+        """
+        print(Back.RESET,Fore.RESET,Style.RESET_ALL,end="")
