@@ -4,6 +4,7 @@ from WinAndBlock.WinAndBlock import Checker
 from Agent.Agent import Agent
 from Player.Player import Player
 from Board.Board import Board
+import time
 
 # class to control all game's logic
 class Connect4():
@@ -263,10 +264,13 @@ class Connect4():
         output:none
             Displays the winner of the game and each player record
         """
+        
         if actual:
             self.view.player2_wins("bright", "", "cyan")
         else:
             self.view.player1_wins("bright", "", "cyan")
+            
+        self.board_printer.print_board(self.board)
         players[actual].add_win()
         players[not actual].add_lose()
         print("{} is the winner".format(players[actual].name))
@@ -283,6 +287,7 @@ class Connect4():
             Displays a draw title and update players record
         """
         self.view.view_draw()
+        self.board_printer.print_board(self.board)
         players[actual].add_draw()
         players[not actual].add_draw()
         players[actual].print_record()
@@ -336,6 +341,7 @@ class Connect4():
         """
         if type(players[actual]) is Agent:
             self.view.print_message("bright","","yellow",">>> Waiting for {}'s answer: ".format(players[actual].name))
+            
             return players[actual].next_move(self.board, players, actual)
 
         elif type(players[actual]) is Player:
@@ -384,12 +390,14 @@ class Connect4():
         """
         actual = 0
         self.view.view_title()
+        self.view.print_players_names(players[0].name, players[1].name)
         self.board_printer.print_board(self.board)
         
         column = self.request_column(players, actual)
         while column  != -1:
             self.view.view_title()
-
+            self.view.print_players_names(players[0].name, players[1].name)
+            
             if self.board.insert_value(column, players[actual].character):
                 self.board_printer.print_board(self.board)
                 if self.ended_game(players, actual):
@@ -400,5 +408,5 @@ class Connect4():
                 self.board_printer.print_board(self.board)
                 self.view.invalid_option()
             column = self.request_column(players, actual)
-        
+            
         return players
