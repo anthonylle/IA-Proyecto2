@@ -255,6 +255,22 @@ class Connect4():
         elif self.game_mode == self.game_modes[2]:
             return self.h_vs_c("Human","Computer")
 
+
+
+
+    #--------------------------------------------------------------------------
+
+    def winner(self, players, actual):
+        """
+        input : a players list, an int with the actual player
+        function: add the values winner
+        output:none
+        """
+
+        players[actual].add_win()
+        players[not actual].add_lose()
+        players[actual].print_record()
+        players[not actual].print_record()
     #--------------------------------------------------------------------------
 
     def show_winner(self, players, actual):
@@ -271,15 +287,27 @@ class Connect4():
             self.view.player1_wins("bright", "", "cyan")
             
         self.board_printer.print_board(self.board)
-        players[actual].add_win()
-        players[not actual].add_lose()
-        print("{} is the winner".format(players[actual].name))
-        players[actual].print_record()
-        players[not actual].print_record()
-     
+        self.winner(players, actual)
+
+
+
+
     #--------------------------------------------------------------------------
 
     def draw(self, players, actual):
+        """   
+        input : a players list, an int with the actual player
+        function:  add the values draw
+        output:none
+        """
+        players[actual].add_draw()
+        players[not actual].add_draw()
+        players[actual].print_record()
+        players[not actual].print_record()
+             
+    #--------------------------------------------------------------------------
+
+    def show_draw(self, players, actual):
         """   
         input : a players list, an int with the actual player
         function: show draw message, and add the values draw
@@ -288,11 +316,9 @@ class Connect4():
         """
         self.view.view_draw()
         self.board_printer.print_board(self.board)
-        players[actual].add_draw()
-        players[not actual].add_draw()
-        players[actual].print_record()
-        players[not actual].print_record()
-        
+        self.draw(players, actual)
+
+
     #--------------------------------------------------------------------------
 
     def ended_game(self, players, actual):
@@ -304,10 +330,27 @@ class Connect4():
         """
         if self.checker.check_win(self.board, self.board.last_column, 
                                             players[actual].character):
-            self.show_winner(players, actual)
+            self.winner(players, actual)
             return True
         elif not(self.board.have_legal_move()):
             self.draw(players, actual)
+            return True
+        return False  
+    #--------------------------------------------------------------------------
+
+    def show_ended_game(self, players, actual):
+        """
+        input : a players list, an int with the actual player
+        function: determine if the game ended or not
+        output:boolean value
+            Checks if one player have won or if there are no more moves played
+        """
+        if self.checker.check_win(self.board, self.board.last_column, 
+                                            players[actual].character):
+            self.show_winner(players, actual)
+            return True
+        elif not(self.board.have_legal_move()):
+            self.show_draw(players, actual)
             return True
         return False        
     
@@ -400,7 +443,7 @@ class Connect4():
             
             if self.board.insert_value(column, players[actual].character):
                 self.board_printer.print_board(self.board)
-                if self.ended_game(players, actual):
+                if self.show_ended_game(players, actual):
                     return players
                 actual = self.change_turn(actual)
 
@@ -410,3 +453,28 @@ class Connect4():
             column = self.request_column(players, actual)
             
         return players
+    
+    
+    #--------------------------------------------------------------------------
+
+    def logic_play(self, players):
+        """
+        input : a list with two players
+        function: to control the normal execution of the game for computers 
+        output: a list with two players
+            Single game, playing cyclo, it asks for the column, inserts the 
+            disc checks for, checks if win, change turn, and repeat the cyclo
+        """
+        actual = 0
+        
+        column = players[actual].next_move(self.board, players, actual)
+        while column  != -1:
+            
+            if self.board.insert_value(column, players[actual].character):
+                if self.ended_game(players, actual):
+                    return players
+                actual = self.change_turn(actual)
+
+            column = players[actual].next_move(self.board, players, actual)
+            
+        return players    
