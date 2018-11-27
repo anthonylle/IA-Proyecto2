@@ -32,9 +32,8 @@ class MiniMax():
             if not(state_board.is_column_full(col)):
                 child = state_board.copy()
                 child.insert_value(col+1, self.current_player)
-                #child.print_matrix()
                 current_max = self.min_value(0, child, self.MIN, self.MAX)
-                print("curent_max", current_max, col)
+                #print("curent_max", current_max, col)
                 if( current_max > best_max):
                     best_move = col
                     best_max = current_max
@@ -89,8 +88,6 @@ class MiniMax():
                 if not(state_board.is_column_full(col)):
                     child = state_board.copy()
                     child.insert_value(col+1, self.oponent) 
-                    #print("-----------jagada valida ----------")
-                    #self.print_state(depth, child)
                     temp_alfa = self.max_value(depth+1, child, alfa, beta)
                     beta = min(beta, temp_alfa)
                     if alfa >= beta:
@@ -119,8 +116,6 @@ class MiniMax():
                     
                     child = state_board.copy()
                     child.insert_value(col+1, self.current_player)
-              #      print("-----------jagada valida ----------")
-              #      self.print_state(depth, child)
                     temp_beta = self.min_value(depth+1, child, alfa, beta)
                     alfa = max(alfa, temp_beta)
                     if alfa >= beta:
@@ -158,7 +153,7 @@ class Secuential(MiniMax):
             return -100000
         return discs_4*100000 + discs_3*100 + discs_2
 
-class Espaces(MiniMax):
+class Spaces(MiniMax):
     def heuristic(self, state_board):
         """
         function: Overwrites heuristic function, it gives a 100000 weight to 4 in line

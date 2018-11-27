@@ -70,7 +70,7 @@ class Board():
         
         while(row >= 0 ):
             if self.matrix[row][column_number] == " ":
-                self.matrix[row][column_number] = str(value)
+                self.setAt(row, column_number, str(value))
                 self.last_column = column_number
                 self.last_row = row
                 self.moves_count += 1 
@@ -104,7 +104,21 @@ class Board():
             output: true if it has a space or false if it has not a space 
         """
         return self.moves_count < self.column_size * self.row_size
-            
+
+    # -------------------------------------------------------------------------
+    
+    def is_legal_area(self, area):
+        """
+        input: a list with specific index area
+        function: review if an area is legal
+        output: true or false
+        """
+        if area != []:
+            for col in area:
+                if not(self.is_column_full(col)):
+                    return True
+        return False
+        
     #--------------------------------------------------------------------------
 
     def getAt(self, row, col):
@@ -113,7 +127,10 @@ class Board():
             function: Returns the value in the row,col position
             output: specifict space in the board    
         """
-        return self.matrix[row][col]
+        if row >= 0 and row < self.row_size and col >= 0 and  col < self.column_size:
+            return self.matrix[row][col]
+        
+        return '-'
 
     #--------------------------------------------------------------------------
 
@@ -188,20 +205,42 @@ class Board():
             function: Sets the a value of the row and col given
             output: true if all is ok or false if it isn't
         """
-        if (col >= 0 and col < self.column_size):
+        if (col >= 0 and col < self.column_size) and ( row >=0 and row < self.row_size):
             self.matrix[row][col] = value
             return True
         return False
     
     #--------------------------------------------------------------------------
-
+    def get_column_with_space(self,area):
+        """
+        input: area with index to search
+        funtion: search a column in the board with a space empty
+        output: index column
+        """
+        for col in area:
+            if not(self.is_column_full(col)) :
+                return col
+        return -2
+    
+    
+    #--------------------------------------------------------------------------
+    def get_set_space(self):
+        """
+        input: none
+        funtion: get a set from 0 to column_size
+        output: set object
+        """
+        return set(list(range(self.column_size)))
+    
+    #--------------------------------------------------------------------------
     def print_matrix(self):
         """
         input : none
         function: Prints the matrix to have a perspective of it's actual state
         output: None
         """
+        m = ""
         for row in self.matrix:
-            print(row)
-        print("________________________________")
+            m += str(row)+"\n"
+        print(m)
             
