@@ -15,11 +15,13 @@ class ConsoleControl(object):
         self.system = system
 
     #--------------------------------------------------------------------------
-    #input : color: a string with the letter's color
-    #function: choose the letter's color
-    #output: none       
     def fore_color(self, color = "reset"):
-        
+        """
+            #input : color: a string with the letter's color
+            #function: choose the letter's color
+            #output: none    
+            Recibes a color string and sets a font color stile
+        """
         print(Fore.RESET, end="")
         if color == "black":
             print(Fore.BLACK,end="")
@@ -45,11 +47,14 @@ class ConsoleControl(object):
         elif color == "white":
             print(Fore.WHITE,end="")
 
-    #--------------------------------------------------------------------------
-    #input : color: a string with the backgrond's color
-    #function: choose the backgrond's color in line console
-    #output: none         
+
+    #--------------------------------------------------------------------------        
     def back_color(self, color = "reset"):
+        """
+          #input : color: a string with the backgrond's color
+          #function: choose the backgrond's color in line console
+          #output: none 
+        """
         print(Back.RESET,end="")
         if color == "black":
             print(Back.BLACK,end="")
@@ -62,24 +67,26 @@ class ConsoleControl(object):
             
         elif color == "yellow":
             print(Back.YELLOW,end="")
-             
+                
         elif color == "blue":
             print(Back.BLUE,end="")
-              
+                
         elif color == "magenta":
             print(Back.MAGENTA,end="")
-              
+                
         elif color == "cyan":
             print(Back.CYAN,end="")
-              
+                
         elif color == "white":
             print(Back.WHITE,end="")
-               
-    #--------------------------------------------------------------------------
-    #input : color: a string with the letter's style
-    #function: choose the letter's style
-    #output: none          
+
+    #-------------------------------------------------------------------------- 
     def style_selector(self, style = "reset"):
+        """
+        #input : color: a string with the letter's style
+        #function: choose the letter's style
+        #output: none     
+        """
         style = str(style)
         print(Style.RESET_ALL , end="")
         if style == "dim":
@@ -87,7 +94,7 @@ class ConsoleControl(object):
             
         elif style == "bringht":
             print(Style.BRIGHT,end="")
-    
+
         elif style == "normal":
             print(Style.NORMAL,end="")  
     #--------------------------------------------------------------------------
@@ -125,4 +132,4 @@ class ConsoleControl(object):
     #function: set the original console's style
     #output: none       
     def reset_all(self):
-        print(Back.RESET,Fore.RESET,Style.RESET_ALL,end="")
+      print(Back.RESET,Fore.RESET,Style.RESET_ALL,end="")

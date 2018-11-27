@@ -10,7 +10,6 @@ class BoardPrinter(ConsoleControl):
     #        see the ConsoleControl class
     #function: constructor
     def __init__ (self, system, style, back, fore):
-        
         ConsoleControl.__init__(self, system)
         self.header = str()
         self.divider = str()
@@ -18,15 +17,18 @@ class BoardPrinter(ConsoleControl):
         self.style = style
         self.back = back
         self.fore = fore
-        self.boardstyle = {185 :'╣', 186 : '║', 187 : '╗', 188 : '╝', 201 : '╔', 
-                           202 : '╩', 200 : '╚', 204 : '╠',
-                          205 : '═', 206 : '╬'}
+        self.boardstyle = {185 :'╣', 186 : '║', 187 : '╗', 188 : '╝', 
+                           201 :'╔', 202 : '╩', 200 : '╚', 204 : '╠',
+                           205 : '═', 206 : '╬'}
 
     #--------------------------------------------------------------------------
     #input : column_size int value
     #function: create the divider between rows
     #output: none
     def creat_divider(self, column_size):
+        """
+            Creates the divisions (═ + ╬  + ═)*columns+ ╣ = ═╬═╬═╬═╣
+        """
         self.divider = "  "+self.boardstyle[205]
         string = self.boardstyle[206] +self.boardstyle[205]*3
         self.divider += string*column_size + self.boardstyle[185]  +"\n"
@@ -36,16 +38,20 @@ class BoardPrinter(ConsoleControl):
     #function: create the footer to the board
     #output: none
     def create_footer(self, column_size):
+        """
+            Creates the footer
+            ╚ + (═*3 + ╩)*columns-1 + ═*3 + ╝ = ╚═══╩═══╩═══╩═══╝  
+        """
         self.footer = "   "+ self.boardstyle[200]
         string = self.boardstyle[205]*3 + self.boardstyle[202]
         self.footer += string * (column_size-1) + self.boardstyle[205]*3 + self.boardstyle[188]  +"\n"
-        
-        
-    #--------------------------------------------------------------------------
-    #input : column_size: int value
-    #function: create the header to the board
-    #output: none
+     
     def create_header(self,column_size):
+        """
+            Creates the header 
+            "  " ═ + (╬ + ═*3)*columns + ╗  =         1   2   3
+                                                "  ═╬═══╬═══╬═══╗"
+        """
         header = "  "
         string = self.boardstyle[206] +self.boardstyle[205]*3
         boundary = "  "+self.boardstyle[205] + string*column_size 
@@ -61,11 +67,14 @@ class BoardPrinter(ConsoleControl):
     #          in boardstyle variable
     #output: none
     def load_boar(self,column_size):
-        
+        """
+            It prepares the divider, footer and headers class to 
+            print the board
+        """
         self.creat_divider(column_size)
         self.create_footer(column_size)
         self.create_header(column_size)
-    
+
     #--------------------------------------------------------------------------
     #input : board: a Board object 
     #function: read the board and create the board view
