@@ -38,25 +38,19 @@ class Agent(Player):
         """
         
         die = self.throw_die(0, self.biggest_percent)
-        #print("my die ", die)
         
         if self.is_in_range(0,die):
-            #print(" >>> sequence_vs_space")
             return self.sequence_vs_space(board_state,depth_max, oponent)
         
         elif self.is_in_range(1,die):
-            #print(" >>> center_vs_extreme")
             return self.center_vs_extremes(board_state,depth_max, oponent)+1
 
         elif self.is_in_range(2,die):
-            #print("Block3_vs_Play3")
             return self.Block3_vs_Play3(board_state,depth_max, oponent)
           
         elif self.is_in_range(3,die):
-            #print("repeat_vs_continue")
             return self.repeat_vs_continue(board_state)+1
         else:
-            #print("sequence_vs_space default")
             return self.sequence_vs_space(board_state,depth_max, oponent)
         
     #--------------------------------------------------------------------------
@@ -124,7 +118,8 @@ class Agent(Player):
             minimax = Play_3_In_Line(depth_max, self.character, oponent)
             return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])    
 
-    #--------------------------------------------------------------------------       
+    #--------------------------------------------------------------------------
+       
     def next_move(self, board, players, actual,depth_max):
         """
             function: Checks if it can win, block or make a move 
