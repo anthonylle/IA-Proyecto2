@@ -4,7 +4,7 @@ from WinAndBlock.WinAndBlock import Checker
 from Player.Player import Player
 from Agent.Agent import Agent
 from Board.Board import Board
-from GeneticTrainer.GeneticTrainer import GeneticTrainer
+#from GeneticTrainer.GeneticTrainer import GeneticTrainer
 
 # class to control all game's logic
 class Connect4():
@@ -167,9 +167,10 @@ class Connect4():
         self.view.print_message("normal","", "white",">>> Please waiting for the training end ....")
         preserve = int(self.view.input_option(">>> How many Agents will preserve each generation while training?: "))
         generations = int(self.view.input_option(">>> How many generations will be trained?: "))
-        trainer = GeneticTrainer(preserve, generations)
-        params = trainer.get_best_configuration_params()
-        training = str(params[0]) + ", "+ str(params[1]) + ", " + str(params[2]) + ", " + str(params[3])
+        #trainer = GeneticTrainer(preserve, generations)
+        #params = trainer.get_best_configuration_params()
+        #training = str(params[0]) + ", "+ str(params[1]) + ", " + str(params[2]) + ", " + str(params[3])
+        training = "0.21, 0.47, 0.65, 0.94"
         self.view.print_message("normal","", "white",">>> Please copy the following text and save it: " + training)
         self.view.input_option(">>> Back [type enter]: ")
 
@@ -471,7 +472,7 @@ class Connect4():
         """
         actual = 0
         
-        column = players[actual].next_move(self.board, players, actual)
+        column = players[actual].next_move(self.board, players, actual, depth_max=self.level)
         while column  != -1:
             
             if self.board.insert_value(column, players[actual].character):
@@ -479,6 +480,6 @@ class Connect4():
                     return players
                 actual = self.change_turn(actual)
 
-            column = players[actual].next_move(self.board, players, actual)
+            column = players[actual].next_move(self.board, players, actual, depth_max=self.level)
             
         return players    

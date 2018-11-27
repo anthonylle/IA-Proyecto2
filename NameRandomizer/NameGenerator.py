@@ -8,5 +8,6 @@ names = ["Yurevoh", "Eimil", "Cervizzu", "Saisraill", "Lehe", "Kon", "Eflefla", 
          "Ewart", "Waverly", "Vallois", "Thoralf", "Piperel", "Clifton", "Denton", "Conrad",
          "Yule", "Jake", "Ruven", "Jaden", "Willy"]
 
+
 def get_random_name():
     return random.choice(names)
