@@ -78,7 +78,6 @@ class MiniMax():
             for the computer
             output: int value, the least between alfa and beta 
         """
-        
         if self.check_state(state_board, depth, self.current_player):
             return self.heuristic(state_board)
             
@@ -92,7 +91,6 @@ class MiniMax():
                     beta = min(beta, temp_alfa)
                     if alfa >= beta:
                         return alfa
-            
             return beta
         
     #--------------------------------------------------------------------------
