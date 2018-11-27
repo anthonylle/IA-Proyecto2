@@ -17,6 +17,7 @@ class Agent(Player):
         self.win_checker = Win_Checker()
         self.block_checker = Block_Checker()
         self.biggest_percent = 1
+        self.test=False
         self.ranges = self.create_ranges(percent_first_move, percent_second_move, 
                            percent_third_move, percent_fourth_move)
 
@@ -26,6 +27,8 @@ class Agent(Player):
         function: throw_die for a new percent
         output: none
         """        
+        if(self.test):
+            random.seen(0)
         my_die = random.uniform(from_, to_)
         return  round(my_die,2)
         
