@@ -70,7 +70,7 @@ class Board():
         
         while(row >= 0 ):
             if self.matrix[row][column_number] == " ":
-                self.matrix[row][column_number] = str(value)
+                self.setAt(row, column_number, str(value))
                 self.last_column = column_number
                 self.last_row = row
                 self.moves_count += 1 
@@ -128,7 +128,10 @@ class Board():
         output: specifict space in the board    
             Returns the value in the row,col position
         """
-        return self.matrix[row][col]
+        if row >= 0 and row < self.row_size and col >= 0 and  col < self.column_size:
+            return self.matrix[row][col]
+        
+        return '-'
 
     #--------------------------------------------------------------------------
 
@@ -205,7 +208,7 @@ class Board():
         output: true if all is ok or false if it isn't
             Sets the a value of the row and col given
         """
-        if (col >= 0 and col < self.column_size):
+        if (col >= 0 and col < self.column_size) and ( row >=0 and row < self.row_size):
             self.matrix[row][col] = value
             return True
         return False
@@ -240,7 +243,8 @@ class Board():
         output: none
             Prints the matrix to have a perspective of it's actual state
         """
+        m = ""
         for row in self.matrix:
-            print(row)
-        print("________________________________")
+            m += str(row)+"\n"
+        print(m)
             

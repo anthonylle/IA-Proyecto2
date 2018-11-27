@@ -154,12 +154,11 @@ class Agent(Player):
                   2:percent_third_move, 3:percent_fourth_move}
         sorted_r = OrderedDict(sorted(ranges.items(), key=itemgetter(1)))
         ranges = dict(sorted_r)
-        keys = list(ranges)
-        
-        the_ranges[keys[0]] = [0,ranges[keys[0]] ]
-        the_ranges[keys[1]] = [ranges[keys[0]]+0.01, ranges[keys[1]] ]
-        the_ranges[keys[2]] = [ranges[keys[1]]+0.01, ranges[keys[2]] ]
-        the_ranges[keys[3]] = [ranges[keys[2]]+0.01, ranges[keys[3]] ]
+        keys = list(ranges)        
+        the_ranges[keys[0]] = [0,ranges[keys[0]]]
+        the_ranges[keys[1]] = [round(ranges[keys[0]]+0.01,2), ranges[keys[1]] ]
+        the_ranges[keys[2]] = [round(ranges[keys[1]]+0.01,2), ranges[keys[2]] ]
+        the_ranges[keys[3]] = [round(ranges[keys[2]]+0.01,2), ranges[keys[3]] ]
         self.biggest_percent = ranges[keys[3]]
         return the_ranges
         

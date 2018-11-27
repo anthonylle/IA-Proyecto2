@@ -1,10 +1,9 @@
 from BoardPrinter.BoardPrinter import BoardPrinter
 from Connect4View.Connect4View import Connect4View
 from WinAndBlock.WinAndBlock import Checker
-from Agent.Agent import Agent
 from Player.Player import Player
+from Agent.Agent import Agent
 from Board.Board import Board
-import time
 
 # class to control all game's logic
 class Connect4():
