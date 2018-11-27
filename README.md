@@ -800,6 +800,94 @@ class Agent(Player):
 ------------------------------------------------
 # Sudocódigo de funciones
 ### Gane y Bloqueo
+#### Checker
+##### Funcion principal, revisa si hay un gane en las verticales, horizontales o diagonales
+```
+class Checker()
+    function chec*(board, players, actual) returns column to win or block
+        copy <- board.get_copy()
+        for col in range(copy.column_size)
+            player_value_to_look <- get_player_value(players, actual)
+            copy.insert_disc(col, player_value_to_look)
+            if check_win(copy, col, player_value_to_look)
+                return col
+            copy.remove_disc_at(row, col)
+        return -1
+        
+    function get_player_value(players, actual) returns the players value to look up
+        return "1"
+    
+    function check_win(board, col, player_value) returns true if a 4 in line is found
+        return check_verticals(board, col, player_value) or 
+               check_horizontals(board, col, player_value) or
+               check_diagonals(board, col, player_value)
+    
+    function check_verticals(board, col, player_value) returns true if vertical 4 in line is found
+        four_in_a_row <- False
+        highest_disc <- board.get_highest_disc(col)
+        if (highest_disc <= 2)
+            for row in range(highest_disc, highest_disc+4)
+                if board.get_value_at(row, col) != player_value
+                    break
+                else if row == highest_disc+3
+                    four_in_a_row <- True
+        return four_in_a_row
+    
+    function check_horizontals(board, col, player_value)returns true if 4 in horizontal row found
+            discs <- 1 #my actual disc
+            highest_disc_row <- board.get_highest_disc(col, player_value)
+            discs += aux_check_horizontals(board, col+1, highest_disc_row, player_value, True)
+            discs += aux_check_horizontals(board, col-1, highest_disc_row, player_value, False)
+        return discs >= 4
+    
+    function aux_check_horizontals(board, col, row, player_value, look_right) returns discs in sequence found at right or left
+        if col >= 0 and col < board.column_size:
+            if look_right
+                if board.get_value_at(row, col) == player_value
+                    return 1 + aux_check_horizontals(board, col+1, row,
+                                                player_value, look_right)
+            else
+                if board.get_value_at(row, col) == player_value
+                    return 1 + aux_check_horizontals(board, col-1, row, 
+                                                player_value, look_right)
+        return 0
+    
+    function check_diagonals(board, col, player_value) returns if there are 4 in a diagonal row
+        discs <- 1  #Actual disc
+        discsT <- 1 #Actual disc
+        inverted_matrix <- board.get_inverted_matrix() #to check the other diagonal
+        highest_disc_row <- board.get_highest_disc(col, player_value)
+        lowest_disc_row_t <- inverted_matrix.get_lowest_disc(col, player_value)
+        discs  += aux_check_diagonals(board, col-1, highest_disc_row-1, player_value, True)
+        discs  += aux_check_diagonals(board, col+1, highest_disc_row+1, player_value, False)
+        discsT += aux_check_diagonals(inverted_matrix, col-1,lowest_disc_row_t-1, player_value, True)
+        discsT += aux_check_diagonals(inverted_matrix, col+1,lowest_disc_row_t+1, player_value, False)
+        return discs >= 4 or discsT>=4
+        
+    function aux_check_diagonals(board, col, row, player_value, look_up) returns amount of sequential discs found to up or down diagonal
+        if col >= 0 and row >= 0 and col < board.column_size and row < board.row_size
+        if look_up
+            if board.get_value_at(row, col) == player_value
+                return 1 + aux_check_diagonals(board, col-1, row-1, player_value, look_up)
+        else
+            if board.get_value_at(row, col) == player_value
+                return 1 + aux_check_diagonals(board, col+1, row+1, player_value, look_up)
+        return 0
+```
+#### Win_Checker
+#### Clase de Gane, hereda de Checker y sobreescribe la funcion de set_player_value para que busque si hay un 4 en linea mío
+```
+class Win_Checker() inherits Checker
+    def set_player_value(self, players, actual) returns actual player value
+        return players[actual].value
+```
+#### Block_Checker
+#### Clase de Bloqueo, hereda de Checker y sobreescribe la funcion de set_player_value para que busque si hay un 4 en linea de mi oponente
+```
+class Block_Checker(Checker):
+    def set_player_value(self, players, actual) returns actual oponent value
+        return players[not(actual)].value
+```
 ### Algorítmo Genético
 ------------------------------------------------
 # Análisis de resultados
