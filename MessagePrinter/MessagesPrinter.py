@@ -22,8 +22,9 @@ class MessagePrinter(ConsoleControl):
     #output: a string value
     def input_option(self, message):
         """
-            asks for an input and prints the message in yellow
-            returns the input
+            function: get a input value from the console, prints a message 
+            in yellow color
+            output: a string value
         """
         self.font_selector("bright","","yellow")
         print(message,end="")
@@ -38,7 +39,8 @@ class MessagePrinter(ConsoleControl):
     #output: none
     def alert(self, message):
         """
-            Prints an alert message in red
+            function: Prints an alert message in red
+            output: none
         """
         self.font_selector("bright","","red")
         print(message)
@@ -50,7 +52,7 @@ class MessagePrinter(ConsoleControl):
         """
             Prints a message with a given stile
             #input : three string with the style and other with the message
-            #function: print simple message in console, with a specific style
+            #function: prints a message in console, with a specific style
             #output: none       
         """
         self.font_selector(style,back, fore)
@@ -60,10 +62,10 @@ class MessagePrinter(ConsoleControl):
     #--------------------------------------------------------------------------
     def clear_print(self, style, back, fore, message):                  
         """
-            #input : three string with the style and other with the message
-            #function: to clear the console after print simple message in console, with a specific style, 
-            #output: none 
-            Clears the console and then prints the message given with stile
+            input : three string with the style and other with the message
+            function: Clears the console and then prints the message given 
+             with stile
+            output: none 
         """     
         self.clear_console()
         self.font_selector(style,back, fore)
