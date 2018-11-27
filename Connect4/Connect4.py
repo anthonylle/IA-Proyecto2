@@ -4,6 +4,7 @@ from WinAndBlock.WinAndBlock import Checker
 from Player.Player import Player
 from Agent.Agent import Agent
 from Board.Board import Board
+from GeneticTrainer.GeneticTrainer import GeneticTrainer
 
 # class to control all game's logic
 class Connect4():
@@ -164,8 +165,12 @@ class Connect4():
         """
         self.view.view_title()
         self.view.print_message("normal","", "white",">>> Please waiting for the training end ....")
-        trainning = "0.40 ,0.6 ,0.85 ,1" # = agent's training function
-        self.view.print_message("normal","", "white",">>> Please copy the following text and save it: "+trainning)
+        preserve = int(self.view.input_option(">>> How many Agents will preserve each generation while training?: "))
+        generations = int(self.view.input_option(">>> How many generations will be trained?: "))
+        trainer = GeneticTrainer(preserve, generations)
+        params = trainer.get_best_configuration_params()
+        training = str(params[0]) + ", "+ str(params[1]) + ", " + str(params[2]) + ", " + str(params[3])
+        self.view.print_message("normal","", "white",">>> Please copy the following text and save it: " + training)
         self.view.input_option(">>> Back [type enter]: ")
 
     #-------------------------------------------------------------------------

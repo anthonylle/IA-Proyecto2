@@ -6,34 +6,17 @@ from Connect4.Connect4 import Connect4
 from NameRandomizer.NameGenerator import get_random_name
 
 
-def mutate(individual: Agent, probability) -> Agent:
+def make_pairs(elements: list, n=2):
     """
-    :param individual:
-    :return:
+    :param elements: list of anything values
+    :param n: 2 by default, the number of elements included in the subgroups (2 = couples/pairs)
+    :return: the list of every n subgroups made from the list,
+                if lent(elements) % n != 0, those elements in the remaining are NOT included
     """
-    random.seed()
-    dies = random.randint(1,100)
-    if dies <= probability:
-        index = random.randint(0, 3)
-
-        current_first = individual.percent_first_move
-        current_second = individual.percent_second_move
-        current_third = individual.percent_third_move
-        current_fourth = individual.percent_fourth_move
-
-        percents = [current_first, current_second, current_third, current_fourth]
-        limits = [0] + percents + [100]
-        percents[index] = round(random.uniform(limits[index], limits[index+2]), 2)
-
-        [individual.percent_first_move,
-         individual.percent_second_move,
-         individual.percent_third_move,
-         individual.percent_fourth_move] = percents
-
-    return individual
+    return zip(*[iter(elements)] * n)
 
 
-class GeneticTrainer:
+class GeneticTrainer():
     def __init__(self, preserved_individuals_amount, number_of_generations):
         self.population = []
         self.preserved_individuals_amount = preserved_individuals_amount
@@ -43,7 +26,7 @@ class GeneticTrainer:
 
     def get_best_configuration_params(self) -> list:
         """
-        :return:
+        :return: the 4 params needed for a print in console after a training process with genetic algorithms
         """
         self.genetic_algorithm()
         first_param = self.best_individual.percent_first_move
@@ -54,7 +37,9 @@ class GeneticTrainer:
 
     def generate_population(self, population_size) -> list:
         """
-        :return:
+        :param population_size: amount of individuals to be created for the new population
+        :return: return the randomly generated population in order to use it if required, if not, it's still kept in the
+        local attribute self.population
         """
         for i in range(0, population_size):
             random.seed()
@@ -68,17 +53,17 @@ class GeneticTrainer:
 
     def get_fitness(self, individual: Agent) -> int:
         """
-        :param individual: instance of Agent
-        :return: the amount of WINS the Agent already has set in its attribute
+        :param individual: instance of Agent to be evaluated for a fitness measure
+        :return: the amount of WINS the Agent already has set in its record as a fitness value
         :rtype: int
         """
         return individual.record[individual.WINS]
 
     def reproduce(self, parent1: Agent, parent2: Agent) -> [Agent, Agent]:
         """
-        :param parent1:
-        :param parent2:
-        :return:
+        :param parent1: an Agent to generate a couple of children with another Agent
+        :param parent2: an Agent to generate a couple of children with another Agent
+        :return: a listf of 2 children (new Agents) with the new combination of the parents (Agents) genes (params)
         """
         random.seed()
 
@@ -108,9 +93,35 @@ class GeneticTrainer:
         child2.percent_fourth_move = child2_params
         return [child1, child2]
 
+    def mutate(self, individual: Agent, probability) -> Agent:
+        """
+        :param individual: An Agent that can have a chance for mutating 1 of its params
+        :return: the same Agent whether or not it mutates
+        """
+        random.seed()
+        dies = random.randint(1, 100)
+        if dies <= probability:
+            index = random.randint(0, 3)
+
+            current_first = individual.percent_first_move
+            current_second = individual.percent_second_move
+            current_third = individual.percent_third_move
+            current_fourth = individual.percent_fourth_move
+
+            percents = [current_first, current_second, current_third, current_fourth]
+            limits = [0] + percents + [100]
+            percents[index] = round(random.uniform(limits[index], limits[index + 2]), 2)
+
+            [individual.percent_first_move,
+             individual.percent_second_move,
+             individual.percent_third_move,
+             individual.percent_fourth_move] = percents
+
+        return individual
+
     def genetic_algorithm(self):
         """
-        :return:
+        :return: the best individual from a population after N generations passed specified by its fitness function
         """
 
         preserved_individuals = []
@@ -136,8 +147,8 @@ class GeneticTrainer:
                 parent2_copy = copy.deepcopy(parent2)
 
                 children = self.reproduce(parent1_copy, parent2_copy)
-                children[0] = mutate(children[0], self.mutation_probability)
-                children[1] = mutate(children[0], self.mutation_probability)
+                children[0] = self.mutate(children[0], self.mutation_probability)
+                children[1] = self.mutate(children[0], self.mutation_probability)
                 preserved_individuals.append(children)
                 children = []
 
@@ -156,9 +167,14 @@ class GeneticTrainer:
         self.best_individual = self.get_N_best_fitting(generation_fitness, 1)
         return self.best_individual
 
-
-
     def train(self, individual: Agent, opponents: list):
+        '''
+        :param individual: an Agent that will play against a list of Agents (opponents) in order to check the amount of
+        wins it gets
+        :param opponents: a list of Agents that will play 1 by 1 against the individual to be trained
+        :return: the same individual (Agent) from the input, but 'trained'
+        '''
+
         individual.character = "1"
         for opponent in opponents:
             opponent.character = "2"
@@ -171,9 +187,9 @@ class GeneticTrainer:
 
     def get_N_best_fitting(self, population: dict, n):
         """
-        :param population:
-        :param n:
-        :return:
+        :param population: dictionary of individuals (Agents) as keys and their fitness function values as values
+        :param n: amount of individuals to be considered "the best"
+        :return: a list of the top n best individuals (Agents) according to their fitness function values
         """
         bests = []
         for i in range(0, n):
@@ -181,23 +197,3 @@ class GeneticTrainer:
             bests.append(best_now)
             del population[best_now]
         return bests
-
-
-def make_pairs(elements: list, n=2):
-    return zip(*[iter(elements)] * n)
-
-
-agent1 = Agent("1", get_random_name(), 15,30, 60, 90)
-#mutated_agent1 = mutate(agent1)
-#print("Agent1 - 1st: ", agent1.percent_first_move, " 2nd: ", agent1.percent_second_move, " 3rd: ", agent1.percent_third_move, " 4th: ", agent1.percent_fourth_move)
-agent2 = Agent("2", get_random_name(), 0, 0, 0, 0)
-
-'''
-players = [agent1, agent2]
-game = Connect4('cls')
-game.default()
-game.game_mode = game.game_modes[0]
-[agent1, agent2] = game.logic_play(players=players)
-print("Agent1:", agent1.name, " Wins: ", agent1.record[agent1.WINS], " DRAWS: ", agent1.record[agent1.DRAWS], " Loses: ", agent1.record[agent1.LOSSES])
-print("Agent2:", agent2.name, " Wins: ", agent2.record[agent2.WINS], " DRAWS: ", agent2.record[agent2.DRAWS], " Loses: ", agent2.record[agent2.LOSSES])
-'''

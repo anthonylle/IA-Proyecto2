@@ -1,4 +1,5 @@
 ![Imgur](https://i.imgur.com/E8Ta3b1.png)
+
 Instituto Tecnológico de Costa Rica 	      
 Escuela de Ingeniería en Computación       
 Curso: Inteligencia Artificial	      
@@ -889,6 +890,178 @@ class Block_Checker(Checker):
         return players[not(actual)].value
 ```
 ### Algorítmo Genético
+#### Generate Population
+De acuerdo a un N para el tamaño de la población se crean N agentes totalmente aleatorios (nombre y parámetros aleatorios)
+
+```
+function generate_population(population_size)
+    inputs
+    	- population_size: amount of individuals to be created for the new population
+    returns
+		- a list with the randomly generated population in order to use it if required, if not, it's still kept in the
+    local attribute population
+    population = []
+    for i <- 1 to population_size do
+        Generate-a-random-seed
+        first_percent <- random-value-in-range(0,0.25) with 2 decimal floating point numbers
+        second_percent <- random-value-in-range(first_percent,0.5) with 2 decimal floating point numbers
+        third_percent <- random-value-in-range(second_percent,0.75) with 2 decimal floating point numbers
+        fourth_percent <- random-value-in-range(third_percent,1) with 2 decimal floating point numbers
+        population.append(Agent("1", get-random-name(), first_percent, second_percent, third_percent, fourth_percent))
+    return population
+```
+#### Reproduce
+Este necesita de 2 Agentes (padres) que aleatoreamente serán cortados para formar 2 nuevos hijos con sus genes (parámetros)
+
+```
+function reproduce(parent1: Agent, parent2: Agent) -> [Agent, Agent]:
+        inputs
+        	- parent1: an Agent to generate a couple of children with another Agent
+        	- parent2: an Agent to generate a couple of children with another Agent
+        return 
+        	- a listf of 2 children (new Agents) with the new combination of the parents (Agents) genes (params)
+        """
+        Generate-a-random-seed
+
+        parent1_params <- parent1.percent_first_move, \
+                         parent1.percent_second_move, \
+                         parent1.percent_third_move, \
+                         parent1.percent_fourth_move \
+
+        parent2_params <- parent2.percent_first_move, \
+                         parent2.percent_second_move, \
+                         parent2.percent_third_move, \
+                         parent2.percent_fourth_move
+
+        index <- random-value-in-range(1, 3)
+        child1_params <- parent1_params[:index] + parent2_params[index:]
+        child2_params <- parent2_params[:index] + parent1_params[index:]
+        child1 <- Agent("1", get-random-name(), 0, 0, 0, 0)
+        child2 <- Agent("2", get-random-name(), 0, 0, 0, 0)
+        child1.percent_first_move, \
+        child1.percent_second_move, \
+        child1.percent_third_move, \
+        child1.percent_fourth_move <- child1_params
+
+        child2.percent_first_move, \
+        child2.percent_second_move, \
+        child2.percent_third_move, \
+        child2.percent_fourth_move <- child2_params
+        return [child1, child2]
+```
+#### Mutate
+Un individuo tiene un chance de probabilidad de mutar, y si al lanzar un dado se cumple esa probabilidad, entonces se selecciona aleatoriamente un parámetro y se muta de acuerdo al rango en el que se encuentra, para esto se necesita conocer los límites del rango tanto a la izquierda como a la derecha, por ejemplo: un 4to parámtro 0.94 puede encontrarse limitado por un 3er parámetro 0.78 y 1.0
+La mutación tiene una baja probabilidad. Para este caso 8%.
+
+```
+function mutate(individual: Agent, probability) -> Agent:
+    inputs
+    	- individual: An Agent that can have a chance for mutating 1 of its params
+    returns 
+    	- the same Agent whether or not it mutates
+    
+    Generate-a-random-seed
+    dies <- random-value-in-range(1, 100)
+    if (dies <= probability) then
+        index <- random-value-in(0, 3)
+
+        current_first <- individual.percent_first_move
+        current_second <- individual.percent_second_move
+        current_third <- individual.percent_third_move
+        current_fourth <- individual.percent_fourth_move
+
+        percents <- [current_first, current_second, current_third, current_fourth]
+        limits <- [0] + percents + [100]
+        percents[index] <- random-value-in-range(limits[index], limits[index + 2]) with 2 decimal floating point numbers
+
+        [individual.percent_first_move,
+         individual.percent_second_move,
+         individual.percent_third_move,
+         individual.percent_fourth_move] <- percents
+
+    return individual
+```
+#### Get Fitnes
+Para obtener el fitness se toma en cuenta la cantidad de ganes que un individuo (agente) tiene
+
+```
+function get_fitness(individual: Agent)
+    inputs
+    	- individual: instance of Agent to be evaluated for a fitness measure
+    returns
+		- the amount of WINS the Agent already has set in its record as a fitness value
+    return individual.record[individual.WINS]
+```
+#### Genetic Algorithm
+Este se encarga de generar una población aleatoria, entrenar cada individuo y evaluar los N mejores para luego cruzarlos, mutarlos (si se da) y luego reevaluar a los nuevos individuos (niños) para saber su fitness. Cuando terminan de transcurrir las generaciones el mejor individuo (por su fitness) es seleccionado de la generación actual.
+
+```
+function genetic_algorithm():
+    returns
+		- the best individual from a population after N generations passed specified by its fitness function
+    
+    preserved_individuals = []
+
+    for i <- 0 to number_of_generations do
+        generation_fitness <- {}            
+        population = generate_population((preserved_individuals_amount * 10) - size(preserved_individuals))
+        population.append(preserved_individuals)
+        preserved_individuals = []
+
+        for each individual in population do
+            opponents <- population.copy()
+            opponents.remove(individual)
+            individual <- train(individual, opponents)
+            generation_fitness[individual] <- get_fitness(individual)
+
+        best_fitting_individuals <- get_N_best_fitting(generation_fitness, preserved_individuals_amount)
+        best_fitting_pairs <- make_pairs(best_fitting_individuals)
+        children = []
+
+        for each parent1, parent2 in best_fitting_pairs do
+            parent1_copy <- copy.deepcopy(parent1)
+            parent2_copy <- copy.deepcopy(parent2)
+
+            children <- reproduce(parent1_copy, parent2_copy)
+            children[0] = mutate(children[0], self.mutation_probability)
+            children[1] = mutate(children[0], self.mutation_probability)
+            preserved_individuals.append(children)
+            children = []
+
+            population.remove(parent1)
+            population.remove(parent2)
+            delete parent1 from generation_fitness
+            delete parent2 from generation_fitness
+
+        for each new_child in children:
+            opponents = population.copy()
+            opponents.remove(new_child)
+            new_child = train(new_child, opponents)
+            generation_fitness[new_child] = get_fitness(new_child)
+
+    population.append(preserved_individuals) # for final iteration
+    best_individual = get_N_best_fitting(generation_fitness, 1)
+    return best_individual
+```
+#### Train
+
+```
+function train(self, individual: Agent, opponents: list):
+    inputs
+    	- individual: an Agent that will play against a list of Agents (opponents) in order to check the amount of wins it gets
+    	- opponents: a list of Agents that will play 1 by 1 against the individual to be trained
+    returns 
+    	- the same individual (Agent) from the input, but 'trained'
+    
+    individual.character <- "1"
+    for each opponent in opponents do
+        opponent.character <- "2"
+        players <- [individual, opponent]
+        game <- new Game
+        [individual, _] <- game.play(players)
+    return individual
+
+```
 ------------------------------------------------
 # Análisis de resultados
 Se mostrará el comportamiento de las pruebas unitarias y las pruebas de cobertura en el código.
