@@ -143,13 +143,13 @@ class Test_ConsoleControl():
         assert (mock_stdout.getvalue() == Style.NORMAL)  
  
     @mock.patch('sys.stdout', new_callable=StringIO)
-    def test_style_selector3(self, mock_stdout):
+    def test_style_selector4(self, mock_stdout):
 
         self.control.style_selector("")
         assert (mock_stdout.getvalue() == Style.RESET_ALL)  
         
     @mock.patch('sys.stdout', new_callable=StringIO)
-    def test_style_selector3(self, mock_stdout):
+    def test_style_selector5(self, mock_stdout):
 
         self.control.style_selector("reset")
         assert (mock_stdout.getvalue() == Style.RESET_ALL)
@@ -166,7 +166,7 @@ class Test_ConsoleControl():
         assert (mock_stdout.getvalue() == Style.NORMAL+Fore.WHITE+Back.WHITE)        
 
     @mock.patch('sys.stdout', new_callable=StringIO)
-    def test_font_selector2(self,  mock_stdout):
+    def test_font_selector3(self,  mock_stdout):
         self.control.font_selector("normal","black","black")
         assert (mock_stdout.getvalue() == Style.NORMAL+Fore.BLACK+Back.BLACK)
         
