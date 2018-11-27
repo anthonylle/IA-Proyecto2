@@ -878,14 +878,14 @@ class Checker()
 #### Clase de Gane, hereda de Checker y sobreescribe la funcion de set_player_value para que busque si hay un 4 en linea mío
 ```
 class Win_Checker() inherits Checker
-    def set_player_value(self, players, actual) returns actual player value
+    function set_player_value(self, players, actual) returns actual player value
         return players[actual].value
 ```
 #### Block_Checker
 #### Clase de Bloqueo, hereda de Checker y sobreescribe la funcion de set_player_value para que busque si hay un 4 en linea de mi oponente
 ```
 class Block_Checker(Checker):
-    def set_player_value(self, players, actual) returns actual oponent value
+    function set_player_value(self, players, actual) returns actual oponent value
         return players[not(actual)].value
 ```
 ### Algorítmo Genético
