@@ -251,17 +251,17 @@ def test_get_column_with_space7():
     
 def test_get_set_space():
     assert( board.get_set_space() == {0,1,2,3,4,5,6})
-    
+ 
 class Test_Print():
     @mock.patch('sys.stdout', new_callable=StringIO)
     def test_print_matrix(self, mock_stdout):
 
         board.print_matrix()
 
-        console = "".join(["['1','2', ' ', ' ', ' ', '1', ' ']\n",
-                            "['1','1', '1', ' ', ' ', '2', ' ']\n",
-                            "['2','1', '2', '2', ' ', '1', ' ']\n",
-                            "['2','1', '1', '1', '2', '2', ' ']\n",
-                            "['2','2', '1', '2', '2', '1', ' ']\n",
-                            "['1','1', '1', '2', '1', '2', '1']\n"])  
+        console = "".join([ str(['1','2', ' ', ' ', ' ', '1', ' '])+"\n",
+                            str(['1','1', '1', ' ', ' ', '2', ' '])+"\n",
+                            str(['2','1', '2', '2', ' ', '1', ' '])+"\n",
+                            str(['2','1', '1', '1', '2', '2', ' '])+"\n",
+                            str(['2','2', '1', '2', '2', '1', ' '])+"\n",
+                            str(['1','1', '1', '2', '1', '2', '1'])+"\n\n"])  
         assert (mock_stdout.getvalue() == console)

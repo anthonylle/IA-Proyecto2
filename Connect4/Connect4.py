@@ -45,7 +45,7 @@ class Connect4():
             output:None  
         """
         option = ""
-        while option != "4":
+        while option != "5":
             option = self.view.view_new_game_menu()
             if option == "1":
                 self.type_game_menu()
