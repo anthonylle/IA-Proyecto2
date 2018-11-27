@@ -14,11 +14,10 @@ class Agent(Player):
         self.percent_second_move = percent_second_move
         self.percent_third_move = percent_third_move
         self.percent_fourth_move =percent_fourth_move
-        self.last_moves = list()
         self.win_checker = Win_Checker()
         self.block_checker = Block_Checker()
-        self.ranges = {}
-        self.create_ranges(percent_first_move, percent_second_move, 
+        self.biggest_percent = 1
+        self.ranges = self.create_ranges(percent_first_move, percent_second_move, 
                            percent_third_move, percent_fourth_move)
 
     #--------------------------------------------------------------------------
@@ -33,27 +32,33 @@ class Agent(Player):
     #--------------------------------------------------------------------------
     def select_move(self, board_state,depth_max, oponent):
         """
-        input: a Board object, max depth to search, oponent character(human)
-        function: select the best move using minimax
-        output: int with column number > 0     
+            input: Board object, max depth to search, oponent character(human)
+            function: Select the best move using minimax
+            output: Int with column number > 0     
         """
         
-        die = self.throw_die(0, self.percent_fourth_move)
-        print("mi dado: ", die)
+        die = self.throw_die(0, self.biggest_percent)
+        #print("my die ", die)
         
         if self.is_in_range(0,die):
-            print("escojo el de secuencia vs espacio")
+            #print(" >>> sequence_vs_space")
             return self.sequence_vs_space(board_state,depth_max, oponent)
+        
         elif self.is_in_range(1,die):
-            print("escojo centro vs centros")
-            return self.center_vs_extremes(board_state,depth_max, oponent)
+            #print(" >>> center_vs_extreme")
+            return self.center_vs_extremes(board_state,depth_max, oponent)+1
 
         elif self.is_in_range(2,die):
-            print("escojo el tercer movimiento")
-            
+            #print("Block3_vs_Play3")
+            return self.Block3_vs_Play3(board_state,depth_max, oponent)
+          
         elif self.is_in_range(3,die):
-            print("escojo repeat_vs_continue")
-            self.repeat_vs_continue(board_state)
+            #print("repeat_vs_continue")
+            return self.repeat_vs_continue(board_state)+1
+        else:
+            #print("sequence_vs_space default")
+            return self.sequence_vs_space(board_state,depth_max, oponent)
+        
     #--------------------------------------------------------------------------
     def sequence_vs_space(self,board_state,depth_max, oponent):
         """
@@ -68,7 +73,7 @@ class Agent(Player):
         else:
             minimax = Spaces(depth_max, self.character, depth_max)
             return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])
-            pass
+            
 
     #--------------------------------------------------------------------------
     def center_vs_extremes(self,board_state,depth_max, oponent):
@@ -85,11 +90,12 @@ class Agent(Player):
         else:
             return -2  
         
+    #--------------------------------------------------------------------------
     
     def repeat_vs_continue(self,board_state):
         """
         input: a Board object, max depth to search, oponent character(human)
-        funtion: select center or extreme
+        funtion: select repeat a last move or continue with other
         output: none
         """
         die = self.throw_die(0, 1)
@@ -102,16 +108,30 @@ class Agent(Player):
             return board_state.get_column_with_space(other_set)
         
         return -2
-            
-                   
-        
-     #--------------------------------------------------------------------------       
-    def next_move(self, board, players, actual):
+
+    #--------------------------------------------------------------------------
+    def Block3_vs_Play3(self,board_state,depth_max, oponent):
         """
-            Checks if it can win el if it can block else make a move from
-            the strategies
+        input: a Board object, max depth to search, oponent character(human)
+        funtion: select Block3 or Play3
+        output: none
         """
-        col_move = 0
+        die = self.throw_die(0, 1)
+        if die <= 0.60: # Bock3
+            minimax = Block_3_In_Line(depth_max, self.character, oponent)
+            return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])            
+        else:
+            minimax = Play_3_In_Line(depth_max, self.character, oponent)
+            return minimax.search_best_move(board_state, [0,1,2,3,4,5,6])    
+
+    #--------------------------------------------------------------------------       
+    def next_move(self, board, players, actual,depth_max):
+        """
+            function: Checks if it can win, block or make a move 
+            from the strategies
+            output: column move chosen
+        """
+        col_move = -2
         win = self.win_checker.check(self, board, players, actual)
         block = self.block_checker.check(self, board, players, actual)
         if win != -1:
@@ -119,11 +139,7 @@ class Agent(Player):
         elif block != -1:
             col_move = block
         else:
-            #Llamar función electora de estrategia
-            #minimax = Secuential(3, self.character, '1')
-            minimax = Spaces(3, self.character, '1')
-            col_move = minimax.search_best_move(board, [0,1,2,3,4,5,6])
-            #col_move = random.randint(0, 6)+1
+            col_move = self.select_move(board,depth_max,players[not(actual)])
         return col_move
 
     #--------------------------------------------------------------------------
@@ -139,13 +155,12 @@ class Agent(Player):
                   2:percent_third_move, 3:percent_fourth_move}
         sorted_r = OrderedDict(sorted(ranges.items(), key=itemgetter(1)))
         ranges = dict(sorted_r)
-        keys = list(ranges)
-        
-        the_ranges[keys[0]] = [0,ranges[keys[0]] ]
-        the_ranges[keys[1]] = [ranges[keys[0]]+0.01, ranges[keys[1]] ]
-        the_ranges[keys[2]] = [ranges[keys[1]]+0.01, ranges[keys[2]] ]
-        the_ranges[keys[3]] = [ranges[keys[2]]+0.01, ranges[keys[3]] ]
-        
+        keys = list(ranges)        
+        the_ranges[keys[0]] = [0,ranges[keys[0]]]
+        the_ranges[keys[1]] = [round(ranges[keys[0]]+0.01,2), ranges[keys[1]] ]
+        the_ranges[keys[2]] = [round(ranges[keys[1]]+0.01,2), ranges[keys[2]] ]
+        the_ranges[keys[3]] = [round(ranges[keys[2]]+0.01,2), ranges[keys[3]] ]
+        self.biggest_percent = ranges[keys[3]]
         return the_ranges
         
     #--------------------------------------------------------------------------
