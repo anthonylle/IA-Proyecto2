@@ -43,7 +43,7 @@ def test_reproduce():
 
 def test_generate_population():
     empty_population = []
-    trainer = GeneticTrainer(10, 100)
+    trainer = GeneticTrainer(6, 20)
     actual_population = trainer.generate_population(100)
     assert (empty_population != actual_population and len(actual_population) == 100)
 
@@ -56,5 +56,6 @@ def test_agents_play_a_game():
     game.default()
     game.game_mode = game.game_modes[0]
     [agent1, agent2] = game.logic_play(players=players)
-    assert((agent1.record[agent1.WINS] == 0 or agent1.record[agent1.DRAWS] == 0) and
-           (agent2.record[agent2.WINS] == 0 or agent2.record[agent2.DRAWS] == 0))
+    assert((agent1.record[agent1.WINS] == 1 or agent1.record[agent1.DRAWS] == 1 or agent1.record[agent1.LOSSES] == 1)
+           and
+           (agent2.record[agent2.WINS] == 1 or agent2.record[agent2.DRAWS] == 1 or agent2.record[agent2.LOSSES] == 1))

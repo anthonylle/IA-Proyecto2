@@ -23,7 +23,7 @@ def mutate(individual: Agent, probability) -> Agent:
 
         percents = [current_first, current_second, current_third, current_fourth]
         limits = [0] + percents + [100]
-        percents[index] = random.randint(limits[index]+1, limits[index+2]-1)
+        percents[index] = round(random.uniform(limits[index], limits[index+2]), 2)
 
         [individual.percent_first_move,
          individual.percent_second_move,
@@ -45,7 +45,12 @@ class GeneticTrainer:
         """
         :return:
         """
-        return None
+        self.genetic_algorithm()
+        first_param = self.best_individual.percent_first_move
+        second_param = self.best_individual.percent_second_move
+        third_param = self.best_individual.percent_third_move
+        fourth_param = self.best_individual.percent_fourth_move
+        return [first_param, second_param, third_param, fourth_param]
 
     def generate_population(self, population_size) -> list:
         """
@@ -53,10 +58,10 @@ class GeneticTrainer:
         """
         for i in range(0, population_size):
             random.seed()
-            first_percent = random.randint(0, 100)
-            second_percent = random.randint(0, 100)
-            third_percent = random.randint(0, 100)
-            fourth_percent = random.randint(0, 100)
+            first_percent = round(random.uniform(0,0.25), 2)
+            second_percent = round(random.uniform(first_percent,0.5), 2)
+            third_percent = round(random.uniform(second_percent,0.75), 2)
+            fourth_percent = round(random.uniform(third_percent,1), 2)
             self.population.append(Agent("1", get_random_name(),
                                          first_percent, second_percent, third_percent, fourth_percent))
         return self.population
@@ -107,10 +112,14 @@ class GeneticTrainer:
         """
         :return:
         """
-        self.population = self.generate_population(self.preserved_individuals_amount*10)
+
+        preserved_individuals = []
 
         for i in range(0, self.number_of_generations):
             generation_fitness = {}
+            self.population = self.generate_population((self.preserved_individuals_amount * 10) - len(preserved_individuals))
+            self.population.append(preserved_individuals)
+            preserved_individuals = []
 
             for individual in self.population:
                 opponents = self.population.copy()
@@ -121,17 +130,31 @@ class GeneticTrainer:
             best_fitting_individuals = self.get_N_best_fitting(generation_fitness, self.preserved_individuals_amount)
             best_fitting_pairs = make_pairs(best_fitting_individuals)
             children = []
+
             for parent1, parent2 in best_fitting_pairs:
                 parent1_copy = copy.deepcopy(parent1)
                 parent2_copy = copy.deepcopy(parent2)
-                new_borns = self.reproduce(parent1_copy, parent2_copy)
-                new_borns[0] = mutate(new_borns[0],self.mutation_probability)
-                new_borns[1] = mutate(new_borns[0], self.mutation_probability)
-                children.append(new_borns)
+
+                children = self.reproduce(parent1_copy, parent2_copy)
+                children[0] = mutate(children[0], self.mutation_probability)
+                children[1] = mutate(children[0], self.mutation_probability)
+                preserved_individuals.append(children)
+                children = []
+
                 self.population.remove(parent1)
                 self.population.remove(parent2)
-            self.population = self.generate_population(self.preserved_individuals_amount*10-len(children))
-            self.population.append(children)
+                del generation_fitness[parent1]
+                del generation_fitness[parent2]
+
+            for new_child in children:
+                opponents = self.population.copy()
+                opponents.remove(new_child)
+                new_child = self.train(new_child, opponents)
+                generation_fitness[new_child] = self.get_fitness(new_child)
+
+        self.population.append(preserved_individuals) # for final iteration
+        self.best_individual = self.get_N_best_fitting(generation_fitness, 1)
+        return self.best_individual
 
 
 
@@ -143,7 +166,7 @@ class GeneticTrainer:
             game = Connect4('cls')
             game.default()
             game.game_mode = game.game_modes[0]
-            [individual, opponent] = game.logic_play(players=players)
+            [individual, _] = game.logic_play(players=players)
         return individual
 
     def get_N_best_fitting(self, population: dict, n):
@@ -165,10 +188,11 @@ def make_pairs(elements: list, n=2):
 
 
 agent1 = Agent("1", get_random_name(), 15,30, 60, 90)
-mutated_agent1 = mutate(agent1)
-print("Agent1 - 1st: ", agent1.percent_first_move, " 2nd: ", agent1.percent_second_move, " 3rd: ", agent1.percent_third_move, " 4th: ", agent1.percent_fourth_move)
-'''
+#mutated_agent1 = mutate(agent1)
+#print("Agent1 - 1st: ", agent1.percent_first_move, " 2nd: ", agent1.percent_second_move, " 3rd: ", agent1.percent_third_move, " 4th: ", agent1.percent_fourth_move)
 agent2 = Agent("2", get_random_name(), 0, 0, 0, 0)
+
+'''
 players = [agent1, agent2]
 game = Connect4('cls')
 game.default()
