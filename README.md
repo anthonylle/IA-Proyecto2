@@ -1068,44 +1068,59 @@ Se mostrará el comportamiento de las pruebas unitarias y las pruebas de cobertu
 
 ### Pruebas de Pytest
 
-============================= test session starts =============================
-platform win32 -- Python 3.6.4, pytest-3.8.2, py-1.7.0, pluggy-0.7.1
-rootdir: E:\TEC\2018\II SEMESTRE\Inteligencia Artifical\Proyecto-IAMMM, inifile:
-plugins: expect-1.1.0, cov-2.6.0
-collected 36 items
+MacBook-Pro-de-Anthony:IA-Proyecto2 aleandro$ pytest tests/
+================================================================================ test session starts ================================================================================
+platform darwin -- Python 3.6.6, pytest-3.8.2, py-1.7.0, pluggy-0.7.1
+rootdir: /Users/aleandro/Documents/Tareas/IA/Proyectos/IA-Proyecto2, inifile:
+plugins: remotedata-0.3.0, openfiles-0.3.0, doctestplus-0.1.3, arraydiff-0.2
+collected 183 items                                                                                                                                                                 
 
-test_arbol.py ............                                               [ 33%]
-test_archivo.py ...                                                      [ 41%]
-test_hoja.py ..                                                          [ 47%]
-test_modelo.py ..                                                        [ 52%]
-test_nodo.py .........                                                   [ 77%]
-test_normalizador.py .....                                               [ 91%]
-test_random_forest.py ...                                                [100%]
+tests/test_Agent.py ......................                                                                                                                                    [ 12%]
+tests/test_Board.py ....................................................                                                                                                      [ 40%]
+tests/test_Connect4.py ......                                                                                                                                                 [ 43%]
+tests/test_ConsoleControl.py ...........................                                                                                                                      [ 58%]
+tests/test_GeneticTrainer.py .....
 
 ### Pruebas de Coverage
 
------------ coverage: platform win32, python 3.6.4-final-0 -----------
-Name                    Stmts   Miss  Cover
-___________________________________________
-arbol.py                  131     16    88%
-archivo.py                 30      3    90%
-hoja.py                     8      0   100%
-modelo.py                  17      2    88%
-nodo.py                    51      6    88%
-normalizador.py            79     13    84%
-random_forest.py           86     56    35%
-red_neuronal.py            66     50    24%
-test_arbol.py             166      0   100%
-test_archivo.py            22      0   100%
-test_hoja.py               15      0   100%
-test_inicializador.py       0      0   100%
-test_modelo.py             22      0   100%
-test_nodo.py               64      0   100%
-test_normalizador.py       41      0   100%
-test_random_forest.py      50      0   100%
-test_red_neuronal.py        8      5    38%
-___________________________________________
-TOTAL                     856    151    82%
+----------- coverage: platform linux, python 3.6.7-final-0 -----------
+Name                                             Stmts   Miss  Cover
+--------------------------------------------------------------------
+IA-Proyecto2/Agent/Agent.py                         84     44    48%
+IA-Proyecto2/Agent/_init_.py                       0      0   100%
+IA-Proyecto2/Board/Board.py                         97      4    96%
+IA-Proyecto2/Board/_init_.py                       0      0   100%
+IA-Proyecto2/BoardPrinter/BoardPrinter.py           55     45    18%
+IA-Proyecto2/BoardPrinter/_init_.py                0      0   100%
+IA-Proyecto2/Connect4/Connect4.py                  214    161    25%
+IA-Proyecto2/Connect4/_init_.py                    0      0   100%
+IA-Proyecto2/Connect4View/Connect4View.py           59     29    51%
+IA-Proyecto2/Connect4View/_init_.py                0      0   100%
+IA-Proyecto2/ConsoleControl/ConsoleControl.py       62      1    98%
+IA-Proyecto2/ConsoleControl/_init_.py              0      0   100%
+IA-Proyecto2/MessagePrinter/MessagesPrinter.py      26      9    65%
+IA-Proyecto2/MessagePrinter/_init_.py              0      0   100%
+IA-Proyecto2/MiniMax/MiniMax.py                     99     21    79%
+IA-Proyecto2/MiniMax/_init_.py                     0      0   100%
+IA-Proyecto2/Player/Player.py                       23      5    78%
+IA-Proyecto2/Player/_init_.py                      0      0   100%
+IA-Proyecto2/WinAndBlock/WinAndBlock.py            242      5    98%
+IA-Proyecto2/apuntes de tablero.py                   0      0   100%
+IA-Proyecto2/main.py                                 5      5     0%
+IA-Proyecto2/test_setup.py                           2      0   100%
+IA-Proyecto2/tests/test_Agent.py                    76      0   100%
+IA-Proyecto2/tests/test_Board.py                   158      0   100%
+IA-Proyecto2/tests/test_BoardPrinter.py              0      0   100%
+IA-Proyecto2/tests/test_Connect4.py                 40      0   100%
+IA-Proyecto2/tests/test_Connect4View.py              4      1    75%
+IA-Proyecto2/tests/test_ConsoleControl.py           89      0   100%
+IA-Proyecto2/tests/test_MessagePrinter.py            0      0   100%
+IA-Proyecto2/tests/test_MiniMax.py                  66      4    94%
+IA-Proyecto2/tests/test_Player.py                   50      0   100%
+IA-Proyecto2/tests/test_WinAndBlock.py             364      0   100%
+IA-Proyecto2/tests/test_main.py                      0      0   100%
+--------------------------------------------------------------------
+TOTAL                                             1815    334    82%
 
 ------------------------------------------------
 
@@ -1142,16 +1157,21 @@ TOTAL                     856    151    82%
 ------------------------------------------------
 ### Distribución de trabajo
 - Diego Tenorio:
-	* ...
-	* ...
+	* Implementación de algoritmos de bloqueo y gane
+	* Algoritmo general del juego
+	* Implementación de estrategias nuevas
+	* Documentación
 
 - Jake Herrera :
-	* ...
-	* ...
+	* Desarrollo de interfaz
+	* Algoritmo general del juego
+	* Implementación de estrategias nuevas
+	* Documentación
 
-- Anthony Miranda:
-	* ...
-	* ...
+- Anthony Leandro:
+	* Desarrollo del algoritmo genético
+	* Implementación de estrategias nuevas
+	* Documentación
 
 ### Distribución de nota
 

@@ -46,8 +46,8 @@ def test_reproduce():
 def test_generate_population():
     empty_population = []
     trainer = GeneticTrainer(6, 20)
-    actual_population = trainer.generate_population(100)
-    assert (empty_population != actual_population and len(actual_population) == 100)
+    actual_population = trainer.generate_population(30)
+    assert (empty_population != actual_population and len(actual_population) == 30)
 
 
 def test_agents_play_a_game():
@@ -55,6 +55,7 @@ def test_agents_play_a_game():
     agent2 = Agent("2", get_random_name(), 0, 0, 0, 0)
     players = [agent1, agent2]
     game = Connect4('cls')
+    game.level = 4
     game.default()
     game.game_mode = game.game_modes[0]
     [agent1, agent2] = game.logic_play(players=players)
@@ -77,7 +78,8 @@ def test_make_pairs():
         couples_in_a_row.append(agent02)
     assert(agents == couples_in_a_row)
 
+
 def test_best_fitting():
-    trainer = GeneticTrainer(10, 100)
-    agent = trainer.best_individual
+    trainer = GeneticTrainer(2, 20)
+    agent = trainer.genetic_algorithm()
     assert(agent.record[agent.WINS] != 0)
